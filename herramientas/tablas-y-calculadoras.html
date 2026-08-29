@@ -74,14 +74,6 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
         
-        .formula-box {
-            background: rgba(0, 102, 204, 0.15);
-            border-left: 4px solid var(--primary-color);
-            padding: 1.5rem;
-            margin: 1rem 0;
-            border-radius: 0 8px 8px 0;
-        }
-        
         .manual-ref-box {
             background: rgba(255, 102, 0, 0.1);
             border: 2px dashed var(--secondary-color);
@@ -90,6 +82,7 @@
             margin: 1.5rem 0;
         }
         .manual-ref-box h5 { color: var(--secondary-color); }
+        .manual-ref-box ol, .manual-ref-box ul { margin-bottom: 0; }
         
         .data-table {
             background: rgba(255, 255, 255, 0.05);
@@ -145,7 +138,7 @@
 </head>
 <body>
 
-    <!-- Header con Logo (Idéntico al modelo) -->
+    <!-- Header con Logo -->
     <header class="main-header">
         <nav class="navbar navbar-expand-lg navbar-dark" aria-label="Navegación principal">
             <div class="container">
@@ -164,7 +157,7 @@
                                 <li><a class="dropdown-item active" href="#conversor">Conversor de Unidades</a></li>
                                 <li><a class="dropdown-item" href="#tabla-f1">Tabla F1: Fluidos</a></li>
                                 <li><a class="dropdown-item" href="#psicrometria">Calculadora Psicrométrica</a></li>
-                                <li><a class="dropdown-item" href="#tablas-ref">Índice de Tablas de Consulta</a></li>
+                                <li><a class="dropdown-item" href="#tablas-ref">Índice de Tablas del Curso</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -189,15 +182,15 @@
             <h3><i class="fas fa-exchange-alt text-warning me-2"></i>Conversor de Unidades Fundamentales</h3>
             
             <div class="manual-ref-box">
-                <h5><i class="fas fa-book-open me-2"></i>📚 Referencia para Búsqueda Manual (Si no hay internet)</h5>
-                <p>Utiliza los siguientes factores de conversión exactos del curso:</p>
+                <h5><i class="fas fa-book-open me-2"></i>📚 Referencia para Búsqueda Manual (Sin internet)</h5>
+                <p>Utiliza los siguientes factores de conversión exactos del curso (Guía 1, Prob. 4):</p>
                 <ul>
-                    <li><strong>Energía:</strong> \( 1 \text{ kWh} = 3600 \text{ kJ} \) (Guía 1, Prob. 4)</li>
+                    <li><strong>Energía:</strong> \( 1 \text{ kWh} = 3600 \text{ kJ} \)</li>
                     <li><strong>Potencia:</strong> \( 1 \text{ kW} = 1000 \text{ W} = 1 \text{ kJ/s} \); \( 1 \text{ HP} \approx 0.7457 \text{ kW} \); \( 1 \text{ TR} \approx 3.517 \text{ kW} \)</li>
                     <li><strong>Presión:</strong> \( 1 \text{ atm} = 101.325 \text{ kPa} = 1.01325 \text{ bar} = 1013.25 \text{ mbar} \)</li>
-                    <li><strong>Tiempo:</strong> \( 1 \text{ h} = 3600 \text{ s} \); \( 1 \text{ día} = 86400 \text{ s} \)</li>
+                    <li><strong>Caudal:</strong> \( 1 \text{ m}^3\text{/h} = \frac{1000}{3600} \text{ L/s} \approx 0.2778 \text{ L/s} \)</li>
                 </ul>
-                <p><em>Fórmula general de conversión: \( \text{Valor}_{destino} = \text{Valor}_{origen} \times \text{Factor} \)</em></p>
+                <p><em>Fórmula general: \( \text{Valor}_{destino} = \text{Valor}_{origen} \times \text{Factor de conversión} \)</em></p>
             </div>
 
             <div class="row g-3">
@@ -244,35 +237,38 @@
             <h3><i class="fas fa-table text-warning me-2"></i>Tabla F1: Densidades y Viscosidades de Líquidos</h3>
             
             <div class="manual-ref-box">
-                <h5><i class="fas fa-book-open me-2"></i>📚 Referencia para Búsqueda Manual</h5>
+                <h5><i class="fas fa-book-open me-2"></i>📚 Referencia para Búsqueda Manual (Sin internet)</h5>
                 <p><strong>Documento:</strong> "Tabla F1 - Densidades y viscosidades de líquidos nueva.pdf"</p>
                 <ol>
-                    <li>Ubica la <strong>Columna 1 (Líquido)</strong> y busca el nombre (ej. "Agua").</li>
-                    <li>En la <strong>Columna 2 (Temperatura °C)</strong>, busca la fila con tu temperatura de operación (ej. "20").</li>
-                    <li>Lee la <strong>Columna 3</strong> para la Densidad (\( \rho \)) en kg/m³.</li>
-                    <li>Lee la <strong>Columna 4</strong> para la Viscosidad Absoluta (\( \eta \)). <em>¡Ojo! El valor está multiplicado por \( \times 10^3 \). Si dice 1,000, el valor real es \( 1.000 \times 10^{-3} \) Pa·s.</em></li>
-                    <li>Lee la <strong>Columna 5</strong> para la Viscosidad Relativa/Cinemática (\( \nu \)). <em>El valor está multiplicado por \( \times 10^7 \) m²/s.</em></li>
+                    <li>Ubica el nombre del líquido en la <strong>Columna 1</strong>.</li>
+                    <li>En la <strong>Columna 2</strong>, busca la fila con tu temperatura de operación (°C).</li>
+                    <li><strong>Columna 3:</strong> Densidad (\( \rho \)) en kg/m³.</li>
+                    <li><strong>Columna 4:</strong> Viscosidad Absoluta (\( \eta \)). <em>¡Ojo! El valor de la tabla está multiplicado por \( 10^3 \). Multiplica el valor leído por \( 10^{-3} \) para obtener Pa·s.</em></li>
+                    <li><strong>Columna 5:</strong> Viscosidad Cinemática (\( \nu \)). <em>¡Ojo! El valor de la tabla está multiplicado por \( 10^7 \). Multiplica el valor leído por \( 10^{-7} \) para obtener m²/s.</em></li>
                 </ol>
+                <p class="mt-2"><em>Verificación matemática:</em> \( \nu = \frac{\eta}{\rho} \)</p>
             </div>
 
             <div class="row g-3 mb-4">
                 <div class="col-md-6">
                     <label class="form-label">Seleccionar Líquido</label>
                     <select id="f1-liquid" class="form-select" onchange="cargarTempF1()">
-                        <option value="">-- Seleccione --</option>
+                        <option value="">-- Seleccione un líquido --</option>
                         <option value="Agua">Agua</option>
                         <option value="Aceite lubricante">Aceite lubricante</option>
                         <option value="Alcohol etílico (etanol)">Alcohol etílico (etanol)</option>
+                        <option value="Alcohol metílico (metanol)">Alcohol metílico (metanol)</option>
                         <option value="Benceno">Benceno</option>
                         <option value="Etilenglicol">Etilenglicol</option>
                         <option value="Kerosene">Kerosene</option>
                         <option value="Mercurio">Mercurio</option>
+                        <option value="Octano normal">Octano normal</option>
                     </select>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Temperatura (°C)</label>
                     <select id="f1-temp" class="form-select" disabled>
-                        <option value="">-- Primero seleccione líquido --</option>
+                        <option value="">-- Primero seleccione el líquido --</option>
                     </select>
                 </div>
                 <div class="col-12 text-center">
@@ -298,8 +294,8 @@
                         <small>m²/s</small>
                     </div>
                 </div>
-                <div class="formula-box mt-3">
-                    <strong>Verificación de consistencia:</strong> \( \nu = \frac{\eta}{\rho} \). 
+                <div class="formula-box mt-3" style="background: rgba(0, 102, 204, 0.15); border-left: 4px solid var(--primary-color); padding: 1rem; border-radius: 0 8px 8px 0;">
+                    <strong>Verificación de consistencia:</strong> \( \nu_{calc} = \frac{\eta}{\rho} \). 
                     <span id="f1-check"></span>
                 </div>
             </div>
@@ -310,13 +306,14 @@
             <h3><i class="fas fa-wind text-warning me-2"></i>Calculadora Psicrométrica (Aire Húmedo)</h3>
             
             <div class="manual-ref-box">
-                <h5><i class="fas fa-book-open me-2"></i>📚 Referencia para Búsqueda Manual y Fórmulas</h5>
+                <h5><i class="fas fa-book-open me-2"></i>📚 Referencia para Búsqueda Manual (Sin internet)</h5>
                 <p><strong>Documentos:</strong> "Tabla A1 - Presión de vapor saturado.pdf" y "Guía 2 - Operaciones Unitarias"</p>
                 <ol>
-                    <li><strong>Paso 1:</strong> Busca en la <strong>Tabla A1</strong> la temperatura de bulbo seco (T) en la fila correspondiente. El valor es \( P_{vs} \) (Presión de vapor saturado en kPa).</li>
-                    <li><strong>Paso 2:</strong> Calcula la presión parcial de vapor: \( P_v = \frac{HR}{100} \times P_{vs} \)</li>
-                    <li><strong>Paso 3:</strong> Calcula la Humedad Absoluta: \( H = 0.622 \times \frac{P_v}{P_{atm} - P_v} \) (donde \( P_{atm} = 101.325 \) kPa a nivel del mar).</li>
-                    <li><strong>Paso 4:</strong> Entalpía aproximada: \( h = 1.006 \cdot T + H \cdot (2501 + 1.86 \cdot T) \) [kJ/kg aire seco].</li>
+                    <li>En la <strong>Tabla A1</strong>, ubica la temperatura de bulbo seco (T) en la fila izquierda y los decimales en la columna superior para obtener \( P_{vs} \) en kPa.</li>
+                    <li>Calcula la presión parcial de vapor: \( P_v = \frac{HR}{100} \times P_{vs} \)</li>
+                    <li>Calcula la Humedad Absoluta: \( H = 0.622 \times \frac{P_v}{P_{atm} - P_v} \) (donde \( P_{atm} = 101.325 \) kPa a nivel del mar).</li>
+                    <li>Calcula la Humedad Molar: \( H_m = H \times \frac{28.97}{18.015} \approx H \times 1.608 \)</li>
+                    <li>Calcula la Entalpía aproximada: \( h = 1.006 \cdot T + H \cdot (2501 + 1.86 \cdot T) \) [kJ/kg aire seco].</li>
                 </ol>
             </div>
 
@@ -327,7 +324,7 @@
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Humedad Relativa, HR (%)</label>
-                    <input type="number" id="psi-hr" class="form-control" placeholder="Ej: 60" step="0.1" max="100">
+                    <input type="number" id="psi-hr" class="form-control" placeholder="Ej: 60" step="0.1" max="100" min="0">
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Presión Atmosférica (kPa)</label>
@@ -360,7 +357,7 @@
             </div>
         </section>
 
-        <!-- 4. ÍNDICE RÁPIDO DE TABLAS -->
+        <!-- 4. ÍNDICE RÁPIDO DE TABLAS DEL CURSO -->
         <section id="tablas-ref" class="tool-card">
             <h3><i class="fas fa-list-ol text-warning me-2"></i>Índice de Tablas de Consulta del Curso</h3>
             <div class="table-responsive">
@@ -394,7 +391,7 @@
                         </tr>
                         <tr>
                             <td><strong>F4</strong></td>
-                            <td>Longitud equivalente de accesorios (\(L_e/D\))</td>
+                            <td>Longitud equivalente de accesorios (\(L_{eq}/D\))</td>
                             <td>Convertir codos, válvulas a longitud recta equivalente para pérdidas</td>
                             <td>Tabla F4 (Actualizada)</td>
                         </tr>
@@ -406,9 +403,15 @@
                         </tr>
                         <tr>
                             <td><strong>B1</strong></td>
-                            <td>Propiedades físicas de sustancias (Masa molar, \(T_b\), \( \Delta H_f \))</td>
-                            <td>Balances de energía, combustión, cambios de fase (Guías 1, 3)</td>
+                            <td>Propiedades físicas de las sustancias</td>
+                            <td>Masas molares, \(T_b\), \( \Delta H_f \), balances de energía y combustión (Guías 1, 3)</td>
                             <td>Tabla B.1</td>
+                        </tr>
+                        <tr>
+                            <td><strong>C1, C2</strong></td>
+                            <td>Conductividades térmicas de materiales</td>
+                            <td>Cálculos de transferencia de calor por conducción (Guía 4)</td>
+                            <td>Tablas C1 y C2</td>
                         </tr>
                     </tbody>
                 </table>
@@ -417,7 +420,7 @@
 
     </main>
 
-    <!-- Footer (Idéntico al modelo) -->
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="row">
@@ -454,19 +457,6 @@
         // ==========================================
         // 1. CONVERSOR DE UNIDADES
         // ==========================================
-        const factoresConversion = {
-            'L_h': { 'm3_s': 1/3600000, 'nombre': 'L/h a m³/s: dividir entre 3,600,000' },
-            'm3_s': { 'L_h': 3600000, 'nombre': 'm³/s a L/h: multiplicar por 3,600,000' },
-            'kW': { 
-                'HP': 1.34102, 'nombre': 'kW a HP: multiplicar por 1.341',
-                'TR': 0.284345, 'nombre2': 'kW a TR: multiplicar por 0.2843'
-            },
-            'HP': { 'kW': 0.7457, 'nombre': 'HP a kW: multiplicar por 0.7457' },
-            'TR': { 'kW': 3.517, 'nombre': 'TR a kW: multiplicar por 3.517' },
-            'atm': { 'kPa': 101.325, 'nombre': 'atm a kPa: multiplicar por 101.325' },
-            'kPa': { 'atm': 1/101.325, 'nombre': 'kPa a atm: dividir entre 101.325' }
-        };
-
         function convertirUnidades() {
             const val = parseFloat(document.getElementById('conv-value').value);
             const from = document.getElementById('conv-from').value;
@@ -483,7 +473,6 @@
             let resultado = val;
             let formula = "";
 
-            // Lógica simplificada para las parejas más comunes del curso
             if (from === 'L_h' && to === 'm3_s') { resultado = val / 3600000; formula = "Dividir entre 3,600,000 (1 m³ = 1000 L, 1 h = 3600 s)"; }
             else if (from === 'm3_s' && to === 'L_h') { resultado = val * 3600000; formula = "Multiplicar por 3,600,000"; }
             else if (from === 'kW' && to === 'HP') { resultado = val * 1.34102; formula = "Multiplicar por 1.34102"; }
@@ -492,7 +481,7 @@
             else if (from === 'TR' && to === 'kW') { resultado = val * 3.517; formula = "Multiplicar por 3.517"; }
             else if (from === 'atm' && to === 'kPa') { resultado = val * 101.325; formula = "Multiplicar por 101.325"; }
             else if (from === 'kPa' && to === 'atm') { resultado = val / 101.325; formula = "Dividir entre 101.325"; }
-            else { formula = "Conversión no mapeada directamente en esta demo. Usa factores de la Guía."; }
+            else { formula = "Conversión no mapeada directamente. Usa los factores de la Guía 1."; }
 
             document.getElementById('conv-output').innerText = resultado.toExponential(4) + " " + to;
             document.getElementById('conv-formula-used').innerText = "Fórmula aplicada: " + formula;
@@ -500,45 +489,72 @@
         }
 
         // ==========================================
-        // 2. TABLA F1 DATA Y LÓGICA
+        // 2. TABLA F1 DATA Y LÓGICA (Datos exactos del PDF)
         // ==========================================
         const datosF1 = {
             'Agua': {
                 '0': { rho: 1000, eta: 1.790e-3, nu: 17.900e-7 },
+                '10': { rho: 1000, eta: 1.310e-3, nu: 13.100e-7 },
                 '20': { rho: 998, eta: 1.000e-3, nu: 10.000e-7 },
+                '30': { rho: 996, eta: 0.798e-3, nu: 8.010e-7 },
                 '40': { rho: 992, eta: 0.653e-3, nu: 6.580e-7 },
+                '50': { rho: 988, eta: 0.547e-3, nu: 5.480e-7 },
                 '60': { rho: 983, eta: 0.467e-3, nu: 4.750e-7 },
+                '70': { rho: 978, eta: 0.404e-3, nu: 4.130e-7 },
                 '80': { rho: 972, eta: 0.355e-3, nu: 3.650e-7 },
+                '90': { rho: 965, eta: 0.315e-3, nu: 3.260e-7 },
                 '100': { rho: 958, eta: 0.282e-3, nu: 2.940e-7 }
             },
             'Aceite lubricante': {
                 '20': { rho: 871, eta: 13.100e-3, nu: 150.000e-7 },
                 '40': { rho: 858, eta: 6.810e-3, nu: 79.400e-7 },
                 '60': { rho: 845, eta: 4.180e-3, nu: 49.500e-7 },
-                '80': { rho: 832, eta: 2.830e-3, nu: 34.000e-7 }
+                '80': { rho: 832, eta: 2.830e-3, nu: 34.000e-7 },
+                '100': { rho: 820, eta: 2.000e-3, nu: 24.400e-7 },
+                '120': { rho: 809, eta: 1.540e-3, nu: 19.000e-7 }
             },
             'Alcohol etílico (etanol)': {
                 '0': { rho: 806, eta: 1.770e-3, nu: 22.000e-7 },
                 '20': { rho: 789, eta: 1.200e-3, nu: 15.200e-7 },
-                '40': { rho: 772, eta: 0.834e-3, nu: 10.800e-7 }
+                '40': { rho: 772, eta: 0.834e-3, nu: 10.800e-7 },
+                '60': { rho: 754, eta: 0.592e-3, nu: 7.850e-7 }
+            },
+            'Alcohol metílico (metanol)': {
+                '0': { rho: 810, eta: 0.817e-3, nu: 10.100e-7 },
+                '20': { rho: 792, eta: 0.584e-3, nu: 7.370e-7 },
+                '30': { rho: 783, eta: 0.510e-3, nu: 6.510e-7 },
+                '40': { rho: 774, eta: 0.450e-3, nu: 5.810e-7 }
             },
             'Benceno': {
+                '0': { rho: 900, eta: 0.912e-3, nu: 10.100e-7 },
                 '20': { rho: 879, eta: 0.652e-3, nu: 7.420e-7 },
                 '40': { rho: 875, eta: 0.503e-3, nu: 5.860e-7 },
-                '60': { rho: 836, eta: 0.392e-3, nu: 4.690e-7 }
+                '60': { rho: 836, eta: 0.392e-3, nu: 4.690e-7 },
+                '80': { rho: 815, eta: 0.329e-3, nu: 4.040e-7 }
             },
             'Etilenglicol': {
                 '20': { rho: 1110, eta: 19.900e-3, nu: 179.000e-7 },
                 '40': { rho: 1100, eta: 9.130e-3, nu: 83.000e-7 },
-                '60': { rho: 1090, eta: 4.950e-3, nu: 45.500e-7 }
+                '60': { rho: 1090, eta: 4.950e-3, nu: 45.500e-7 },
+                '80': { rho: 1070, eta: 3.020e-3, nu: 28.200e-7 },
+                '100': { rho: 1060, eta: 1.990e-3, nu: 18.800e-7 }
             },
             'Kerosene': {
                 '-18': { rho: 841, eta: 7.060e-3, nu: 84.000e-7 },
                 '20': { rho: 814, eta: 1.900e-3, nu: 23.700e-7 }
             },
             'Mercurio': {
+                '0': { rho: 13600, eta: 1.680e-3, nu: 1.240e-7 },
                 '20': { rho: 13550, eta: 1.550e-3, nu: 1.140e-7 },
-                '40': { rho: 13500, eta: 1.450e-3, nu: 1.070e-7 }
+                '40': { rho: 13500, eta: 1.450e-3, nu: 1.070e-7 },
+                '60': { rho: 13450, eta: 1.370e-3, nu: 1.020e-7 },
+                '80': { rho: 13400, eta: 1.300e-3, nu: 0.970e-7 },
+                '100': { rho: 13350, eta: 1.240e-3, nu: 0.929e-7 }
+            },
+            'Octano normal': {
+                '0': { rho: 718, eta: 0.706e-3, nu: 9.830e-7 },
+                '20': { rho: 702, eta: 0.542e-3, nu: 7.720e-7 },
+                '40': { rho: 686, eta: 0.433e-3, nu: 6.310e-7 }
             }
         };
 
@@ -574,15 +590,14 @@
             // Verificación
             const nuCalc = data.eta / data.rho;
             const error = Math.abs((nuCalc - data.nu) / data.nu) * 100;
-            document.getElementById('f1-check').innerHTML = `<br>Verificación: \( \\nu_{calc} = \\frac{${data.eta.toExponential(3)}}{${data.rho}} = ${nuCalc.toExponential(3)} \\text{ m²/s} \). (Coincide con la tabla con < ${error.toFixed(2)}% de diferencia por redondeo de la tabla original).`;
+            document.getElementById('f1-check').innerHTML = `<br>Verificación: \\( \\nu_{calc} = \\frac{${data.eta.toExponential(3)}}{${data.rho}} = ${nuCalc.toExponential(3)} \\text{ m²/s} \\). (Coincide con la tabla con < ${error.toFixed(2)}% de diferencia por redondeo de la tabla original).`;
             
             document.getElementById('f1-result').classList.add('show');
-            // Re-renderizar MathJax
             if (window.MathJax) { MathJax.typesetPromise(); }
         }
 
         // ==========================================
-        // 3. CALCULADORA PSICROMÉTRICA
+        // 3. CALCULADORA PSICROMÉTRICA (Ecuación Riedel modificada del Excel)
         // ==========================================
         function calcularPsicrometria() {
             const T = parseFloat(document.getElementById('psi-t').value);
@@ -592,14 +607,17 @@
             if (isNaN(T) || isNaN(HR) || isNaN(Patm)) { alert("Complete todos los campos correctamente"); return; }
             if (HR > 100 || HR < 0) { alert("La Humedad Relativa debe estar entre 0 y 100%"); return; }
 
-            // Ecuación de Antoine para agua (válida 0-100°C) para obtener Pvs en mmHg, luego convertir a kPa
-            // log10(Pvs_mmHg) = A - B / (T + C)
-            const A = 8.07131;
-            const B = 1730.63;
-            const C = 233.426;
-            
-            const Pvs_mmHg = Math.pow(10, A - B / (T + C));
-            const Pvs_kPa = Pvs_mmHg * 0.133322; // 1 mmHg = 0.133322 kPa
+            // Ecuación Riedel modificada (del Excel proporcionado)
+            // Pvs = exp(C1 + C2/T + C3*ln(T) + C4*T^C5); Pvs en Pa, T en K
+            const Tk = T + 273.15;
+            const C1 = 73.649;
+            const C2 = -7258.2;
+            const C3 = -7.3037;
+            const C4 = 4.17e-6;
+            const C5 = 2;
+
+            const Pvs_Pa = Math.exp(C1 + (C2 / Tk) + (C3 * Math.log(Tk)) + (C4 * Math.pow(Tk, C5)));
+            const Pvs_kPa = Pvs_Pa / 1000;
 
             const Pv = (HR / 100) * Pvs_kPa;
             
