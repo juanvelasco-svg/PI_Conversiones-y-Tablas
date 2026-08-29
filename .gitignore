@@ -1,1 +1,1 @@
-(tablas/tabla-f2.html, tablas/tabla-f3.html, tablas/tabla-f4.html are all html files, which belong to source code or configuration files, and there are no build artifacts, dependencies, or temporary files in the changed file list, so no files need to be added to .gitignore according to rule 6)
+(tabla-f1.html is a source/config file, and there are no build artifacts, dependencies, or temp files in the changes)
