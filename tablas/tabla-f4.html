@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tabla F4 - Longitud Equivalente de Accesorios - Procesos Industriales">
+    <title>Tabla F4 | Longitud Equivalente - Procesos Industriales</title>
+    <link rel="icon" href="../assets/images/logo.png" type="image/png">
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- MathJax -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #ff6600;
+            --dark-bg: #1a1a2e;
+            --card-bg: rgba(255, 255, 255, 0.1);
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+        
+        .main-header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid var(--secondary-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-brand img {
+            filter: drop-shadow(0 0 10px var(--secondary-color));
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: var(--secondary-color) !important;
+        }
+        
+        .dropdown-menu-dark {
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid var(--secondary-color);
+        }
+        
+        .page-title {
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(45deg, var(--secondary-color), #ff9933);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .info-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .data-table {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            font-size: 0.85rem;
+        }
+        
+        .data-table thead {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        .data-table th {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+            color: white;
+            white-space: nowrap;
+        }
+        
+        .data-table tbody tr:hover {
+            background: rgba(255, 102, 0, 0.15);
+        }
+        
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            border-top: 3px solid var(--secondary-color);
+            margin-top: 4rem;
+            padding: 3rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">
+                    <img src="../assets/images/logo.png" alt="Logo" height="60">
+                    <span style="font-family: 'Orbitron'; font-weight: 700;">PROCESOS INDUSTRIALES</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">Inicio</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" data-bs-toggle="dropdown">Tablas</a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="tabla-f1.html">Tabla F1: Fluidos</a></li>
+                                <li><a class="dropdown-item" href="tabla-f2.html">Tabla F2: Tuberías</a></li>
+                                <li><a class="dropdown-item" href="tabla-f3.html">Tabla F3: Rugosidad</a></li>
+                                <li><a class="dropdown-item active" href="tabla-f4.html">Tabla F4: Longitud Equivalente</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Herramientas</a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="../herramientas/calculadora-fluidos.html">Fluidos</a></li>
+                                <li><a class="dropdown-item" href="../herramientas/calculadora-termodinamica.html">Termodinámica</a></li>
+                                <li><a class="dropdown-item" href="../herramientas/calculadora-transferencia-calor.html">Calor</a></li>
+                                <li><a class="dropdown-item" href="../herramientas/calculadora-combustion.html">Combustión</a></li>
+                                <li><a class="dropdown-item" href="../herramientas/calculadora-operaciones-unitarias.html">Operaciones Unitarias</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container py-4">
+        <h1 class="page-title"><i class="fas fa-ruler-vertical me-3"></i>TABLA F4: LONGITUD EQUIVALENTE DE ACCESORIOS</h1>
+        
+        <div class="info-card">
+            <h3><i class="fas fa-info-circle me-2"></i>Descripción</h3>
+            <p>La longitud equivalente (Le/D) es un método para calcular las pérdidas menores en tuberías causadas por accesorios, válvulas y conexiones. Representa la longitud de tubería recta que produciría la misma caída de presión que el accesorio.</p>
+            <p>Este método simplifica los cálculos al convertir todas las pérdidas locales en una longitud adicional de tubería.</p>
+        </div>
+
+        <div class="table-responsive mb-4">
+            <table class="table data-table table-hover">
+                <thead>
+                    <tr>
+                        <th>Accesorio / Válvula</th>
+                        <th>Le/D (equiv. en diámetros)</th>
+                        <th>K (coeficiente de resistencia)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td colspan="3" class="text-warning fw-bold">Codos y Curvas</td></tr>
+                    <tr><td>Codo estándar 90° (radio largo)</td><td>20</td><td>0.75</td></tr>
+                    <tr><td>Codo estándar 90° (radio corto)</td><td>30</td><td>1.1</td></tr>
+                    <tr><td>Codo 45° estándar</td><td>15</td><td>0.35</td></tr>
+                    <tr><td>Codo 90° de esquina viva</td><td>60</td><td>1.3</td></tr>
+                    <tr><td>Retorno en U (180°)</td><td>50</td><td>2.0</td></tr>
+                    <tr><td>Curva 90° radio grande (R=3D)</td><td>12</td><td>0.45</td></tr>
+                    
+                    <tr><td colspan="3" class="text-warning fw-bold">Tees (T)</td></tr>
+                    <tr><td>Tee, flujo en línea (recto)</td><td>20</td><td>0.4</td></tr>
+                    <tr><td>Tee, flujo en derivación (ramal)</td><td>60</td><td>1.8</td></tr>
+                    
+                    <tr><td colspan="3" class="text-warning fw-bold">Válvulas</td></tr>
+                    <tr><td>Válvula de compuerta (totalmente abierta)</td><td>8</td><td>0.17</td></tr>
+                    <tr><td>Válvula de compuerta (1/4 cerrada)</td><td>40</td><td>0.9</td></tr>
+                    <tr><td>Válvula de compuerta (1/2 cerrada)</td><td>200</td><td>4.5</td></tr>
+                    <tr><td>Válvula de compuerta (3/4 cerrada)</td><td>800</td><td>24</td></tr>
+                    <tr><td>Válvula de globo (totalmente abierta)</td><td>340</td><td>10</td></tr>
+                    <tr><td>Válvula de ángulo (abierta)</td><td>150</td><td>5</td></tr>
+                    <tr><td>Válvula de retención (check) de bola</td><td>150</td><td>6</td></tr>
+                    <tr><td>Válvula de retención tipo swing</td><td>100</td><td>2.5</td></tr>
+                    <tr><td>Válvula de mariposa (abierta)</td><td>45</td><td>1.2</td></tr>
+                    <tr><td>Válvula de pie con filtro</td><td>400</td><td>15</td></tr>
+                    
+                    <tr><td colspan="3" class="text-warning fw-bold">Reducciones y Expansiones</td></tr>
+                    <tr><td>Entrada de tubería (borde afilado)</td><td>-</td><td>0.5</td></tr>
+                    <tr><td>Entrada de tubería (bordes redondeados)</td><td>-</td><td>0.04</td></tr>
+                    <tr><td>Entrada de tubería (proyectada hacia dentro)</td><td>-</td><td>1.0</td></tr>
+                    <tr><td>Salida de tubería (hacia tanque)</td><td>-</td><td>1.0</td></tr>
+                    <tr><td>Contracción súbita (D1/D2 = 0.5)</td><td>-</td><td>0.37</td></tr>
+                    <tr><td>Expansión súbita (D1/D2 = 0.5)</td><td>-</td><td>0.56</td></tr>
+                    
+                    <tr><td colspan="3" class="text-warning fw-bold">Otros Accesorios</td></tr>
+                    <tr><td>Unión roscada (coupling)</td><td>4</td><td>0.04</td></tr>
+                    <tr><td>Unión universal</td><td>4</td><td>0.08</td></tr>
+                    <tr><td>Brida (flange)</td><td>2</td><td>0.02</td></tr>
+                    <tr><td>Filtro Y (limpio)</td><td>60</td><td>2.0</td></tr>
+                    <tr><td>Filtro Y (sucio)</td><td>200</td><td>6.0</td></tr>
+                    <tr><td>Medidor Venturi</td><td>20</td><td>0.4</td></tr>
+                    <tr><td>Medidor de orificio</td><td>60</td><td>3.5</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="info-card bg-info bg-opacity-10 border border-info">
+            <h4><i class="fas fa-calculator me-2"></i>Fórmulas Relacionadas</h4>
+            <ul>
+                <li><strong>Pérdida por fricción en accesorios:</strong> \\( h_f = f \times \frac{L_e}{D} \times \frac{v^2}{2g} \\)</li>
+                <li><strong>Método del coeficiente K:</strong> \\( h_f = K \times \frac{v^2}{2g} \\)</li>
+                <li><strong>Relación entre Le/D y K:</strong> \\( K = f \times \frac{L_e}{D} \\)</li>
+                <li><strong>Pérdida total:</strong> \\( h_{total} = h_{tuberia} + \sum h_{accesorios} \\)</li>
+            </ul>
+        </div>
+
+        <div class="info-card bg-warning bg-opacity-10 border border-warning">
+            <h4><i class="fas fa-exclamation-triangle me-2"></i>Notas Importantes</h4>
+            <ul>
+                <li>Los valores de Le/D son aproximados y pueden variar según el fabricante</li>
+                <li>Para flujo laminar, los valores de K pueden ser significativamente diferentes</li>
+                <li>Las válvulas parcialmente cerradas tienen pérdidas mucho mayores</li>
+                <li>El método Le/D asume que el factor de fricción f es el mismo que en la tubería</li>
+                <li>Para cálculos precisos, consulte datos específicos del fabricante</li>
+                <li>Los valores de K son más precisos cuando se dispone de ellos</li>
+            </ul>
+        </div>
+
+        <div class="info-card bg-success bg-opacity-10 border border-success">
+            <h4><i class="fas fa-lightbulb me-2"></i>Ejemplo de Aplicación</h4>
+            <p><strong>Problema:</strong> Calcular la pérdida de carga en una línea con: 3 codos 90° estándar, 1 válvula de globo abierta, y 1 tee en derivación. Tubería de 2" Sch 40, agua a 20°C, v = 2 m/s.</p>
+            <ol>
+                <li>Sumar Le/D: (3 × 30) + (1 × 340) + (1 × 60) = 90 + 340 + 60 = 490 diámetros</li>
+                <li>Obtener diámetro interior: D = 52.51 mm = 0.05251 m</li>
+                <li>Calcular longitud equivalente: Le = 490 × 0.05251 = 25.73 m</li>
+                <li>Calcular pérdida: \\( h_f = f \times \frac{L_e}{D} \times \frac{v^2}{2g} \\)</li>
+                <li>Si f = 0.02: \\( h_f = 0.02 \times 490 \times \frac{2^2}{2 \times 9.81} = 2.0 \text{ m} \\)</li>
+            </ol>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="../assets/images/logo.png" alt="Logo" height="50">
+                    <p><strong>Procesos Industriales</strong></p>
+                    <p>Ingeniería Industrial</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="../index.html" class="text-white text-decoration-none">Inicio</a></li>
+                        <li><a href="tabla-f1.html" class="text-white text-decoration-none">Tabla F1</a></li>
+                        <li><a href="tabla-f2.html" class="text-white text-decoration-none">Tabla F2</a></li>
+                        <li><a href="tabla-f3.html" class="text-white text-decoration-none">Tabla F3</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contacto</h5>
+                    <p><i class="fas fa-envelope me-2"></i>juan.velasco@universidad.edu</p>
+                    <p>Período: 2026-1</p>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center mb-0">&copy; 2026 Procesos Industriales</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

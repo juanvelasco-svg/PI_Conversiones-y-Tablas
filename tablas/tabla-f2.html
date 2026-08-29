@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tabla F2 - Dimensiones de Tuberías - Procesos Industriales">
+    <title>Tabla F2 | Tuberías - Procesos Industriales</title>
+    <link rel="icon" href="../assets/images/logo.png" type="image/png">
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- MathJax -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #ff6600;
+            --dark-bg: #1a1a2e;
+            --card-bg: rgba(255, 255, 255, 0.1);
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+        
+        .main-header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid var(--secondary-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-brand img {
+            filter: drop-shadow(0 0 10px var(--secondary-color));
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: var(--secondary-color) !important;
+        }
+        
+        .dropdown-menu-dark {
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid var(--secondary-color);
+        }
+        
+        .page-title {
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(45deg, var(--secondary-color), #ff9933);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .info-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .data-table {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            font-size: 0.9rem;
+        }
+        
+        .data-table thead {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        .data-table th {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+            color: white;
+        }
+        
+        .data-table tbody tr:hover {
+            background: rgba(255, 102, 0, 0.15);
+        }
+        
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            border-top: 3px solid var(--secondary-color);
+            margin-top: 4rem;
+            padding: 3rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">
+                    <img src="../assets/images/logo.png" alt="Logo" height="60">
+                    <span style="font-family: 'Orbitron'; font-weight: 700;">PROCESOS INDUSTRIALES</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">Inicio</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" data-bs-toggle="dropdown">Tablas</a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="tabla-f1.html">Tabla F1: Fluidos</a></li>
+                                <li><a class="dropdown-item active" href="tabla-f2.html">Tabla F2: Tuberías</a></li>
+                                <li><a class="dropdown-item" href="tabla-f3.html">Tabla F3: Rugosidad</a></li>
+                                <li><a class="dropdown-item" href="tabla-f4.html">Tabla F4: Longitud Equivalente</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Herramientas</a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="../herramientas/calculadora-fluidos.html">Fluidos</a></li>
+                                <li><a class="dropdown-item" href="../herramientas/calculadora-termodinamica.html">Termodinámica</a></li>
+                                <li><a class="dropdown-item" href="../herramientas/calculadora-transferencia-calor.html">Calor</a></li>
+                                <li><a class="dropdown-item" href="../herramientas/calculadora-combustion.html">Combustión</a></li>
+                                <li><a class="dropdown-item" href="../herramientas/calculadora-operaciones-unitarias.html">Operaciones Unitarias</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container py-4">
+        <h1 class="page-title"><i class="fas fa-pipe me-3"></i>TABLA F2: DIMENSIONES DE TUBERÍAS</h1>
+        
+        <div class="info-card">
+            <h3><i class="fas fa-info-circle me-2"></i>Descripción</h3>
+            <p>Esta tabla presenta las dimensiones estándar de tuberías de acero según la norma ASME B36.10M para tubos de acero al carbono e inoxidables.</p>
+            <p>Se incluyen los diámetros nominales (NPS), diámetros exteriores, espesores de pared según diferentes schedules (Sch 40, Sch 80, etc.) y diámetros interiores resultantes.</p>
+        </div>
+
+        <div class="info-card">
+            <h3><i class="fas fa-book-open me-2"></i>Cómo Usar Esta Tabla</h3>
+            <ol>
+                <li>Identifique el <strong>Diámetro Nominal (NPS)</strong> de su tubería en pulgadas.</li>
+                <li>Seleccione el <strong>Schedule (Sch)</strong> apropiado según la presión de trabajo.</li>
+                <li>Obtenga el <strong>Diámetro Exterior (OD)</strong> que es fijo para cada NPS.</li>
+                <li>Lea el <strong>Espesor de Pared</strong> según el Schedule seleccionado.</li>
+                <li>Calcule o lea el <strong>Diámetro Interior (ID)</strong>: ID = OD - 2 × Espesor.</li>
+                <li>Use el diámetro interior para cálculos de flujo y pérdida de presión.</li>
+            </ol>
+        </div>
+
+        <div class="table-responsive mb-4">
+            <table class="table data-table table-hover">
+                <thead>
+                    <tr>
+                        <th>NPS (pulg)</th>
+                        <th>DN (mm)</th>
+                        <th>OD (mm)</th>
+                        <th>Sch 10 (mm)</th>
+                        <th>Sch 40 (mm)</th>
+                        <th>Sch 80 (mm)</th>
+                        <th>ID Sch 40 (mm)</th>
+                        <th>ID Sch 80 (mm)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1/8</td><td>6</td><td>10.29</td><td>1.24</td><td>1.73</td><td>2.41</td><td>6.83</td><td>5.47</td></tr>
+                    <tr><td>1/4</td><td>8</td><td>13.72</td><td>1.65</td><td>2.24</td><td>3.02</td><td>9.24</td><td>7.68</td></tr>
+                    <tr><td>3/8</td><td>10</td><td>17.15</td><td>1.65</td><td>2.31</td><td>3.20</td><td>12.53</td><td>10.75</td></tr>
+                    <tr><td>1/2</td><td>15</td><td>21.34</td><td>2.11</td><td>2.77</td><td>3.73</td><td>15.80</td><td>13.88</td></tr>
+                    <tr><td>3/4</td><td>20</td><td>26.67</td><td>2.11</td><td>2.87</td><td>3.91</td><td>20.93</td><td>18.85</td></tr>
+                    <tr><td>1</td><td>25</td><td>33.40</td><td>2.77</td><td>3.38</td><td>4.55</td><td>26.64</td><td>24.30</td></tr>
+                    <tr><td>1¼</td><td>32</td><td>42.16</td><td>2.77</td><td>3.56</td><td>4.85</td><td>35.04</td><td>32.46</td></tr>
+                    <tr><td>1½</td><td>40</td><td>48.26</td><td>2.77</td><td>3.68</td><td>5.08</td><td>40.90</td><td>38.10</td></tr>
+                    <tr><td>2</td><td>50</td><td>60.33</td><td>2.77</td><td>3.91</td><td>5.54</td><td>52.51</td><td>49.25</td></tr>
+                    <tr><td>2½</td><td>65</td><td>73.03</td><td>3.05</td><td>5.16</td><td>7.01</td><td>62.71</td><td>59.01</td></tr>
+                    <tr><td>3</td><td>80</td><td>88.90</td><td>3.05</td><td>5.49</td><td>7.62</td><td>77.92</td><td>73.66</td></tr>
+                    <tr><td>3½</td><td>90</td><td>101.60</td><td>3.05</td><td>5.74</td><td>8.08</td><td>90.12</td><td>85.44</td></tr>
+                    <tr><td>4</td><td>100</td><td>114.30</td><td>3.40</td><td>6.02</td><td>8.56</td><td>102.26</td><td>97.18</td></tr>
+                    <tr><td>5</td><td>125</td><td>141.30</td><td>3.40</td><td>6.55</td><td>9.53</td><td>128.20</td><td>122.24</td></tr>
+                    <tr><td>6</td><td>150</td><td>168.28</td><td>3.40</td><td>7.11</td><td>10.97</td><td>154.06</td><td>146.34</td></tr>
+                    <tr><td>8</td><td>200</td><td>219.08</td><td>3.76</td><td>8.18</td><td>12.70</td><td>202.72</td><td>193.68</td></tr>
+                    <tr><td>10</td><td>250</td><td>273.05</td><td>4.19</td><td>9.27</td><td>15.09</td><td>254.51</td><td>242.87</td></tr>
+                    <tr><td>12</td><td>300</td><td>323.85</td><td>4.57</td><td>9.53</td><td>17.48</td><td>304.79</td><td>288.89</td></tr>
+                    <tr><td>14</td><td>350</td><td>355.60</td><td>4.78</td><td>9.53</td><td>19.05</td><td>336.54</td><td>317.50</td></tr>
+                    <tr><td>16</td><td>400</td><td>406.40</td><td>4.78</td><td>9.53</td><td>21.44</td><td>387.34</td><td>363.52</td></tr>
+                    <tr><td>18</td><td>450</td><td>457.20</td><td>4.78</td><td>9.53</td><td>23.83</td><td>438.14</td><td>409.54</td></tr>
+                    <tr><td>20</td><td>500</td><td>508.00</td><td>4.78</td><td>9.53</td><td>26.19</td><td>488.94</td><td>455.62</td></tr>
+                    <tr><td>24</td><td>600</td><td>609.60</td><td>5.54</td><td>9.53</td><td>30.96</td><td>590.54</td><td>547.68</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="info-card bg-info bg-opacity-10 border border-info">
+            <h4><i class="fas fa-calculator me-2"></i>Fórmulas Relacionadas</h4>
+            <ul>
+                <li><strong>Área de Flujo:</strong> \\( A = \\frac{\\pi \\times ID^2}{4} \\)</li>
+                <li><strong>Velocidad del Flujo:</strong> \\( v = \\frac{Q}{A} \\)</li>
+                <li><strong>Diámetro Interior:</strong> \\( ID = OD - 2 \\times t \\) donde t = espesor de pared</li>
+            </ul>
+        </div>
+
+        <div class="info-card bg-warning bg-opacity-10 border border-warning">
+            <h4><i class="fas fa-exclamation-triangle me-2"></i>Notas Importantes</h4>
+            <ul>
+                <li>NPS = Nominal Pipe Size (pulgadas), DN = Diameter Nominal (mm)</li>
+                <li>El diámetro exterior (OD) es constante para cada NPS, independientemente del schedule</li>
+                <li>Mayor número de Schedule = mayor espesor de pared = menor diámetro interior</li>
+                <li>Sch 40 es el más común para aplicaciones generales</li>
+                <li>Sch 80 se usa para mayores presiones de trabajo</li>
+                <li>Para NPS ≤ 12, el NPS no coincide exactamente con el diámetro exterior</li>
+                <li>Para NPS ≥ 14, el NPS coincide con el diámetro exterior en pulgadas</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="../assets/images/logo.png" alt="Logo" height="50">
+                    <p><strong>Procesos Industriales</strong></p>
+                    <p>Ingeniería Industrial</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="../index.html" class="text-white text-decoration-none">Inicio</a></li>
+                        <li><a href="tabla-f1.html" class="text-white text-decoration-none">Tabla F1</a></li>
+                        <li><a href="tabla-f3.html" class="text-white text-decoration-none">Tabla F3</a></li>
+                        <li><a href="tabla-f4.html" class="text-white text-decoration-none">Tabla F4</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contacto</h5>
+                    <p><i class="fas fa-envelope me-2"></i>juan.velasco@universidad.edu</p>
+                    <p>Período: 2026-1</p>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center mb-0">&copy; 2026 Procesos Industriales</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
