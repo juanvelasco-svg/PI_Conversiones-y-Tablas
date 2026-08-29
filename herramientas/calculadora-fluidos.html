@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Flujo de Fluidos | Procesos Industriales</title>
+    <link rel="icon" href="../assets/images/logo.svg" type="image/svg+xml">
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- MathJax -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #ff6600;
+            --dark-bg: #1a1a2e;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-light: #e0e0e0;
+        }
+        body { font-family: 'Roboto', sans-serif; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: var(--text-light); min-height: 100vh; }
+        h1, h2, h3, h4 { font-family: 'Orbitron', sans-serif; }
+        .main-header { background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); border-bottom: 3px solid var(--secondary-color); position: sticky; top: 0; z-index: 1000; }
+        .navbar-brand img { filter: drop-shadow(0 0 8px var(--secondary-color)); }
+        .nav-link:hover, .nav-link.active { color: var(--secondary-color) !important; }
+        .dropdown-menu-dark { background: rgba(0, 0, 0, 0.95); border: 1px solid var(--secondary-color); }
+        .page-title { background: linear-gradient(45deg, var(--secondary-color), #ff9933); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin: 2rem 0; font-weight: 900; }
+        .tool-card { background: var(--card-bg); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
+        .manual-ref-box { background: rgba(255, 102, 0, 0.1); border: 2px dashed var(--secondary-color); padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0; }
+        .manual-ref-box h5 { color: var(--secondary-color); }
+        .form-control, .form-select { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white; }
+        .form-control:focus, .form-select:focus { background: rgba(255, 255, 255, 0.15); border-color: var(--secondary-color); color: white; box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.25); }
+        .form-select option { background: var(--dark-bg); color: white; }
+        .btn-calculate { background: linear-gradient(135deg, var(--secondary-color), #ff9933); border: none; font-weight: 700; padding: 0.75rem 2rem; transition: all 0.3s; color: white; }
+        .btn-calculate:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(255, 102, 0, 0.4); color: white; }
+        .result-box { background: rgba(0, 255, 100, 0.1); border: 1px solid #00ff66; border-radius: 10px; padding: 1.5rem; margin-top: 1rem; display: none; }
+        .result-box.show { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .result-item { background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid var(--secondary-color); }
+        footer { background: rgba(0, 0, 0, 0.9); border-top: 3px solid var(--secondary-color); margin-top: 4rem; padding: 3rem 0; }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html"><img src="../assets/images/logo.svg" alt="Logo" height="60"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">Inicio</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" data-bs-toggle="dropdown">Herramientas</a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="tablas-y-calculadoras.html">Tablas y Conversores</a></li>
+                                <li><a class="dropdown-item active" href="calculadora-fluidos.html">Flujo de Fluidos (Guía 5)</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container py-4">
+        <h1 class="page-title"><i class="fas fa-water me-3"></i>CALCULADORA DE FLUJO DE FLUIDOS</h1>
+        <p class="text-center mb-4">Resuelve problemas de la Guía 5: Número de Reynolds, Factor de Fricción y Pérdidas de Carga (Darcy-Weisbach).</p>
+
+        <!-- Referencia Manual -->
+        <div class="manual-ref-box">
+            <h5><i class="fas fa-book-open me-2"></i>📚 Referencia para Búsqueda Manual (Sin internet)</h5>
+            <p>Si estás en un examen, sigue estos pasos usando tus PDFs:</p>
+            <ol>
+                <li><strong>Propiedades del fluido (Tabla F1):</strong> Busca la densidad (\( \rho \)) en kg/m³ y viscosidad (\( \eta \)) en Pa·s a la temperatura dada. <em>¡Ojo con los multiplicadores \(10^3\) y \(10^7\)!</em></li>
+                <li><strong>Diámetro (Tabla F2):</strong> Ubica el DN y la Cédula (ej. DN 3" #40). Anota el Diámetro Interno (\( D \)) en metros.</li>
+                <li><strong>Rugosidad (Tabla F3):</strong> Busca el material (ej. Acero comercial \( \epsilon = 4.6 \times 10^{-5} \) m).</li>
+                <li><strong>Accesorios (Tabla F4):</strong> Suma las longitudes equivalentes (\( L_{eq}/D \)) de codos, válvulas, etc.</li>
+                <li><strong>Fórmulas:</strong> 
+                    <ul>
+                        <li>Velocidad: \( v = \frac{4Q}{\pi D^2} \)</li>
+                        <li>Reynolds: \( Re = \frac{\rho v D}{\eta} \)</li>
+                        <li>Fricción (Swamee-Jain): \( f = \frac{0.25}{[\log_{10}(\frac{\epsilon}{3.7D} + \frac{5.74}{Re^{0.9}})]^2} \)</li>
+                        <li>Pérdidas totales: \( H_L = (f \frac{L}{D} + \sum \frac{L_{eq}}{D}) \frac{v^2}{2g} \)</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <!-- Calculadora -->
+        <div class="tool-card">
+            <h3 class="mb-4"><i class="fas fa-calculator text-warning me-2"></i>Ingresa los Datos del Problema</h3>
+            
+            <div class="row g-3">
+                <!-- Fluido -->
+                <div class="col-md-6">
+                    <label class="form-label">Fluido y Temperatura</label>
+                    <select id="fluido" class="form-select" onchange="cargarPropiedades()">
+                        <option value="custom">-- Ingresar propiedades manualmente --</option>
+                        <option value="agua_20">Agua a 20 °C</option>
+                        <option value="benceno_20">Benceno a 20 °C (Guía 5, Prob. 1)</option>
+                        <option value="nitrotolueno_15">Nitrotolueno a 15 °C (Guía 5, Prob. 3)</option>
+                        <option value="kerosene_20">Kerosene a 20 °C (Guía 5, Prob. 4)</option>
+                        <option value="leche_4">Leche a 4 °C (Guía 5, Prob. 5)</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Densidad \( \rho \) (kg/m³)</label>
+                    <input type="number" id="rho" class="form-control" step="0.1">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Viscosidad \( \eta \) (Pa·s)</label>
+                    <input type="number" id="mu" class="form-control" step="0.0001">
+                </div>
+
+                <!-- Flujo -->
+                <div class="col-md-4">
+                    <label class="form-label">Caudal \( Q \) (m³/s)</label>
+                    <input type="number" id="caudal" class="form-control" step="0.0001" placeholder="Ej: 0.01">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">O Velocidad \( v \) (m/s)</label>
+                    <input type="number" id="velocidad" class="form-control" step="0.1" placeholder="Si no tienes Q">
+                </div>
+
+                <!-- Tubería -->
+                <div class="col-md-4">
+                    <label class="form-label">Diámetro Interno \( D \) (mm)</label>
+                    <input type="number" id="diametro" class="form-control" step="0.1" placeholder="De Tabla F2">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Material de Tubería (Rugosidad \( \epsilon \))</label>
+                    <select id="rugosidad" class="form-select">
+                        <option value="0">Vidrio (Liso)</option>
+                        <option value="0.0000003">Plástico</option>
+                        <option value="0.0000015">Tubo extruido (Cobre/Latón)</option>
+                        <option value="0.000046" selected>Acero comercial / soldado</option>
+                        <option value="0.00015">Hierro galvanizado</option>
+                        <option value="0.00024">Hierro fundido dúctil (no recubierto)</option>
+                        <option value="0.0018">Acero remachado</option>
+                        <option value="custom">Otro (ingresar manual)</option>
+                    </select>
+                </div>
+                <div class="col-md-6" id="rugosidad-custom-container" style="display:none;">
+                    <label class="form-label">Rugosidad \( \epsilon \) (m)</label>
+                    <input type="number" id="rugosidad-custom" class="form-control" step="0.0000001">
+                </div>
+
+                <!-- Longitudes y Accesorios -->
+                <div class="col-md-4">
+                    <label class="form-label">Longitud Recta \( L \) (m)</label>
+                    <input type="number" id="longitud" class="form-control" step="0.1">
+                </div>
+                <div class="col-md-8">
+                    <label class="form-label">Accesorios (Suma de \( L_{eq}/D \) de Tabla F4)</label>
+                    <div class="input-group">
+                        <input type="number" id="leq_total" class="form-control" step="1" placeholder="Ej: 2 codos 90° = 60, 1 válvula compuerta = 8">
+                        <button class="btn btn-outline-warning" type="button" data-bs-toggle="modal" data-bs-target="#modalAccesorios"><i class="fas fa-table"></i> Ver Tabla F4</button>
+                    </div>
+                </div>
+
+                <div class="col-12 text-center mt-4">
+                    <button class="btn btn-calculate btn-lg" onclick="calcularFluidos()"><i class="fas fa-cogs me-2"></i>Calcular Pérdidas de Carga</button>
+                </div>
+            </div>
+
+            <!-- Resultados -->
+            <div id="resultados" class="result-box">
+                <h4 class="text-center mb-4 text-warning">Resultados del Análisis de Flujo</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="result-item">
+                            <h5><i class="fas fa-tachometer-alt me-2"></i>Número de Reynolds (\( Re \))</h5>
+                            <h2 id="res-re">-</h2>
+                            <p id="res-tipo" class="mb-0 text-info fw-bold">-</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="result-item">
+                            <h5><i class="fas fa-wave-square me-2"></i>Factor de Fricción (\( f \))</h5>
+                            <h2 id="res-f">-</h2>
+                            <small class="text-muted">Ecuación de Swamee-Jain</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="result-item">
+                            <h6>Pérdidas por Fricción (\( h_f \))</h6>
+                            <h3 id="res-hf">-</h3>
+                            <small>m de columna de fluido</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="result-item">
+                            <h6>Pérdidas por Accesorios (\( h_m \))</h6>
+                            <h3 id="res-hm">-</h3>
+                            <small>m de columna de fluido</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="result-item" style="border-left-color: #00ff66;">
+                            <h6 class="text-warning">Pérdidas TOTALES (\( H_L \))</h6>
+                            <h3 id="res-hl">-</h3>
+                            <small>m de columna de fluido</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Tabla F4 -->
+    <div class="modal fade" id="modalAccesorios" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content" style="background: var(--dark-bg); color: white; border: 1px solid var(--secondary-color);">
+                <div class="modal-header">
+                    <h5 class="modal-title text-warning">Tabla F4 - Longitudes Equivalentes (\( L_{eq}/D \))</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-dark table-striped">
+                        <thead><tr><th>Accesorio</th><th>Tipo/Condición</th><th>\( L_{eq}/D \)</th></tr></thead>
+                        <tbody>
+                            <tr><td>Codo a 90°</td><td>Estándar</td><td>30</td></tr>
+                            <tr><td>Codo a 90°</td><td>Radio amplio</td><td>20</td></tr>
+                            <tr><td>Codo a 45°</td><td>Estándar</td><td>16</td></tr>
+                            <tr><td>Tee (T)</td><td>Flujo directo</td><td>20</td></tr>
+                            <tr><td>Tee (T)</td><td>Flujo en ramal</td><td>60</td></tr>
+                            <tr><td>Válvula de compuerta</td><td>Abierta por completo</td><td>8</td></tr>
+                            <tr><td>Válvula de globo (asiento)</td><td>Abierta por completo</td><td>340</td></tr>
+                            <tr><td>Válvula de ángulo</td><td>Abierta por completo</td><td>150</td></tr>
+                            <tr><td>Válvula de retención (check)</td><td>Giratoria</td><td>100</td></tr>
+                            <tr><td>Válvula de aguja</td><td>Abierta por completo</td><td>84</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2026 Procesos Industriales. Facultad de Ingeniería.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Base de datos de fluidos (Extraído de Tabla F1 y Guías)
+        const fluidosDB = {
+            'agua_20': { rho: 998, mu: 1.000e-3 },
+            'benceno_20': { rho: 879, mu: 0.652e-3 },
+            'nitrotolueno_15': { rho: 1160, mu: 0.003 }, // 1.16 g/cm3 = 1160 kg/m3
+            'kerosene_20': { rho: 814, mu: 1.900e-3 },
+            'leche_4': { rho: 1035, mu: 2.1e-3 }
+        };
+
+        function cargarPropiedades() {
+            const val = document.getElementById('fluido').value;
+            if (fluidosDB[val]) {
+                document.getElementById('rho').value = fluidosDB[val].rho;
+                document.getElementById('mu').value = fluidosDB[val].mu;
+            }
+        }
+
+        document.getElementById('rugosidad').addEventListener('change', function() {
+            document.getElementById('rugosidad-custom-container').style.display = this.value === 'custom' ? 'block' : 'none';
+        });
+
+        function calcularFluidos() {
+            // 1. Obtener valores
+            const rho = parseFloat(document.getElementById('rho').value);
+            const mu = parseFloat(document.getElementById('mu').value);
+            let v = parseFloat(document.getElementById('velocidad').value);
+            const Q = parseFloat(document.getElementById('caudal').value);
+            const D_mm = parseFloat(document.getElementById('diametro').value);
+            const L = parseFloat(document.getElementById('longitud').value);
+            const Leq_D = parseFloat(document.getElementById('leq_total').value) || 0;
+            
+            let epsilon = parseFloat(document.getElementById('rugosidad').value);
+            if (document.getElementById('rugosidad').value === 'custom') {
+                epsilon = parseFloat(document.getElementById('rugosidad-custom').value);
+            }
+
+            // Validaciones
+            if (!rho || !mu || !D_mm) { alert("Por favor completa Densidad, Viscosidad y Diámetro."); return; }
+            
+            const D = D_mm / 1000; // Convertir a metros
+
+            // Calcular velocidad si se ingresó caudal
+            if (!v && Q) {
+                v = (4 * Q) / (Math.PI * Math.pow(D, 2));
+            }
+            if (!v) { alert("Ingresa la Velocidad o el Caudal."); return; }
+
+            // 2. Cálculos
+            const Re = (rho * v * D) / mu;
+            
+            // Factor de fricción (Swamee-Jain para flujo turbulento)
+            let f = 0;
+            if (Re < 2300) {
+                f = 64 / Re; // Flujo laminar
+            } else {
+                // Swamee-Jain
+                const term1 = epsilon / (3.7 * D);
+                const term2 = 5.74 / Math.pow(Re, 0.9);
+                f = 0.25 / Math.pow(Math.log10(term1 + term2), 2);
+            }
+
+            // Pérdidas de carga (Ecuación de Darcy-Weisbach)
+            const g = 9.81;
+            const carga_velocidad = Math.pow(v, 2) / (2 * g);
+            
+            const hf = f * (L / D) * carga_velocidad; // Pérdidas por fricción en tubería recta
+            const hm = Leq_D * carga_velocidad;       // Pérdidas por accesorios
+            const HL = hf + hm;                       // Pérdidas totales
+
+            // 3. Mostrar Resultados
+            document.getElementById('res-re').innerText = Re.toFixed(0);
+            let tipoFlujo = Re < 2300 ? "FLUJO LAMINAR" : (Re > 4000 ? "FLUJO TURBULENTO" : "ZONA DE TRANSICIÓN");
+            document.getElementById('res-tipo').innerText = tipoFlujo;
+            
+            document.getElementById('res-f').innerText = f.toFixed(5);
+            document.getElementById('res-hf').innerText = hf.toFixed(3);
+            document.getElementById('res-hm').innerText = hm.toFixed(3);
+            document.getElementById('res-hl').innerText = HL.toFixed(3);
+
+            document.getElementById('resultados').classList.add('show');
+            
+            // Re-renderizar MathJax si es necesario
+            if (window.MathJax) MathJax.typesetPromise();
+        }
+    </script>
+</body>
+</html>
