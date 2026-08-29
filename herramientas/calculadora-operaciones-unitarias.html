@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operaciones Unitarias | Procesos Industriales</title>
+    <link rel="icon" href="../assets/images/logo.svg" type="image/svg+xml">
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- MathJax -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #ff6600;
+            --dark-bg: #1a1a2e;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-light: #e0e0e0;
+        }
+        body { font-family: 'Roboto', sans-serif; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: var(--text-light); min-height: 100vh; }
+        h1, h2, h3, h4 { font-family: 'Orbitron', sans-serif; }
+        .main-header { background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); border-bottom: 3px solid var(--secondary-color); position: sticky; top: 0; z-index: 1000; }
+        .navbar-brand img { filter: drop-shadow(0 0 8px var(--secondary-color)); }
+        .nav-link:hover, .nav-link.active { color: var(--secondary-color) !important; }
+        .dropdown-menu-dark { background: rgba(0, 0, 0, 0.95); border: 1px solid var(--secondary-color); }
+        .page-title { background: linear-gradient(45deg, var(--secondary-color), #ff9933); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin: 2rem 0; font-weight: 900; }
+        .tool-card { background: var(--card-bg); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
+        .manual-ref-box { background: rgba(255, 102, 0, 0.1); border: 2px dashed var(--secondary-color); padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0; }
+        .manual-ref-box h5 { color: var(--secondary-color); }
+        .form-control, .form-select { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white; }
+        .form-control:focus, .form-select:focus { background: rgba(255, 255, 255, 0.15); border-color: var(--secondary-color); color: white; box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.25); }
+        .form-select option { background: var(--dark-bg); color: white; }
+        .btn-calculate { background: linear-gradient(135deg, var(--secondary-color), #ff9933); border: none; font-weight: 700; padding: 0.75rem 2rem; transition: all 0.3s; color: white; }
+        .btn-calculate:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(255, 102, 0, 0.4); color: white; }
+        .result-box { background: rgba(0, 255, 100, 0.1); border: 1px solid #00ff66; border-radius: 10px; padding: 1.5rem; margin-top: 1rem; display: none; }
+        .result-box.show { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .result-item { background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid var(--secondary-color); }
+        .nav-tabs .nav-link { color: var(--text-light); border: 1px solid rgba(255,255,255,0.2); }
+        .nav-tabs .nav-link.active { background: var(--secondary-color); color: white; border-color: var(--secondary-color); }
+        footer { background: rgba(0, 0, 0, 0.9); border-top: 3px solid var(--secondary-color); margin-top: 4rem; padding: 3rem 0; }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html"><img src="../assets/images/logo.svg" alt="Logo" height="60"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">Inicio</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" data-bs-toggle="dropdown">Herramientas</a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="tablas-y-calculadoras.html">Tablas y Conversores</a></li>
+                                <li><a class="dropdown-item" href="calculadora-fluidos.html">Flujo de Fluidos</a></li>
+                                <li><a class="dropdown-item" href="calculadora-termodinamica.html">Termodinámica</a></li>
+                                <li><a class="dropdown-item" href="calculadora-transferencia-calor.html">Transferencia de Calor</a></li>
+                                <li><a class="dropdown-item" href="calculadora-combustion.html">Combustión</a></li>
+                                <li><a class="dropdown-item active" href="calculadora-operaciones-unitarias.html">Operaciones Unitarias</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container py-4">
+        <h1 class="page-title"><i class="fas fa-industry me-3"></i>OPERACIONES UNITARIAS</h1>
+        <p class="text-center mb-4">Acondicionamiento de Aire, Secado y Evaporación - Guía 2</p>
+
+        <!-- Navegación por pestañas -->
+        <ul class="nav nav-tabs" id="ouTabs" role="tablist">
+            <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-aire">Acondicionamiento de Aire</button></li>
+            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-secado">Secado</button></li>
+            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-evaporacion">Evaporación</button></li>
+        </ul>
+
+        <div class="tab-content">
+
+            <!-- TAB 1: ACONDICIONAMIENTO DE AIRE -->
+            <div class="tab-pane fade show active" id="tab-aire">
+                <div class="tool-card">
+                    <h3><i class="fas fa-wind me-2 text-info"></i>Acondicionamiento de Aire (Mezclas y Serpentines)</h3>
+                    
+                    <div class="manual-ref-box">
+                        <h5><i class="fas fa-book-open me-2"></i>📚 Referencia Manual (Sin internet)</h5>
+                        <p><strong>Documentos:</strong> Tabla A1 (Presión de vapor), Carta Psicrométrica, Guía 2 (Sección A)</p>
+                        <ol>
+                            <li><strong>Humedad absoluta:</strong> \( H = 0.622 \cdot \frac{P_v}{P_{atm} - P_v} \) donde \( P_v = \frac{HR}{100} \cdot P_{vs}(T) \)</li>
+                            <li><strong>Entalpía del aire húmedo:</strong> \( h = 1.006 \cdot T + H \cdot (2501 + 1.86 \cdot T) \) [kJ/kg aire seco]</li>
+                            <li><strong>Mezcla adiabática de dos corrientes:</strong>
+                                <ul>
+                                    <li>Balance de aire seco: \( \dot{m}_{as,1} + \dot{m}_{as,2} = \dot{m}_{as,mezcla} \)</li>
+                                    <li>Balance de agua: \( \dot{m}_{as,1} \cdot H_1 + \dot{m}_{as,2} \cdot H_2 = \dot{m}_{as,mezcla} \cdot H_{mezcla} \)</li>
+                                    <li>Balance de energía: \( \dot{m}_{as,1} \cdot h_1 + \dot{m}_{as,2} \cdot h_2 = \dot{m}_{as,mezcla} \cdot h_{mezcla} \)</li>
+                                </ul>
+                            </li>
+                            <li><strong>Serpentín de enfriamiento:</strong> Si \( T_{serpentín} < T_{rocío} \), hay condensación. \( \dot{m}_{agua} = \dot{m}_{as} \cdot (H_{ent} - H_{sal}) \)</li>
+                        </ol>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <h5 class="text-warning">Corriente 1 (Aire atmosférico)</h5>
+                            <div class="mb-2"><label class="form-label">TBS (°C)</label><input type="number" id="aire1-T" class="form-control" placeholder="Ej: 32"></div>
+                            <div class="mb-2"><label class="form-label">HR (%)</label><input type="number" id="aire1-HR" class="form-control" placeholder="Ej: 70"></div>
+                            <div class="mb-2"><label class="form-label">Flujo volumétrico (m³/h)</label><input type="number" id="aire1-V" class="form-control" placeholder="Ej: 1500"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="text-warning">Corriente 2 (Aire recirculado o secundario)</h5>
+                            <div class="mb-2"><label class="form-label">TBS (°C)</label><input type="number" id="aire2-T" class="form-control" placeholder="Ej: 24"></div>
+                            <div class="mb-2"><label class="form-label">HR (%)</label><input type="number" id="aire2-HR" class="form-control" placeholder="Ej: 60"></div>
+                            <div class="mb-2"><label class="form-label">Flujo volumétrico (m³/h)</label><input type="number" id="aire2-V" class="form-control" placeholder="Ej: 500"></div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label">Presión atmosférica (kPa)</label>
+                            <input type="number" id="aire-P" class="form-control" value="101.325" step="0.1">
+                        </div>
+                        <div class="col-12 text-center mt-3">
+                            <button class="btn btn-calculate" onclick="calcularMezclaAire()"><i class="fas fa-calculator me-2"></i>Calcular Mezcla</button>
+                        </div>
+                    </div>
+
+                    <div id="mezcla-result" class="result-box">
+                        <div class="row">
+                            <div class="col-md-4"><div class="result-item"><h6>Humedad Mezcla (\(H_m\))</h6><h4 id="res-Hm">-</h4><small>kg agua/kg as</small></div></div>
+                            <div class="col-md-4"><div class="result-item"><h6>Entalpía Mezcla (\(h_m\))</h6><h4 id="res-hm">-</h4><small>kJ/kg as</small></div></div>
+                            <div class="col-md-4"><div class="result-item"><h6>TBS Mezcla</h6><h4 id="res-Tm">-</h4><small>°C</small></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: SECADO -->
+            <div class="tab-pane fade" id="tab-secado">
+                <div class="tool-card">
+                    <h3><i class="fas fa-sun me-2 text-warning"></i>Balance de Materia en Secado</h3>
+                    
+                    <div class="manual-ref-box">
+                        <h5><i class="fas fa-book-open me-2"></i>📚 Referencia Manual (Sin internet)</h5>
+                        <p><strong>Documentos:</strong> Guía 2 (Sección B - Problemas 7 al 12)</p>
+                        <ol>
+                            <li><strong>Conversión de humedad:</strong>
+                                <ul>
+                                    <li>Base húmeda (\(X_{bh}\)): \( X_{bh} = \frac{m_{agua}}{m_{total}} \times 100 \)</li>
+                                    <li>Base seca (\(X_{bs}\)): \( X_{bs} = \frac{m_{agua}}{m_{sólido\_seco}} \) [kg agua/kg sólido seco]</li>
+                                    <li>Conversión: \( X_{bs} = \frac{X_{bh}}{100 - X_{bh}} \) (si \(X_{bh}\) está en %)</li>
+                                </ul>
+                            </li>
+                            <li><strong>Balance de sólido seco:</strong> \( \dot{m}_{sólido\_seco} = \dot{m}_{entrada} \cdot (1 - X_{bh,ent}) = \dot{m}_{salida} \cdot (1 - X_{bh,sal}) \)</li>
+                            <li><strong>Agua evaporada:</strong> \( \dot{m}_{agua\_evap} = \dot{m}_{entrada} - \dot{m}_{salida} = \dot{m}_{sólido\_seco} \cdot (X_{bs,ent} - X_{bs,sal}) \)</li>
+                            <li><strong>Balance de aire en secador:</strong> \( \dot{m}_{as} \cdot (H_{sal} - H_{ent}) = \dot{m}_{agua\_evap} \)</li>
+                        </ol>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <h5 class="text-warning">Alimento Húmedo (Entrada)</h5>
+                            <div class="mb-2"><label class="form-label">Flujo másico total (kg/h)</label><input type="number" id="sec-m-ent" class="form-control" placeholder="Ej: 1000"></div>
+                            <div class="mb-2"><label class="form-label">Humedad entrada (% base húmeda)</label><input type="number" id="sec-Xbh-ent" class="form-control" placeholder="Ej: 40" step="0.1"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="text-warning">Producto Seco (Salida)</h5>
+                            <div class="mb-2"><label class="form-label">Humedad salida (% base húmeda)</label><input type="number" id="sec-Xbh-sal" class="form-control" placeholder="Ej: 9" step="0.1"></div>
+                            <div class="mb-2"><label class="form-label">O flujo másico salida (kg/h) - opcional</label><input type="number" id="sec-m-sal" class="form-control" placeholder="Dejar vacío para calcular"></div>
+                        </div>
+                        <div class="col-12 text-center mt-3">
+                            <button class="btn btn-calculate" onclick="calcularSecado()"><i class="fas fa-calculator me-2"></i>Calcular Balance de Secado</button>
+                        </div>
+                    </div>
+
+                    <div id="secado-result" class="result-box">
+                        <div class="row">
+                            <div class="col-md-3"><div class="result-item"><h6>Sólido seco</h6><h4 id="res-ss">-</h4><small>kg/h</small></div></div>
+                            <div class="col-md-3"><div class="result-item"><h6>Flujo salida</h6><h4 id="res-msal">-</h4><small>kg/h</small></div></div>
+                            <div class="col-md-3"><div class="result-item"><h6>Agua evaporada</h6><h4 id="res-mevap">-</h4><small>kg/h</small></div></div>
+                            <div class="col-md-3"><div class="result-item"><h6>X base seca (ent)</h6><h4 id="res-Xbs-ent">-</h4><small>kg/kg ss</small></div></div>
+                            <div class="col-md-3"><div class="result-item"><h6>X base seca (sal)</h6><h4 id="res-Xbs-sal">-</h4><small>kg/kg ss</small></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: EVAPORACIÓN -->
+            <div class="tab-pane fade" id="tab-evaporacion">
+                <div class="tool-card">
+                    <h3><i class="fas fa-tint me-2 text-primary"></i>Evaporador de Simple Efecto</h3>
+                    
+                    <div class="manual-ref-box">
+                        <h5><i class="fas fa-book-open me-2"></i>📚 Referencia Manual (Sin internet)</h5>
+                        <p><strong>Documentos:</strong> Guía 2 (Sección C - Problemas 13 al 16), Tablas de vapor saturado</p>
+                        <ol>
+                            <li><strong>Balance de materia global:</strong> \( F = L + V \) (Alimentación = Concentrado + Vapor)</li>
+                            <li><strong>Balance de sólidos:</strong> \( F \cdot x_F = L \cdot x_L \) → \( L = F \cdot \frac{x_F}{x_L} \)</li>
+                            <li><strong>Vapor producido:</strong> \( V = F - L \)</li>
+                            <li><strong>Balance de energía (sin pérdidas):</strong> \( F \cdot h_F + S \cdot \lambda_S = L \cdot h_L + V \cdot H_V + S \cdot h_{cond} \)</li>
+                            <li><strong>Vapor de calefacción requerido:</strong> \( S = \frac{L \cdot h_L + V \cdot H_V - F \cdot h_F}{\lambda_S} \) donde \( \lambda_S = H_S - h_{cond} \)</li>
+                            <li><strong>Economía del evaporador:</strong> \( E = \frac{V}{S} \)</li>
+                        </ol>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <h5 class="text-warning">Alimentación (F)</h5>
+                            <div class="mb-2"><label class="form-label">Flujo (kg/h)</label><input type="number" id="evap-F" class="form-control" placeholder="Ej: 1000"></div>
+                            <div class="mb-2"><label class="form-label">% Sólidos entrada</label><input type="number" id="evap-xF" class="form-control" placeholder="Ej: 20" step="0.1"></div>
+                            <div class="mb-2"><label class="form-label">Temperatura entrada (°C)</label><input type="number" id="evap-TF" class="form-control" placeholder="Ej: 50"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="text-warning">Concentrado (L) y Vapor (V)</h5>
+                            <div class="mb-2"><label class="form-label">% Sólidos salida</label><input type="number" id="evap-xL" class="form-control" placeholder="Ej: 35" step="0.1"></div>
+                            <div class="mb-2"><label class="form-label">Temperatura ebullición (°C)</label><input type="number" id="evap-TL" class="form-control" placeholder="Ej: 105"></div>
+                            <div class="mb-2"><label class="form-label">Cp solución (kJ/kg·°C)</label><input type="number" id="evap-Cp" class="form-control" value="3.79" step="0.01"></div>
+                        </div>
+                        <div class="col-md-12">
+                            <h5 class="text-warning">Vapor de Calefacción (S)</h5>
+                            <div class="row">
+                                <div class="col-md-6"><label class="form-label">Temperatura vapor saturado (°C)</label><input type="number" id="evap-TS" class="form-control" placeholder="Ej: 120"></div>
+                                <div class="col-md-6"><label class="form-label">Calor latente vapor calefacción (kJ/kg)</label><input type="number" id="evap-lambdaS" class="form-control" value="2202" step="1"></div>
+                            </div>
+                        </div>
+                        <div class="col-12 text-center mt-3">
+                            <button class="btn btn-calculate" onclick="calcularEvaporacion()"><i class="fas fa-calculator me-2"></i>Calcular Evaporador</button>
+                        </div>
+                    </div>
+
+                    <div id="evap-result" class="result-box">
+                        <div class="row">
+                            <div class="col-md-3"><div class="result-item"><h6>Concentrado (L)</h6><h4 id="res-L">-</h4><small>kg/h</small></div></div>
+                            <div class="col-md-3"><div class="result-item"><h6>Vapor producido (V)</h6><h4 id="res-V">-</h4><small>kg/h</small></div></div>
+                            <div class="col-md-3"><div class="result-item"><h6>Vapor calefacción (S)</h6><h4 id="res-S">-</h4><small>kg/h</small></div></div>
+                            <div class="col-md-3"><div class="result-item"><h6>Economía (V/S)</h6><h4 id="res-E">-</h4><small>adim.</small></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2026 Procesos Industriales. Facultad de Ingeniería.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- LÓGICA JAVASCRIPT -->
+    <script>
+        // ==========================================
+        // FUNCIÓN AUXILIAR: Presión de vapor saturado (Antoine)
+        // ==========================================
+        function Pvs_Antoine(T_C) {
+            // Antoine para agua: log10(Pvs_mmHg) = 7.96681 - 1668.21 / (T + 228)
+            const A = 7.96681, B = 1668.21, C = 228;
+            const Pvs_mmHg = Math.pow(10, A - B / (T_C + C));
+            return Pvs_mmHg * 0.133322; // Convertir a kPa
+        }
+
+        // ==========================================
+        // FUNCIÓN AUXILIAR: Humedad absoluta
+        // ==========================================
+        function humedad_absoluta(T_C, HR, P_atm) {
+            const Pvs = Pvs_Antoine(T_C);
+            const Pv = (HR / 100) * Pvs;
+            return 0.622 * Pv / (P_atm - Pv);
+        }
+
+        // ==========================================
+        // FUNCIÓN AUXILIAR: Entalpía aire húmedo
+        // ==========================================
+        function entalpia_aire(T_C, H) {
+            return 1.006 * T_C + H * (2501 + 1.86 * T_C);
+        }
+
+        // ==========================================
+        // FUNCIÓN AUXILIAR: Volumen específico aire húmedo
+        // ==========================================
+        function volumen_especifico(T_C, H, P_atm) {
+            const R_aire = 0.287; // kJ/kg·K
+            const T_K = T_C + 273.15;
+            const P_kPa = P_atm;
+            return (R_aire * T_K / P_kPa) * (1 + 1.608 * H); // m³/kg as
+        }
+
+        // ==========================================
+        // 1. MEZCLA DE AIRE (ACONDICIONAMIENTO)
+        // ==========================================
+        function calcularMezclaAire() {
+            const T1 = parseFloat(document.getElementById('aire1-T').value);
+            const HR1 = parseFloat(document.getElementById('aire1-HR').value);
+            const V1 = parseFloat(document.getElementById('aire1-V').value);
+            const T2 = parseFloat(document.getElementById('aire2-T').value);
+            const HR2 = parseFloat(document.getElementById('aire2-HR').value);
+            const V2 = parseFloat(document.getElementById('aire2-V').value);
+            const P_atm = parseFloat(document.getElementById('aire-P').value);
+
+            if (isNaN(T1) || isNaN(HR1) || isNaN(V1) || isNaN(T2) || isNaN(HR2) || isNaN(V2)) {
+                alert("Complete todos los campos de ambas corrientes"); return;
+            }
+
+            // Propiedades corriente 1
+            const H1 = humedad_absoluta(T1, HR1, P_atm);
+            const h1 = entalpia_aire(T1, H1);
+            const v1 = volumen_especifico(T1, H1, P_atm);
+            const m_as1 = V1 / v1; // kg aire seco/h
+
+            // Propiedades corriente 2
+            const H2 = humedad_absoluta(T2, HR2, P_atm);
+            const h2 = entalpia_aire(T2, H2);
+            const v2 = volumen_especifico(T2, H2, P_atm);
+            const m_as2 = V2 / v2;
+
+            // Mezcla
+            const m_as_total = m_as1 + m_as2;
+            const H_mezcla = (m_as1 * H1 + m_as2 * H2) / m_as_total;
+            const h_mezcla = (m_as1 * h1 + m_as2 * h2) / m_as_total;
+
+            // Temperatura de mezcla (aproximada iterativamente)
+            // h = 1.006*T + H*(2501 + 1.86*T) → T = (h - 2501*H) / (1.006 + 1.86*H)
+            const T_mezcla = (h_mezcla - 2501 * H_mezcla) / (1.006 + 1.86 * H_mezcla);
+
+            document.getElementById('res-Hm').innerText = H_mezcla.toFixed(4);
+            document.getElementById('res-hm').innerText = h_mezcla.toFixed(2);
+            document.getElementById('res-Tm').innerText = T_mezcla.toFixed(1);
+            document.getElementById('mezcla-result').classList.add('show');
+        }
+
+        // ==========================================
+        // 2. SECADO
+        // ==========================================
+        function calcularSecado() {
+            const m_ent = parseFloat(document.getElementById('sec-m-ent').value);
+            const Xbh_ent = parseFloat(document.getElementById('sec-Xbh-ent').value);
+            const Xbh_sal = parseFloat(document.getElementById('sec-Xbh-sal').value);
+            const m_sal_input = document.getElementById('sec-m-sal').value;
+
+            if (isNaN(m_ent) || isNaN(Xbh_ent) || isNaN(Xbh_sal)) {
+                alert("Complete flujo de entrada y humedades"); return;
+            }
+
+            // Convertir % base húmeda a fracción
+            const xbh_ent = Xbh_ent / 100;
+            const xbh_sal = Xbh_sal / 100;
+
+            // Sólido seco (constante)
+            const m_ss = m_ent * (1 - xbh_ent);
+
+            // Base seca
+            const Xbs_ent = xbh_ent / (1 - xbh_ent);
+            const Xbs_sal = xbh_sal / (1 - xbh_sal);
+
+            // Flujo salida
+            let m_sal;
+            if (m_sal_input && !isNaN(parseFloat(m_sal_input))) {
+                m_sal = parseFloat(m_sal_input);
+            } else {
+                m_sal = m_ss / (1 - xbh_sal);
+            }
+
+            // Agua evaporada
+            const m_evap = m_ent - m_sal;
+
+            document.getElementById('res-ss').innerText = m_ss.toFixed(2);
+            document.getElementById('res-msal').innerText = m_sal.toFixed(2);
+            document.getElementById('res-mevap').innerText = m_evap.toFixed(2);
+            document.getElementById('res-Xbs-ent').innerText = Xbs_ent.toFixed(4);
+            document.getElementById('res-Xbs-sal').innerText = Xbs_sal.toFixed(4);
+            document.getElementById('secado-result').classList.add('show');
+        }
+
+        // ==========================================
+        // 3. EVAPORACIÓN
+        // ==========================================
+        function calcularEvaporacion() {
+            const F = parseFloat(document.getElementById('evap-F').value);
+            const xF = parseFloat(document.getElementById('evap-xF').value) / 100;
+            const TF = parseFloat(document.getElementById('evap-TF').value);
+            const xL = parseFloat(document.getElementById('evap-xL').value) / 100;
+            const TL = parseFloat(document.getElementById('evap-TL').value);
+            const Cp = parseFloat(document.getElementById('evap-Cp').value);
+            const TS = parseFloat(document.getElementById('evap-TS').value);
+            const lambdaS = parseFloat(document.getElementById('evap-lambdaS').value);
+
+            if (isNaN(F) || isNaN(xF) || isNaN(xL) || isNaN(lambdaS)) {
+                alert("Complete los campos obligatorios"); return;
+            }
+
+            // Balance de sólidos
+            const L = F * (xF / xL);
+            const V = F - L;
+
+            // Entalpías (referencia: agua líquida a 0°C)
+            const hF = Cp * TF; // kJ/kg (aproximado, Cp solución)
+            const hL = Cp * TL;
+            const HV = 2501 + 1.86 * TL; // Vapor de agua a TL (aproximado)
+
+            // Vapor de calefacción
+            // F*hF + S*lambdaS = L*hL + V*HV  (asumiendo condensado a TS sale como líquido saturado)
+            // S = (L*hL + V*HV - F*hF) / lambdaS
+            const S = (L * hL + V * HV - F * hF) / lambdaS;
+            const E = V / S;
+
+            document.getElementById('res-L').innerText = L.toFixed(2);
+            document.getElementById('res-V').innerText = V.toFixed(2);
+            document.getElementById('res-S').innerText = S.toFixed(2);
+            document.getElementById('res-E').innerText = E.toFixed(3);
+            document.getElementById('evap-result').classList.add('show');
+        }
+    </script>
+</body>
+</html>
