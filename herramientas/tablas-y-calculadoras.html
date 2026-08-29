@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tablas y Calculadoras Interactivas - Procesos Industriales 2026-1">
+    <title>Tablas y Herramientas | Procesos Industriales</title>
+    <link rel="icon" href="../assets/images/logo.svg" type="image/svg+xml">
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- MathJax para fórmulas -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #ff6600;
+            --dark-bg: #1a1a2e;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-light: #e0e0e0;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+        }
+        
+        h1, h2, h3, h4, .navbar-brand {
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .main-header {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid var(--secondary-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-brand img {
+            filter: drop-shadow(0 0 8px var(--secondary-color));
+            transition: transform 0.3s;
+        }
+        .navbar-brand img:hover { transform: scale(1.05); }
+        
+        .nav-link { font-weight: 500; transition: all 0.3s; }
+        .nav-link:hover, .nav-link.active { color: var(--secondary-color) !important; }
+        .dropdown-menu-dark { background: rgba(0, 0, 0, 0.95); border: 1px solid var(--secondary-color); }
+        
+        .page-title {
+            background: linear-gradient(45deg, var(--secondary-color), #ff9933);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin: 2rem 0;
+            font-weight: 900;
+        }
+        
+        .tool-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .formula-box {
+            background: rgba(0, 102, 204, 0.15);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .manual-ref-box {
+            background: rgba(255, 102, 0, 0.1);
+            border: 2px dashed var(--secondary-color);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+        }
+        .manual-ref-box h5 { color: var(--secondary-color); }
+        
+        .data-table {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            font-size: 0.9rem;
+        }
+        .data-table thead { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); }
+        .data-table th { font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; color: white; }
+        .data-table tbody tr:hover { background: rgba(255, 102, 0, 0.15); transition: all 0.3s; }
+        
+        .btn-calculate {
+            background: linear-gradient(135deg, var(--secondary-color), #ff9933);
+            border: none;
+            font-weight: 700;
+            padding: 0.75rem 2rem;
+            transition: all 0.3s;
+            color: white;
+        }
+        .btn-calculate:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(255, 102, 0, 0.4); color: white; }
+        
+        .result-box {
+            background: rgba(0, 255, 100, 0.1);
+            border: 1px solid #00ff66;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            display: none;
+        }
+        .result-box.show { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .form-control, .form-select {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        .form-control:focus, .form-select:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--secondary-color);
+            color: white;
+            box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.25);
+        }
+        .form-select option { background: var(--dark-bg); color: white; }
+        
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            border-top: 3px solid var(--secondary-color);
+            margin-top: 4rem;
+            padding: 3rem 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header con Logo (Idéntico al modelo) -->
+    <header class="main-header">
+        <nav class="navbar navbar-expand-lg navbar-dark" aria-label="Navegación principal">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html" aria-label="Inicio">
+                    <img src="../assets/images/logo.svg" alt="Logo Procesos Industriales" height="60">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">Inicio</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">Herramientas</a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item active" href="#conversor">Conversor de Unidades</a></li>
+                                <li><a class="dropdown-item" href="#tabla-f1">Tabla F1: Fluidos</a></li>
+                                <li><a class="dropdown-item" href="#psicrometria">Calculadora Psicrométrica</a></li>
+                                <li><a class="dropdown-item" href="#tablas-ref">Índice de Tablas de Consulta</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Procesos</a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="../procesos/paso0.html">Paso 0: Sistema y Frontera</a></li>
+                                <li><a class="dropdown-item" href="../procesos/paso1.html">Paso 1: Matriz Entrada-Salida</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container py-4">
+        <h1 class="page-title"><i class="fas fa-tools me-3"></i>TABLAS Y HERRAMIENTAS DE CÁLCULO</h1>
+        <p class="text-center mb-5">Recursos interactivos y guías de búsqueda manual para la resolución de problemas de Procesos Industriales (Periodo 2026-1).</p>
+
+        <!-- 1. CONVERSOR DE UNIDADES -->
+        <section id="conversor" class="tool-card">
+            <h3><i class="fas fa-exchange-alt text-warning me-2"></i>Conversor de Unidades Fundamentales</h3>
+            
+            <div class="manual-ref-box">
+                <h5><i class="fas fa-book-open me-2"></i>📚 Referencia para Búsqueda Manual (Si no hay internet)</h5>
+                <p>Utiliza los siguientes factores de conversión exactos del curso:</p>
+                <ul>
+                    <li><strong>Energía:</strong> \( 1 \text{ kWh} = 3600 \text{ kJ} \) (Guía 1, Prob. 4)</li>
+                    <li><strong>Potencia:</strong> \( 1 \text{ kW} = 1000 \text{ W} = 1 \text{ kJ/s} \); \( 1 \text{ HP} \approx 0.7457 \text{ kW} \); \( 1 \text{ TR} \approx 3.517 \text{ kW} \)</li>
+                    <li><strong>Presión:</strong> \( 1 \text{ atm} = 101.325 \text{ kPa} = 1.01325 \text{ bar} = 1013.25 \text{ mbar} \)</li>
+                    <li><strong>Tiempo:</strong> \( 1 \text{ h} = 3600 \text{ s} \); \( 1 \text{ día} = 86400 \text{ s} \)</li>
+                </ul>
+                <p><em>Fórmula general de conversión: \( \text{Valor}_{destino} = \text{Valor}_{origen} \times \text{Factor} \)</em></p>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Valor a convertir</label>
+                    <input type="number" id="conv-value" class="form-control" placeholder="Ej: 18000">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Unidad de origen</label>
+                    <select id="conv-from" class="form-select">
+                        <option value="L_h">L/h (Litros por hora)</option>
+                        <option value="m3_s">m³/s (Metros cúbicos por segundo)</option>
+                        <option value="kW">kW (Kilowatts)</option>
+                        <option value="HP">HP (Caballos de fuerza)</option>
+                        <option value="TR">TR (Toneladas de refrigeración)</option>
+                        <option value="atm">atm (Atmósferas)</option>
+                        <option value="kPa">kPa (Kilopascales)</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Unidad de destino</label>
+                    <select id="conv-to" class="form-select">
+                        <option value="m3_s">m³/s (Metros cúbicos por segundo)</option>
+                        <option value="L_h">L/h (Litros por hora)</option>
+                        <option value="kW">kW (Kilowatts)</option>
+                        <option value="HP">HP (Caballos de fuerza)</option>
+                        <option value="TR">TR (Toneladas de refrigeración)</option>
+                        <option value="atm">atm (Atmósferas)</option>
+                        <option value="kPa">kPa (Kilopascales)</option>
+                    </select>
+                </div>
+                <div class="col-12 text-center mt-3">
+                    <button class="btn btn-calculate" onclick="convertirUnidades()"><i class="fas fa-calculator me-2"></i>Convertir</button>
+                </div>
+            </div>
+            <div id="conv-result" class="result-box text-center">
+                <h4>Resultado: <span id="conv-output" class="text-warning">0</span></h4>
+                <small id="conv-formula-used" class="text-muted"></small>
+            </div>
+        </section>
+
+        <!-- 2. TABLA F1 INTERACTIVA -->
+        <section id="tabla-f1" class="tool-card">
+            <h3><i class="fas fa-table text-warning me-2"></i>Tabla F1: Densidades y Viscosidades de Líquidos</h3>
+            
+            <div class="manual-ref-box">
+                <h5><i class="fas fa-book-open me-2"></i>📚 Referencia para Búsqueda Manual</h5>
+                <p><strong>Documento:</strong> "Tabla F1 - Densidades y viscosidades de líquidos nueva.pdf"</p>
+                <ol>
+                    <li>Ubica la <strong>Columna 1 (Líquido)</strong> y busca el nombre (ej. "Agua").</li>
+                    <li>En la <strong>Columna 2 (Temperatura °C)</strong>, busca la fila con tu temperatura de operación (ej. "20").</li>
+                    <li>Lee la <strong>Columna 3</strong> para la Densidad (\( \rho \)) en kg/m³.</li>
+                    <li>Lee la <strong>Columna 4</strong> para la Viscosidad Absoluta (\( \eta \)). <em>¡Ojo! El valor está multiplicado por \( \times 10^3 \). Si dice 1,000, el valor real es \( 1.000 \times 10^{-3} \) Pa·s.</em></li>
+                    <li>Lee la <strong>Columna 5</strong> para la Viscosidad Relativa/Cinemática (\( \nu \)). <em>El valor está multiplicado por \( \times 10^7 \) m²/s.</em></li>
+                </ol>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <label class="form-label">Seleccionar Líquido</label>
+                    <select id="f1-liquid" class="form-select" onchange="cargarTempF1()">
+                        <option value="">-- Seleccione --</option>
+                        <option value="Agua">Agua</option>
+                        <option value="Aceite lubricante">Aceite lubricante</option>
+                        <option value="Alcohol etílico (etanol)">Alcohol etílico (etanol)</option>
+                        <option value="Benceno">Benceno</option>
+                        <option value="Etilenglicol">Etilenglicol</option>
+                        <option value="Kerosene">Kerosene</option>
+                        <option value="Mercurio">Mercurio</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Temperatura (°C)</label>
+                    <select id="f1-temp" class="form-select" disabled>
+                        <option value="">-- Primero seleccione líquido --</option>
+                    </select>
+                </div>
+                <div class="col-12 text-center">
+                    <button class="btn btn-calculate" onclick="buscarF1()"><i class="fas fa-search me-2"></i>Buscar Propiedades</button>
+                </div>
+            </div>
+
+            <div id="f1-result" class="result-box">
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <h5 class="text-warning">Densidad (\( \rho \))</h5>
+                        <h3 id="res-rho">-</h3>
+                        <small>kg/m³</small>
+                    </div>
+                    <div class="col-md-4">
+                        <h5 class="text-warning">Visc. Absoluta (\( \eta \))</h5>
+                        <h3 id="res-eta">-</h3>
+                        <small>Pa·s</small>
+                    </div>
+                    <div class="col-md-4">
+                        <h5 class="text-warning">Visc. Cinemática (\( \nu \))</h5>
+                        <h3 id="res-nu">-</h3>
+                        <small>m²/s</small>
+                    </div>
+                </div>
+                <div class="formula-box mt-3">
+                    <strong>Verificación de consistencia:</strong> \( \nu = \frac{\eta}{\rho} \). 
+                    <span id="f1-check"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. CALCULADORA PSICROMÉTRICA -->
+        <section id="psicrometria" class="tool-card">
+            <h3><i class="fas fa-wind text-warning me-2"></i>Calculadora Psicrométrica (Aire Húmedo)</h3>
+            
+            <div class="manual-ref-box">
+                <h5><i class="fas fa-book-open me-2"></i>📚 Referencia para Búsqueda Manual y Fórmulas</h5>
+                <p><strong>Documentos:</strong> "Tabla A1 - Presión de vapor saturado.pdf" y "Guía 2 - Operaciones Unitarias"</p>
+                <ol>
+                    <li><strong>Paso 1:</strong> Busca en la <strong>Tabla A1</strong> la temperatura de bulbo seco (T) en la fila correspondiente. El valor es \( P_{vs} \) (Presión de vapor saturado en kPa).</li>
+                    <li><strong>Paso 2:</strong> Calcula la presión parcial de vapor: \( P_v = \frac{HR}{100} \times P_{vs} \)</li>
+                    <li><strong>Paso 3:</strong> Calcula la Humedad Absoluta: \( H = 0.622 \times \frac{P_v}{P_{atm} - P_v} \) (donde \( P_{atm} = 101.325 \) kPa a nivel del mar).</li>
+                    <li><strong>Paso 4:</strong> Entalpía aproximada: \( h = 1.006 \cdot T + H \cdot (2501 + 1.86 \cdot T) \) [kJ/kg aire seco].</li>
+                </ol>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Temperatura Bulbo Seco, T (°C)</label>
+                    <input type="number" id="psi-t" class="form-control" placeholder="Ej: 24" step="0.1">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Humedad Relativa, HR (%)</label>
+                    <input type="number" id="psi-hr" class="form-control" placeholder="Ej: 60" step="0.1" max="100">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Presión Atmosférica (kPa)</label>
+                    <input type="number" id="psi-p" class="form-control" value="101.325" step="0.1">
+                </div>
+                <div class="col-12 text-center mt-3">
+                    <button class="btn btn-calculate" onclick="calcularPsicrometria()"><i class="fas fa-wind me-2"></i>Calcular Propiedades</button>
+                </div>
+            </div>
+
+            <div id="psi-result" class="result-box">
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        <h6>Presión Vapor Saturado (\(P_{vs}\))</h6>
+                        <h4 id="res-pvs" class="text-warning">-</h4><small>kPa</small>
+                    </div>
+                    <div class="col-md-3">
+                        <h6>Humedad Absoluta (\(H\))</h6>
+                        <h4 id="res-h" class="text-warning">-</h4><small>kg agua / kg a.s.</small>
+                    </div>
+                    <div class="col-md-3">
+                        <h6>Humedad Molar (\(H_m\))</h6>
+                        <h4 id="res-hm" class="text-warning">-</h4><small>mol agua / mol a.s.</small>
+                    </div>
+                    <div class="col-md-3">
+                        <h6>Entalpía (\(h\))</h6>
+                        <h4 id="res-h-enthalpy" class="text-warning">-</h4><small>kJ / kg a.s.</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. ÍNDICE RÁPIDO DE TABLAS -->
+        <section id="tablas-ref" class="tool-card">
+            <h3><i class="fas fa-list-ol text-warning me-2"></i>Índice de Tablas de Consulta del Curso</h3>
+            <div class="table-responsive">
+                <table class="table table-dark table-hover data-table">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nombre de la Tabla</th>
+                            <th>Uso Principal en el Curso</th>
+                            <th>Ubicación en PDF</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>F1</strong></td>
+                            <td>Densidades y viscosidades de líquidos</td>
+                            <td>Cálculo de Reynolds, pérdidas de carga, bombeo (Guía 5)</td>
+                            <td>Tabla F1 (Nueva)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>F2</strong></td>
+                            <td>Dimensiones de tuberías (DN, Cédula)</td>
+                            <td>Obtener diámetro interno/externo para cálculos de flujo</td>
+                            <td>Tabla F2</td>
+                        </tr>
+                        <tr>
+                            <td><strong>F3</strong></td>
+                            <td>Rugosidad equivalente (\( \epsilon \))</td>
+                            <td>Cálculo de fricción (Darcy-Weisbach). Ej: Acero comercial = \(4.6 \times 10^{-5}\) m</td>
+                            <td>Tabla F3 (Actualizada)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>F4</strong></td>
+                            <td>Longitud equivalente de accesorios (\(L_e/D\))</td>
+                            <td>Convertir codos, válvulas a longitud recta equivalente para pérdidas</td>
+                            <td>Tabla F4 (Actualizada)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>A1</strong></td>
+                            <td>Presión de vapor de agua saturado</td>
+                            <td>Psicrometría, cálculo de punto de rocío, NPSH (Guía 2 y 5)</td>
+                            <td>Tabla A1</td>
+                        </tr>
+                        <tr>
+                            <td><strong>B1</strong></td>
+                            <td>Propiedades físicas de sustancias (Masa molar, \(T_b\), \( \Delta H_f \))</td>
+                            <td>Balances de energía, combustión, cambios de fase (Guías 1, 3)</td>
+                            <td>Tabla B.1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer (Idéntico al modelo) -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <img src="../assets/images/logo.svg" alt="Logo" height="50" class="mb-3">
+                    <p><strong>Procesos Industriales</strong><br>Ingeniería Industrial - Facultad de Ingeniería<br>Periodo Académico: 2026-1</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="../index.html" class="text-white text-decoration-none">Inicio</a></li>
+                        <li><a href="#conversor" class="text-white text-decoration-none">Conversor</a></li>
+                        <li><a href="#tablas-ref" class="text-white text-decoration-none">Índice de Tablas</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Contacto</h5>
+                    <p><i class="fas fa-envelope me-2"></i>procesos.industriales@universidad.edu</p>
+                    <p><i class="fas fa-clock me-2"></i>Período: 2026-1</p>
+                </div>
+            </div>
+            <hr class="border-secondary">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2026 Procesos Industriales. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Lógica de la Aplicación -->
+    <script>
+        // ==========================================
+        // 1. CONVERSOR DE UNIDADES
+        // ==========================================
+        const factoresConversion = {
+            'L_h': { 'm3_s': 1/3600000, 'nombre': 'L/h a m³/s: dividir entre 3,600,000' },
+            'm3_s': { 'L_h': 3600000, 'nombre': 'm³/s a L/h: multiplicar por 3,600,000' },
+            'kW': { 
+                'HP': 1.34102, 'nombre': 'kW a HP: multiplicar por 1.341',
+                'TR': 0.284345, 'nombre2': 'kW a TR: multiplicar por 0.2843'
+            },
+            'HP': { 'kW': 0.7457, 'nombre': 'HP a kW: multiplicar por 0.7457' },
+            'TR': { 'kW': 3.517, 'nombre': 'TR a kW: multiplicar por 3.517' },
+            'atm': { 'kPa': 101.325, 'nombre': 'atm a kPa: multiplicar por 101.325' },
+            'kPa': { 'atm': 1/101.325, 'nombre': 'kPa a atm: dividir entre 101.325' }
+        };
+
+        function convertirUnidades() {
+            const val = parseFloat(document.getElementById('conv-value').value);
+            const from = document.getElementById('conv-from').value;
+            const to = document.getElementById('conv-to').value;
+            
+            if (isNaN(val)) { alert("Ingresa un valor numérico válido"); return; }
+            if (from === to) { 
+                document.getElementById('conv-output').innerText = val + " " + to; 
+                document.getElementById('conv-formula-used').innerText = "Misma unidad, no se requiere conversión.";
+                document.getElementById('conv-result').classList.add('show');
+                return; 
+            }
+
+            let resultado = val;
+            let formula = "";
+
+            // Lógica simplificada para las parejas más comunes del curso
+            if (from === 'L_h' && to === 'm3_s') { resultado = val / 3600000; formula = "Dividir entre 3,600,000 (1 m³ = 1000 L, 1 h = 3600 s)"; }
+            else if (from === 'm3_s' && to === 'L_h') { resultado = val * 3600000; formula = "Multiplicar por 3,600,000"; }
+            else if (from === 'kW' && to === 'HP') { resultado = val * 1.34102; formula = "Multiplicar por 1.34102"; }
+            else if (from === 'HP' && to === 'kW') { resultado = val * 0.7457; formula = "Multiplicar por 0.7457"; }
+            else if (from === 'kW' && to === 'TR') { resultado = val * 0.284345; formula = "Multiplicar por 0.2843 (1 TR = 3.517 kW)"; }
+            else if (from === 'TR' && to === 'kW') { resultado = val * 3.517; formula = "Multiplicar por 3.517"; }
+            else if (from === 'atm' && to === 'kPa') { resultado = val * 101.325; formula = "Multiplicar por 101.325"; }
+            else if (from === 'kPa' && to === 'atm') { resultado = val / 101.325; formula = "Dividir entre 101.325"; }
+            else { formula = "Conversión no mapeada directamente en esta demo. Usa factores de la Guía."; }
+
+            document.getElementById('conv-output').innerText = resultado.toExponential(4) + " " + to;
+            document.getElementById('conv-formula-used').innerText = "Fórmula aplicada: " + formula;
+            document.getElementById('conv-result').classList.add('show');
+        }
+
+        // ==========================================
+        // 2. TABLA F1 DATA Y LÓGICA
+        // ==========================================
+        const datosF1 = {
+            'Agua': {
+                '0': { rho: 1000, eta: 1.790e-3, nu: 17.900e-7 },
+                '20': { rho: 998, eta: 1.000e-3, nu: 10.000e-7 },
+                '40': { rho: 992, eta: 0.653e-3, nu: 6.580e-7 },
+                '60': { rho: 983, eta: 0.467e-3, nu: 4.750e-7 },
+                '80': { rho: 972, eta: 0.355e-3, nu: 3.650e-7 },
+                '100': { rho: 958, eta: 0.282e-3, nu: 2.940e-7 }
+            },
+            'Aceite lubricante': {
+                '20': { rho: 871, eta: 13.100e-3, nu: 150.000e-7 },
+                '40': { rho: 858, eta: 6.810e-3, nu: 79.400e-7 },
+                '60': { rho: 845, eta: 4.180e-3, nu: 49.500e-7 },
+                '80': { rho: 832, eta: 2.830e-3, nu: 34.000e-7 }
+            },
+            'Alcohol etílico (etanol)': {
+                '0': { rho: 806, eta: 1.770e-3, nu: 22.000e-7 },
+                '20': { rho: 789, eta: 1.200e-3, nu: 15.200e-7 },
+                '40': { rho: 772, eta: 0.834e-3, nu: 10.800e-7 }
+            },
+            'Benceno': {
+                '20': { rho: 879, eta: 0.652e-3, nu: 7.420e-7 },
+                '40': { rho: 875, eta: 0.503e-3, nu: 5.860e-7 },
+                '60': { rho: 836, eta: 0.392e-3, nu: 4.690e-7 }
+            },
+            'Etilenglicol': {
+                '20': { rho: 1110, eta: 19.900e-3, nu: 179.000e-7 },
+                '40': { rho: 1100, eta: 9.130e-3, nu: 83.000e-7 },
+                '60': { rho: 1090, eta: 4.950e-3, nu: 45.500e-7 }
+            },
+            'Kerosene': {
+                '-18': { rho: 841, eta: 7.060e-3, nu: 84.000e-7 },
+                '20': { rho: 814, eta: 1.900e-3, nu: 23.700e-7 }
+            },
+            'Mercurio': {
+                '20': { rho: 13550, eta: 1.550e-3, nu: 1.140e-7 },
+                '40': { rho: 13500, eta: 1.450e-3, nu: 1.070e-7 }
+            }
+        };
+
+        function cargarTempF1() {
+            const liquido = document.getElementById('f1-liquid').value;
+            const tempSelect = document.getElementById('f1-temp');
+            tempSelect.innerHTML = '<option value="">-- Seleccione Temp --</option>';
+            
+            if (liquido && datosF1[liquido]) {
+                tempSelect.disabled = false;
+                Object.keys(datosF1[liquido]).sort((a,b) => parseFloat(a)-parseFloat(b)).forEach(temp => {
+                    const option = document.createElement('option');
+                    option.value = temp;
+                    option.text = temp + " °C";
+                    tempSelect.add(option);
+                });
+            } else {
+                tempSelect.disabled = true;
+            }
+        }
+
+        function buscarF1() {
+            const liquido = document.getElementById('f1-liquid').value;
+            const temp = document.getElementById('f1-temp').value;
+            
+            if (!liquido || !temp) { alert("Seleccione líquido y temperatura"); return; }
+            
+            const data = datosF1[liquido][temp];
+            document.getElementById('res-rho').innerText = data.rho;
+            document.getElementById('res-eta').innerText = data.eta.toExponential(3);
+            document.getElementById('res-nu').innerText = data.nu.toExponential(3);
+            
+            // Verificación
+            const nuCalc = data.eta / data.rho;
+            const error = Math.abs((nuCalc - data.nu) / data.nu) * 100;
+            document.getElementById('f1-check').innerHTML = `<br>Verificación: \( \\nu_{calc} = \\frac{${data.eta.toExponential(3)}}{${data.rho}} = ${nuCalc.toExponential(3)} \\text{ m²/s} \). (Coincide con la tabla con < ${error.toFixed(2)}% de diferencia por redondeo de la tabla original).`;
+            
+            document.getElementById('f1-result').classList.add('show');
+            // Re-renderizar MathJax
+            if (window.MathJax) { MathJax.typesetPromise(); }
+        }
+
+        // ==========================================
+        // 3. CALCULADORA PSICROMÉTRICA
+        // ==========================================
+        function calcularPsicrometria() {
+            const T = parseFloat(document.getElementById('psi-t').value);
+            const HR = parseFloat(document.getElementById('psi-hr').value);
+            const Patm = parseFloat(document.getElementById('psi-p').value);
+
+            if (isNaN(T) || isNaN(HR) || isNaN(Patm)) { alert("Complete todos los campos correctamente"); return; }
+            if (HR > 100 || HR < 0) { alert("La Humedad Relativa debe estar entre 0 y 100%"); return; }
+
+            // Ecuación de Antoine para agua (válida 0-100°C) para obtener Pvs en mmHg, luego convertir a kPa
+            // log10(Pvs_mmHg) = A - B / (T + C)
+            const A = 8.07131;
+            const B = 1730.63;
+            const C = 233.426;
+            
+            const Pvs_mmHg = Math.pow(10, A - B / (T + C));
+            const Pvs_kPa = Pvs_mmHg * 0.133322; // 1 mmHg = 0.133322 kPa
+
+            const Pv = (HR / 100) * Pvs_kPa;
+            
+            // Humedad Absoluta (H)
+            const H = 0.622 * (Pv / (Patm - Pv));
+            
+            // Humedad Molar (Hm) = H * (M_aire / M_agua) = H * (28.97 / 18.015) ≈ H * 1.608
+            const Hm = H * 1.608;
+
+            // Entalpía (h) ≈ 1.006*T + H*(2501 + 1.86*T)
+            const h = 1.006 * T + H * (2501 + 1.86 * T);
+
+            document.getElementById('res-pvs').innerText = Pvs_kPa.toFixed(3);
+            document.getElementById('res-h').innerText = H.toFixed(5);
+            document.getElementById('res-hm').innerText = Hm.toFixed(5);
+            document.getElementById('res-h-enthalpy').innerText = h.toFixed(2);
+
+            document.getElementById('psi-result').classList.add('show');
+        }
+    </script>
+</body>
+</html>
