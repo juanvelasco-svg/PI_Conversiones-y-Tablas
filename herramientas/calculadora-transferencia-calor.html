@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transferencia de Calor | Procesos Industriales</title>
+    <link rel="icon" href="../assets/images/logo.svg" type="image/svg+xml">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #0066cc; --secondary-color: #ff6600; --dark-bg: #1a1a2e;
+            --card-bg: rgba(255, 255, 255, 0.05); --text-light: #e0e0e0;
+        }
+        body { font-family: 'Roboto', sans-serif; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: var(--text-light); min-height: 100vh; }
+        h1, h2, h3, h4 { font-family: 'Orbitron', sans-serif; }
+        .main-header { background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); border-bottom: 3px solid var(--secondary-color); position: sticky; top: 0; z-index: 1000; }
+        .navbar-brand img { filter: drop-shadow(0 0 8px var(--secondary-color)); }
+        .nav-link:hover, .nav-link.active { color: var(--secondary-color) !important; }
+        .dropdown-menu-dark { background: rgba(0, 0, 0, 0.95); border: 1px solid var(--secondary-color); }
+        .page-title { background: linear-gradient(45deg, var(--secondary-color), #ff9933); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin: 2rem 0; font-weight: 900; }
+        .tool-card { background: var(--card-bg); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
+        .manual-ref-box { background: rgba(255, 102, 0, 0.1); border: 2px dashed var(--secondary-color); padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0; }
+        .manual-ref-box h5 { color: var(--secondary-color); }
+        .form-control, .form-select { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white; }
+        .form-control:focus, .form-select:focus { background: rgba(255, 255, 255, 0.15); border-color: var(--secondary-color); color: white; box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.25); }
+        .form-select option { background: var(--dark-bg); color: white; }
+        .btn-calculate { background: linear-gradient(135deg, var(--secondary-color), #ff9933); border: none; font-weight: 700; padding: 0.75rem 2rem; transition: all 0.3s; color: white; }
+        .btn-calculate:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(255, 102, 0, 0.4); color: white; }
+        .result-box { background: rgba(0, 255, 100, 0.1); border: 1px solid #00ff66; border-radius: 10px; padding: 1.5rem; margin-top: 1rem; display: none; }
+        .result-box.show { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .result-item { background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid var(--secondary-color); }
+        footer { background: rgba(0, 0, 0, 0.9); border-top: 3px solid var(--secondary-color); margin-top: 4rem; padding: 3rem 0; }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html"><img src="../assets/images/logo.svg" alt="Logo" height="60"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">Inicio</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" data-bs-toggle="dropdown">Herramientas</a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="tablas-y-calculadoras.html">Tablas y Conversores</a></li>
+                                <li><a class="dropdown-item" href="calculadora-fluidos.html">Flujo de Fluidos</a></li>
+                                <li><a class="dropdown-item" href="calculadora-termodinamica.html">Termodinámica</a></li>
+                                <li><a class="dropdown-item active" href="calculadora-transferencia-calor.html">Transferencia de Calor</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container py-4">
+        <h1 class="page-title"><i class="fas fa-fire-alt me-3"></i>TRANSFERENCIA DE CALOR</h1>
+        <p class="text-center mb-4">Conducción en paredes compuestas e Intercambiadores de Calor (LMTD) - Guía 4</p>
+
+        <ul class="nav nav-tabs" id="tcTabs" role="tablist">
+            <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-conduccion">Conducción (Paredes)</button></li>
+            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-intercambiador">Intercambiadores (LMTD)</button></li>
+        </ul>
+
+        <div class="tab-content">
+            <!-- TAB 1: CONDUCCIÓN -->
+            <div class="tab-pane fade show active" id="tab-conduccion">
+                <div class="tool-card">
+                    <h3><i class="fas fa-layer-group me-2 text-warning"></i>Conducción en Paredes (Plana y Cilíndrica)</h3>
+                    
+                    <div class="manual-ref-box">
+                        <h5><i class="fas fa-book-open me-2"></i>📚 Referencia Manual (Sin internet)</h5>
+                        <p><strong>Documentos:</strong> Tablas C1 y C2 (Conductividades térmicas $k$)</p>
+                        <ol>
+                            <li><strong>Pared Plana Compuesta:</strong> \( Q = \frac{T_{int} - T_{ext}}{\frac{1}{h_{int}A} + \sum \frac{L_i}{k_i A} + \frac{1}{h_{ext}A}} \)</li>
+                            <li><strong>Tubería (Cilíndrica):</strong> \( Q = \frac{T_{int} - T_{ext}}{\frac{1}{h_{int} 2\pi r_1 L} + \sum \frac{\ln(r_{i+1}/r_i)}{2\pi k_i L} + \frac{1}{h_{ext} 2\pi r_n L}} \)</li>
+                            <li>Busca \( k \) en Tabla C1/C2. Si hay dos temperaturas, usa \( k \) a la temperatura media \( T_m = (T_1+T_2)/2 \).</li>
+                        </ol>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Tipo de Geometría</label>
+                            <select id="geo-type" class="form-select">
+                                <option value="plana">Pared Plana (Horno/Muro)</option>
+                                <option value="cilindrica">Tubería / Cilindro</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Temp. Interior Fluido (\(T_{int}\)) °C</label>
+                            <input type="number" id="t-int" class="form-control" placeholder="Ej: 1200">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Temp. Exterior Aire (\(T_{ext}\)) °C</label>
+                            <input type="number" id="t-ext" class="form-control" placeholder="Ej: 25">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Coef. Conv. Interior (\(h_{int}\)) W/m²·K</label>
+                            <input type="number" id="h-int" class="form-control" placeholder="Ej: 1500">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Coef. Conv. Exterior (\(h_{ext}\)) W/m²·K</label>
+                            <input type="number" id="h-ext" class="form-control" placeholder="Ej: 15">
+                        </div>
+                        
+                        <div class="col-12 mt-3"><hr><h5 class="text-warning">Capas del Material (Separa valores por comas si hay varias capas)</h5></div>
+                        <div class="col-md-4">
+                            <label class="form-label">Espesores (\(L\) en metros)</label>
+                            <input type="text" id="layers-L" class="form-control" placeholder="Ej: 0.15, 0.06">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Conductividades (\(k\) en W/m·K)</label>
+                            <input type="text" id="layers-k" class="form-control" placeholder="Ej: 1.0, 0.17">
+                            <small class="text-muted">Ladrillo ref: ~1.0, Caolín: ~0.17, Lana mineral: ~0.039</small>
+                        </div>
+                        <div class="col-md-4" id="area-container">
+                            <label class="form-label">Área (\(A\)) o Longitud (\(L\))</label>
+                            <input type="number" id="geo-dim" class="form-control" placeholder="m² o metros">
+                        </div>
+
+                        <div class="col-12 text-center mt-4">
+                            <button class="btn btn-calculate" onclick="calcularConduccion()"><i class="fas fa-calculator me-2"></i>Calcular Flujo de Calor</button>
+                        </div>
+                    </div>
+
+                    <div id="res-conduccion" class="result-box">
+                        <div class="row">
+                            <div class="col-md-6"><div class="result-item"><h6>Flujo de Calor (\(Q\))</h6><h3 id="res-Q">-</h3><small>Watts (J/s)</small></div></div>
+                            <div class="col-md-6"><div class="result-item"><h6>Resistencia Térmica Total (\(R_{tot}\))</h6><h3 id="res-R">-</h3><small>K/W</small></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: INTERCAMBIADORES -->
+            <div class="tab-pane fade" id="tab-intercambiador">
+                <div class="tool-card">
+                    <h3><i class="fas fa-exchange-alt me-2 text-warning"></i>Intercambiadores de Calor (LMTD)</h3>
+                    
+                    <div class="manual-ref-box">
+                        <h5><i class="fas fa-book-open me-2"></i>📚 Referencia Manual (Sin internet)</h5>
+                        <p><strong>Fórmula fundamental:</strong> \( Q = U \cdot A \cdot \Delta T_{ml} \)</p>
+                        <ol>
+                            <li><strong>Diferencia de temperaturas:</strong> 
+                                <ul>
+                                    <li>Contracorriente: \(\Delta T_1 = T_{c,ent} - T_{f,sal}\), \(\Delta T_2 = T_{c,sal} - T_{f,ent}\)</li>
+                                    <li>Paralelo: \(\Delta T_1 = T_{c,ent} - T_{f,ent}\), \(\Delta T_2 = T_{c,sal} - T_{f,sal}\)</li>
+                                </ul>
+                            </li>
+                            <li><strong>Media Logarítmica (LMTD):</strong> \( \Delta T_{ml} = \frac{\Delta T_1 - \Delta T_2}{\ln(\Delta T_1 / \Delta T_2)} \)</li>
+                            <li><em>Nota:</em> Si \(\Delta T_1 = \Delta T_2\), entonces \(\Delta T_{ml} = \Delta T_1\).</li>
+                        </ol>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Configuración de Flujo</label>
+                            <select id="flow-type" class="form-select">
+                                <option value="contra">Contracorriente</option>
+                                <option value="paralelo">Flujo Paralelo (Concorriente)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Coef. Global de Transf. (\(U\)) W/m²·K</label>
+                            <input type="number" id="U-val" class="form-control" placeholder="Ej: 1500">
+                        </div>
+
+                        <div class="col-12 mt-3"><hr><h5 class="text-warning">Temperaturas (°C)</h5></div>
+                        <div class="col-md-3">
+                            <label class="form-label">Caliente Entrada (\(T_{c,ent}\))</label>
+                            <input type="number" id="tc-in" class="form-control" placeholder="Ej: 120">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Caliente Salida (\(T_{c,sal}\))</label>
+                            <input type="number" id="tc-out" class="form-control" placeholder="Ej: 120 (si condensa)">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Frío Entrada (\(T_{f,ent}\))</label>
+                            <input type="number" id="tf-in" class="form-control" placeholder="Ej: 4">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Frío Salida (\(T_{f,sal}\))</label>
+                            <input type="number" id="tf-out" class="form-control" placeholder="Ej: 80">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Área de Transferencia (\(A\)) m² (Opcional)</label>
+                            <input type="number" id="A-val" class="form-control" placeholder="Dejar vacío para calcular Q">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Flujo de Calor (\(Q\)) kW (Opcional)</label>
+                            <input type="number" id="Q-val" class="form-control" placeholder="Dejar vacío para calcular A">
+                        </div>
+
+                        <div class="col-12 text-center mt-4">
+                            <button class="btn btn-calculate" onclick="calcularLMTD()"><i class="fas fa-calculator me-2"></i>Calcular LMTD y Diseño</button>
+                        </div>
+                    </div>
+
+                    <div id="res-lmtd" class="result-box">
+                        <div class="row">
+                            <div class="col-md-4"><div class="result-item"><h6>\(\Delta T_1\)</h6><h3 id="res-dt1">-</h3><small>°C o K</small></div></div>
+                            <div class="col-md-4"><div class="result-item"><h6>\(\Delta T_2\)</h6><h3 id="res-dt2">-</h3><small>°C o K</small></div></div>
+                            <div class="col-md-4"><div class="result-item"><h6>LMTD (\(\Delta T_{ml}\))</h6><h3 id="res-lmtd-val">-</h3><small>°C o K</small></div></div>
+                            <div class="col-md-6"><div class="result-item"><h6>Flujo de Calor (\(Q\))</h6><h3 id="res-Q-lmtd">-</h3><small>kW</small></div></div>
+                            <div class="col-md-6"><div class="result-item"><h6>Área Requerida (\(A\))</h6><h3 id="res-A-lmtd">-</h3><small>m²</small></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2026 Procesos Industriales. Facultad de Ingeniería.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // ==========================================
+        // 1. CONDUCCIÓN
+        // ==========================================
+        function calcularConduccion() {
+            const geo = document.getElementById('geo-type').value;
+            const T_int = parseFloat(document.getElementById('t-int').value);
+            const T_ext = parseFloat(document.getElementById('t-ext').value);
+            const h_int = parseFloat(document.getElementById('h-int').value);
+            const h_ext = parseFloat(document.getElementById('h-ext').value);
+            const L_str = document.getElementById('layers-L').value;
+            const k_str = document.getElementById('layers-k').value;
+            const dim = parseFloat(document.getElementById('geo-dim').value);
+
+            if (isNaN(T_int) || isNaN(T_ext) || isNaN(h_int) || isNaN(h_ext) || isNaN(dim)) {
+                alert("Por favor completa todos los campos numéricos."); return;
+            }
+
+            const L_arr = L_str.split(',').map(Number);
+            const k_arr = k_str.split(',').map(Number);
+
+            if (L_arr.length !== k_arr.length || L_arr.some(isNaN) || k_arr.some(isNaN)) {
+                alert("Los espesores y conductividades deben tener la misma cantidad de valores separados por comas."); return;
+            }
+
+            let R_tot = 0;
+
+            if (geo === 'plana') {
+                const A = dim;
+                R_tot += 1 / (h_int * A);
+                for (let i = 0; i < L_arr.length; i++) {
+                    R_tot += L_arr[i] / (k_arr[i] * A);
+                }
+                R_tot += 1 / (h_ext * A);
+            } else {
+                // Cilíndrica (Asumimos dim = Longitud L en metros. Radios se calculan asumiendo que L_arr son espesores de capas concéntricas partiendo de r1=0.05m como ejemplo base, o el usuario debe ingresar radios. Para simplificar en esta demo, usaremos la fórmula de pared plana adaptada o pediremos radios. 
+                // *Corrección para Guía 4*: Usaremos la lógica de resistencia cilíndrica asumiendo que el usuario ingresa los RADIOS en el campo de espesores (r1, r2, r3...)
+                const L = dim;
+                R_tot += 1 / (h_int * 2 * Math.PI * L_arr[0] * L); // r1 es el primer valor
+                for (let i = 0; i < L_arr.length - 1; i++) {
+                    const r1 = L_arr[i];
+                    const r2 = L_arr[i+1];
+                    R_tot += Math.log(r2 / r1) / (2 * Math.PI * k_arr[i] * L);
+                }
+                const r_last = L_arr[L_arr.length - 1];
+                R_tot += 1 / (h_ext * 2 * Math.PI * r_last * L);
+            }
+
+            const Q = (T_int - T_ext) / R_tot;
+
+            document.getElementById('res-Q').innerText = Q.toFixed(2);
+            document.getElementById('res-R').innerText = R_tot.toExponential(3);
+            document.getElementById('res-conduccion').classList.add('show');
+        }
+
+        // ==========================================
+        // 2. LMTD INTERCAMBIADORES
+        // ==========================================
+        function calcularLMTD() {
+            const flow = document.getElementById('flow-type').value;
+            const U = parseFloat(document.getElementById('U-val').value);
+            const Tc_in = parseFloat(document.getElementById('tc-in').value);
+            const Tc_out = parseFloat(document.getElementById('tc-out').value);
+            const Tf_in = parseFloat(document.getElementById('tf-in').value);
+            const Tf_out = parseFloat(document.getElementById('tf-out').value);
+            const A_inp = document.getElementById('A-val').value;
+            const Q_inp = document.getElementById('Q-val').value;
+
+            if (isNaN(U) || isNaN(Tc_in) || isNaN(Tc_out) || isNaN(Tf_in) || isNaN(Tf_out)) {
+                alert("Completa las temperaturas y el coeficiente U."); return;
+            }
+
+            let dT1, dT2;
+            if (flow === 'contra') {
+                dT1 = Tc_in - Tf_out;
+                dT2 = Tc_out - Tf_in;
+            } else {
+                dT1 = Tc_in - Tf_in;
+                dT2 = Tc_out - Tf_out;
+            }
+
+            let LMTD;
+            if (Math.abs(dT1 - dT2) < 0.001) {
+                LMTD = dT1;
+            } else {
+                LMTD = (dT1 - dT2) / Math.log(dT1 / dT2);
+            }
+
+            document.getElementById('res-dt1').innerText = dT1.toFixed(2);
+            document.getElementById('res-dt2').innerText = dT2.toFixed(2);
+            document.getElementById('res-lmtd-val').innerText = LMTD.toFixed(2);
+
+            let Q_kw = 0, A_m2 = 0;
+            if (A_inp && !isNaN(parseFloat(A_inp))) {
+                A_m2 = parseFloat(A_inp);
+                Q_kw = (U * A_m2 * LMTD) / 1000; // U en W/m2K, A en m2 -> Q en W -> /1000 = kW
+                document.getElementById('res-Q-lmtd').innerText = Q_kw.toFixed(2);
+                document.getElementById('res-A-lmtd').innerText = A_m2.toFixed(2);
+            } else if (Q_inp && !isNaN(parseFloat(Q_inp))) {
+                Q_kw = parseFloat(Q_inp);
+                A_m2 = (Q_kw * 1000) / (U * LMTD);
+                document.getElementById('res-Q-lmtd').innerText = Q_kw.toFixed(2);
+                document.getElementById('res-A-lmtd').innerText = A_m2.toFixed(2);
+            } else {
+                document.getElementById('res-Q-lmtd').innerText = "Ingresa A o Q";
+                document.getElementById('res-A-lmtd').innerText = "Ingresa A o Q";
+            }
+
+            document.getElementById('res-lmtd').classList.add('show');
+            if (window.MathJax) MathJax.typesetPromise();
+        }
+    </script>
+</body>
+</html>
