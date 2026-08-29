@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tabla F3 - Rugosidad de Tuberías - Procesos Industriales">
+    <title>Tabla F3 | Rugosidad - Procesos Industriales</title>
+    <link rel="icon" href="../assets/images/logo.png" type="image/png">
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- MathJax -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #ff6600;
+            --dark-bg: #1a1a2e;
+            --card-bg: rgba(255, 255, 255, 0.1);
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+        
+        .main-header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid var(--secondary-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-brand img {
+            filter: drop-shadow(0 0 10px var(--secondary-color));
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: var(--secondary-color) !important;
+        }
+        
+        .dropdown-menu-dark {
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid var(--secondary-color);
+        }
+        
+        .page-title {
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(45deg, var(--secondary-color), #ff9933);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .info-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .data-table {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            font-size: 0.9rem;
+        }
+        
+        .data-table thead {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        .data-table th {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+            color: white;
+        }
+        
+        .data-table tbody tr:hover {
+            background: rgba(255, 102, 0, 0.15);
+        }
+        
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            border-top: 3px solid var(--secondary-color);
+            margin-top: 4rem;
+            padding: 3rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">
+                    <img src="../assets/images/logo.png" alt="Logo" height="60">
+                    <span style="font-family: 'Orbitron'; font-weight: 700;">PROCESOS INDUSTRIALES</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">Inicio</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" data-bs-toggle="dropdown">Tablas</a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="tabla-f1.html">Tabla F1: Fluidos</a></li>
+                                <li><a class="dropdown-item" href="tabla-f2.html">Tabla F2: Tuberías</a></li>
+                                <li><a class="dropdown-item active" href="tabla-f3.html">Tabla F3: Rugosidad</a></li>
+                                <li><a class="dropdown-item" href="tabla-f4.html">Tabla F4: Longitud Equivalente</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Herramientas</a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="../herramientas/calculadora-fluidos.html">Fluidos</a></li>
+                                <li><a class="dropdown-item" href="../herramientas/calculadora-termodinamica.html">Termodinámica</a></li>
+                                <li><a class="dropdown-item" href="../herramientas/calculadora-transferencia-calor.html">Calor</a></li>
+                                <li><a class="dropdown-item" href="../herramientas/calculadora-combustion.html">Combustión</a></li>
+                                <li><a class="dropdown-item" href="../herramientas/calculadora-operaciones-unitarias.html">Operaciones Unitarias</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container py-4">
+        <h1 class="page-title"><i class="fas fa-wave-square me-3"></i>TABLA F3: RUGOSIDAD DE TUBERÍAS</h1>
+        
+        <div class="info-card">
+            <h3><i class="fas fa-info-circle me-2"></i>Descripción</h3>
+            <p>La rugosidad absoluta (ε) es una medida de las irregularidades en la superficie interior de una tubería. Este valor es fundamental para calcular el factor de fricción de Darcy-Weisbach usando el diagrama de Moody o la ecuación de Colebrook-White.</p>
+            <p>La rugosidad relativa se calcula como: \\( \frac{\epsilon}{D} \\) donde D es el diámetro interior de la tubería.</p>
+        </div>
+
+        <div class="table-responsive mb-4">
+            <table class="table data-table table-hover">
+                <thead>
+                    <tr>
+                        <th>Material de la Tubería</th>
+                        <th>Rugosidad Absoluta (ε) mm</th>
+                        <th>Rugosidad Absoluta (ε) pies</th>
+                        <th>Condición</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Vidrio, latón, cobre, plástico</td><td>0.0015</td><td>0.000005</td><td>Nuevo</td></tr>
+                    <tr><td>Acerado inoxidable</td><td>0.015</td><td>0.00005</td><td>Nuevo</td></tr>
+                    <tr><td>Acero comercial (hierro forjado)</td><td>0.045</td><td>0.00015</td><td>Nuevo</td></tr>
+                    <tr><td>Acero galvanizado</td><td>0.15</td><td>0.0005</td><td>Nuevo</td></tr>
+                    <tr><td>Hierro fundido</td><td>0.26</td><td>0.00085</td><td>Nuevo</td></tr>
+                    <tr><td>Hormigón</td><td>0.3 - 3.0</td><td>0.001 - 0.01</td><td>Nuevo</td></tr>
+                    <tr><td>Madera</td><td>0.18 - 0.9</td><td>0.0006 - 0.003</td><td>Nuevo</td></tr>
+                    <tr><td>Ladrillo</td><td>3.0 - 10.0</td><td>0.01 - 0.03</td><td>Nuevo</td></tr>
+                    <tr><td>Acero remachado</td><td>0.9 - 9.0</td><td>0.003 - 0.03</td><td>Nuevo</td></tr>
+                    <tr><td>Hierro fundido</td><td>0.6 - 3.0</td><td>0.002 - 0.01</td><td>En servicio</td></tr>
+                    <tr><td>Acero comercial</td><td>0.15 - 1.5</td><td>0.0005 - 0.005</td><td>En servicio</td></tr>
+                    <tr><td>Hierro fundido</td><td>1.5 - 2.5</td><td>0.005 - 0.008</td><td>Corroído</td></tr>
+                    <tr><td>Acero comercial</td><td>1.5 - 3.0</td><td>0.005 - 0.01</td><td>Corroído</td></tr>
+                    <tr><td>Tubería con incrustaciones</td><td>1.5 - 4.0</td><td>0.005 - 0.013</td><td>Incrustado</td></tr>
+                    <tr><td>Tubería muy corroída/incrustada</td><td>3.0 - 9.0</td><td>0.01 - 0.03</td><td>Deteriorado</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="info-card bg-info bg-opacity-10 border border-info">
+            <h4><i class="fas fa-calculator me-2"></i>Fórmulas Relacionadas</h4>
+            <ul>
+                <li><strong>Rugosidad Relativa:</strong> \\( \text{Rugosidad Relativa} = \frac{\epsilon}{D} \\)</li>
+                <li><strong>Ecuación de Colebrook-White:</strong> \\( \frac{1}{\sqrt{f}} = -2.0 \log_{10}\left(\frac{\epsilon/D}{3.7} + \frac{2.51}{Re\sqrt{f}}\right) \\)</li>
+                <li><strong>Ecuación de Swamee-Jain (explícita):</strong> \\( f = \frac{0.25}{\left[\log_{10}\left(\frac{\epsilon/D}{3.7} + \frac{5.74}{Re^{0.9}}\right)\right]^2} \\)</li>
+            </ul>
+        </div>
+
+        <div class="info-card bg-warning bg-opacity-10 border border-warning">
+            <h4><i class="fas fa-exclamation-triangle me-2"></i>Notas Importantes</h4>
+            <ul>
+                <li>La rugosidad absoluta (ε) tiene unidades de longitud (mm o pies)</li>
+                <li>Para flujo laminar (Re < 2000), la rugosidad no afecta el factor de fricción</li>
+                <li>En flujo turbulento completamente desarrollado, el factor de fricción depende solo de la rugosidad relativa</li>
+                <li>Los valores de rugosidad aumentan con el tiempo debido a corrosión e incrustaciones</li>
+                <li>Para tuberías lisas (vidrio, plástico), ε ≈ 0</li>
+                <li>Use valores conservadores (mayores) para diseño cuando la condición de la tubería sea incierta</li>
+            </ul>
+        </div>
+
+        <div class="info-card bg-success bg-opacity-10 border border-success">
+            <h4><i class="fas fa-lightbulb me-2"></i>Ejemplo de Aplicación</h4>
+            <p><strong>Problema:</strong> Calcular la rugosidad relativa para una tubería de acero comercial nuevo de 6 pulgadas (DN 150, ID = 154.06 mm).</p>
+            <ol>
+                <li>Buscar rugosidad absoluta: ε = 0.045 mm (acero comercial nuevo)</li>
+                <li>Obtener diámetro interior: D = 154.06 mm</li>
+                <li>Calcular rugosidad relativa: \\( \frac{\epsilon}{D} = \frac{0.045}{154.06} = 0.000292 \\)</li>
+                <li>Usar este valor en el diagrama de Moody o ecuación de Colebrook</li>
+            </ol>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="../assets/images/logo.png" alt="Logo" height="50">
+                    <p><strong>Procesos Industriales</strong></p>
+                    <p>Ingeniería Industrial</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="../index.html" class="text-white text-decoration-none">Inicio</a></li>
+                        <li><a href="tabla-f1.html" class="text-white text-decoration-none">Tabla F1</a></li>
+                        <li><a href="tabla-f2.html" class="text-white text-decoration-none">Tabla F2</a></li>
+                        <li><a href="tabla-f4.html" class="text-white text-decoration-none">Tabla F4</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contacto</h5>
+                    <p><i class="fas fa-envelope me-2"></i>juan.velasco@universidad.edu</p>
+                    <p>Período: 2026-1</p>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center mb-0">&copy; 2026 Procesos Industriales</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
