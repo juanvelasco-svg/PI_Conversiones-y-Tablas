@@ -12,7 +12,7 @@
 
 ---
 
-## 📋 Tabla de Contenidos
+##  Tabla de Contenidos
 
 - [Descripción](#-descripción)
 - [Características Principales](#-características-principales)
@@ -48,7 +48,7 @@ Cada módulo incluye un recuadro de **"Referencia para Búsqueda Manual"** que i
 
 - 🎨 **Diseño moderno y responsivo** con tema oscuro y colores institucionales
 -  **6 módulos especializados** que cubren todo el contenido del curso
-- 🧮 **Calculadoras interactivas** con validación de datos en tiempo real
+- 📊 **Calculadoras interactivas** con validación de datos en tiempo real
 - 📚 **Tablas termodinámicas completas** (Cengel & Boles, 9ª Edición) en formato JSON
 - 📱 **Compatible con dispositivos móviles**, tablets y escritorio
 - 🌐 **Funciona sin servidor** (solo HTML, CSS y JavaScript estático)
