@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Paso 0 - Datos del Sistema | Procesos Industriales</title>
+    <link rel="icon" href="../assets/images/logo.png" type="image/png">
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #ff6600;
+            --dark-bg: #1a1a2e;
+            --card-bg: rgba(255, 255, 255, 0.1);
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+        
+        .main-header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid var(--secondary-color);
+            padding: 1rem 0;
+        }
+        
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .navbar-brand img {
+            filter: drop-shadow(0 0 10px var(--secondary-color));
+        }
+        
+        .navbar-brand span {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            background: linear-gradient(45deg, var(--secondary-color), #ff9933);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            transition: all 0.3s;
+            margin: 0 0.5rem;
+        }
+        
+        .nav-link:hover {
+            color: var(--secondary-color) !important;
+        }
+        
+        .dropdown-menu-dark {
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid var(--secondary-color);
+        }
+        
+        .quiz-container {
+            max-width: 800px;
+            margin: 3rem auto;
+        }
+        
+        .quiz-title {
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(45deg, var(--secondary-color), #ff9933);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            font-weight: 900;
+        }
+        
+        .quiz-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .question-number {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: 700;
+            margin-right: 10px;
+        }
+        
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .option-label {
+            display: block;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .option-label:hover {
+            border-color: var(--secondary-color);
+            background: rgba(255, 102, 0, 0.1);
+        }
+        
+        .option-label input[type="radio"] {
+            margin-right: 10px;
+        }
+        
+        .btn-submit {
+            background: linear-gradient(135deg, var(--secondary-color), #ff9933);
+            border: none;
+            font-weight: 700;
+            padding: 1rem 3rem;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 102, 0, 0.4);
+        }
+        
+        .result-box {
+            background: rgba(0, 255, 0, 0.1);
+            border: 2px solid #00ff00;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .result-box.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        .score-display {
+            font-size: 3rem;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            color: #00ff00;
+        }
+        
+        .feedback-item {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+            text-align: left;
+        }
+        
+        .feedback-correct {
+            border-left: 4px solid #00ff00;
+        }
+        
+        .feedback-incorrect {
+            border-left: 4px solid #ff0000;
+        }
+        
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            border-top: 3px solid var(--secondary-color);
+            margin-top: 4rem;
+            padding: 2rem 0;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">
+                    <img src="../assets/images/logo.png" alt="Logo" height="60">
+                    <span>PROCESOS INDUSTRIALES</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html"><i class="fas fa-home me-1"></i> Dashboard</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-tools me-1"></i> Herramientas
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="../herramientas/calculadora-fluidos.html"><i class="fas fa-tint me-2"></i>Fluidos</a></li>
+                                <li><a class="dropdown-item" href="../herramientas/calculadora-termodinamica.html"><i class="fas fa-thermometer-half me-2"></i>Termodinámica</a></li>
+                                <li><a class="dropdown-item" href="../herramientas/calculadora-transferencia-calor.html"><i class="fas fa-fire me-2"></i>Transferencia de Calor</a></li>
+                                <li><a class="dropdown-item" href="../herramientas/calculadora-combustion.html"><i class="fas fa-burn me-2"></i>Combustión</a></li>
+                                <li><a class="dropdown-item" href="../herramientas/calculadora-operaciones-unitarias.html"><i class="fas fa-cogs me-2"></i>Operaciones Unitarias</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-table me-1"></i> Tablas
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="../tablas/tabla-f1.html"><i class="fas fa-flask me-2"></i>Tabla F1</a></li>
+                                <li><a class="dropdown-item" href="../tablas/tabla-f2.html"><i class="fas fa-pipe me-2"></i>Tabla F2</a></li>
+                                <li><a class="dropdown-item" href="../tablas/tabla-f3.html"><i class="fas fa-wave-square me-2"></i>Tabla F3</a></li>
+                                <li><a class="dropdown-item" href="../tablas/tabla-f4.html"><i class="fas fa-ruler-vertical me-2"></i>Tabla F4</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-clipboard-check me-1"></i> Quizzes
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item active" href="quiz-paso0.html">Quiz Paso 0</a></li>
+                                <li><a class="dropdown-item" href="quiz-paso1.html">Quiz Paso 1</a></li>
+                                <li><a class="dropdown-item" href="quiz-paso2.html">Quiz Paso 2</a></li>
+                                <li><a class="dropdown-item" href="quiz-paso3.html">Quiz Paso 3</a></li>
+                                <li><a class="dropdown-item" href="quiz-paso4.html">Quiz Paso 4</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="quiz-container">
+        <h1 class="quiz-title">
+            <i class="fas fa-clipboard-list me-3"></i>Quiz Paso 0: Datos del Sistema
+        </h1>
+        
+        <form id="quizForm">
+            <!-- Pregunta 1 -->
+            <div class="quiz-card">
+                <div class="question-text">
+                    <span class="question-number">1</span>
+                    ¿Qué información básica se necesita recopilar en el Paso 0 para un cálculo de flujo de fluidos?
+                </div>
+                <label class="option-label">
+                    <input type="radio" name="q1" value="a">
+                    a) Solo el tipo de fluido y su temperatura
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q1" value="b">
+                    b) Tipo de fluido, temperatura, caudal requerido, longitudes de tubería y elevaciones
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q1" value="c">
+                    c) Únicamente el diámetro de la tubería
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q1" value="d">
+                    d) Solo la presión de entrada y salida
+                </label>
+            </div>
+
+            <!-- Pregunta 2 -->
+            <div class="quiz-card">
+                <div class="question-text">
+                    <span class="question-number">2</span>
+                    ¿Por qué es importante conocer la temperatura del fluido desde el inicio?
+                </div>
+                <label class="option-label">
+                    <input type="radio" name="q2" value="a">
+                    a) Porque afecta el color del fluido
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q2" value="b">
+                    b) Porque determina las propiedades físicas como densidad y viscosidad
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q2" value="c">
+                    c) Porque cambia el nombre del fluido
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q2" value="d">
+                    d) Porque no es importante conocerla
+                </label>
+            </div>
+
+            <!-- Pregunta 3 -->
+            <div class="quiz-card">
+                <div class="question-text">
+                    <span class="question-number">3</span>
+                    ¿Qué unidades son comúnmente usadas para expresar el caudal en sistemas industriales?
+                </div>
+                <label class="option-label">
+                    <input type="radio" name="q3" value="a">
+                    a) kg/m³
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q3" value="b">
+                    b) m/s
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q3" value="c">
+                    c) m³/h, L/min, GPM
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q3" value="d">
+                    d) Pa·s
+                </label>
+            </div>
+
+            <!-- Pregunta 4 -->
+            <div class="quiz-card">
+                <div class="question-text">
+                    <span class="question-number">4</span>
+                    En la recolección de datos del sistema, ¿qué información sobre la tubería es esencial?
+                </div>
+                <label class="option-label">
+                    <input type="radio" name="q4" value="a">
+                    a) Solo el material de la tubería
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q4" value="b">
+                    b) Diámetro nominal, longitud total, material y número de accesorios
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q4" value="c">
+                    c) Únicamente el color de la tubería
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q4" value="d">
+                    d) Solo la marca del fabricante
+                </label>
+            </div>
+
+            <!-- Pregunta 5 -->
+            <div class="quiz-card">
+                <div class="question-text">
+                    <span class="question-number">5</span>
+                    ¿Qué representa la diferencia de elevación en un sistema de bombeo?
+                </div>
+                <label class="option-label">
+                    <input type="radio" name="q5" value="a">
+                    a) La distancia horizontal entre bombas
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q5" value="b">
+                    b) El cambio de altura vertical que el fluido debe vencer (carga estática)
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q5" value="c">
+                    c) El diámetro de la tubería
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q5" value="d">
+                    d) La temperatura del fluido
+                </label>
+            </div>
+
+            <div class="text-center">
+                <button type="button" class="btn btn-submit" onclick="calculateScore()">
+                    <i class="fas fa-paper-plane me-2"></i>Enviar Respuestas
+                </button>
+            </div>
+        </form>
+
+        <!-- Result Box -->
+        <div id="resultBox" class="result-box">
+            <h3><i class="fas fa-trophy me-2"></i>Resultados del Quiz</h3>
+            <div class="score-display" id="scoreDisplay">0/5</div>
+            <p id="scoreMessage" class="mt-3"></p>
+            <div id="feedbackContainer"></div>
+            <button class="btn btn-submit mt-3" onclick="location.reload()">
+                <i class="fas fa-redo me-2"></i>Intentar de Nuevo
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <img src="../assets/images/logo.png" alt="Logo" height="50" class="mb-3">
+            <p class="mb-2">© 2024 Procesos Industriales - Herramientas Educativas</p>
+            <p class="text-muted small">Dashboard integral para cálculo y análisis de procesos industriales</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        const correctAnswers = {
+            q1: 'b',
+            q2: 'b',
+            q3: 'c',
+            q4: 'b',
+            q5: 'b'
+        };
+
+        const explanations = {
+            q1: 'El Paso 0 requiere recopilar TODA la información del sistema: tipo de fluido, temperatura, caudal, longitudes, elevaciones, accesorios y presiones.',
+            q2: 'La temperatura afecta directamente la densidad y viscosidad del fluido, propiedades críticas para todos los cálculos posteriores.',
+            q3: 'Las unidades comunes de caudal son: m³/h (sistema internacional), L/min (laboratorios), GPM (galones por minuto, sistema inglés).',
+            q4: 'Para calcular pérdidas por fricción necesitas: diámetro (afecta velocidad), longitud (más tubería = más fricción), material (rugosidad) y accesorios (pérdidas menores).',
+            q5: 'La diferencia de elevación representa la carga estática vertical que la bomba debe vencer, contribuyendo directamente a la presión requerida.'
+        };
+
+        function calculateScore() {
+            let score = 0;
+            let feedbackHTML = '';
+            
+            for (let i = 1; i <= 5; i++) {
+                const questionName = 'q' + i;
+                const selected = document.querySelector(`input[name="${questionName}"]:checked`);
+                const userAnswer = selected ? selected.value : null;
+                const isCorrect = userAnswer === correctAnswers[questionName];
+                
+                if (isCorrect) {
+                    score++;
+                    feedbackHTML += `<div class="feedback-item feedback-correct">
+                        <strong>Pregunta ${i}: <i class="fas fa-check-circle text-success"></i> Correcta</strong>
+                        <p class="mb-0 small mt-2">${explanations[questionName]}</p>
+                    </div>`;
+                } else {
+                    feedbackHTML += `<div class="feedback-item feedback-incorrect">
+                        <strong>Pregunta ${i}: <i class="fas fa-times-circle text-danger"></i> Incorrecta</strong>
+                        <p class="mb-0 small mt-2">Respuesta correcta: ${correctAnswers[questionName].toUpperCase()} - ${explanations[questionName]}</p>
+                    </div>`;
+                }
+            }
+            
+            document.getElementById('scoreDisplay').textContent = `${score}/5`;
+            
+            let message = '';
+            if (score === 5) {
+                message = '¡Excelente! Dominas completamente los conceptos del Paso 0.';
+            } else if (score >= 3) {
+                message = '¡Buen trabajo! Pero repasa los conceptos donde fallaste.';
+            } else {
+                message = 'Sigue estudiando. Revisa los conceptos básicos del Paso 0.';
+            }
+            
+            document.getElementById('scoreMessage').textContent = message;
+            document.getElementById('feedbackContainer').innerHTML = feedbackHTML;
+            document.getElementById('resultBox').classList.add('show');
+            
+            // Scroll to results
+            document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
