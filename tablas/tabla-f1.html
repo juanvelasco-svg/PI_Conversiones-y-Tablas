@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tabla F1 - Densidades y Viscosidades de Líquidos - Procesos Industriales">
+    <title>Tabla F1 | Densidades y Viscosidades - Procesos Industriales</title>
+    <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- MathJax -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #ff6600;
+            --dark-bg: #1a1a2e;
+            --card-bg: rgba(255, 255, 255, 0.1);
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+        
+        .main-header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid var(--secondary-color);
+        }
+        
+        .navbar-brand img {
+            filter: drop-shadow(0 0 10px var(--secondary-color));
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: var(--secondary-color) !important;
+            transform: translateY(-2px);
+        }
+        
+        .dropdown-menu-dark {
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid var(--secondary-color);
+        }
+        
+        .page-title {
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(45deg, var(--secondary-color), #ff9933);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .info-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .formula-box {
+            background: rgba(0, 102, 204, 0.2);
+            border-left: 4px solid var(--secondary-color);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+        
+        .table-reference {
+            background: rgba(255, 102, 0, 0.15);
+            border: 2px dashed var(--secondary-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .data-table {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .data-table thead {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        .data-table th {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .data-table tbody tr:hover {
+            background: rgba(255, 102, 0, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .calculator-panel {
+            background: linear-gradient(135deg, rgba(0, 102, 204, 0.3), rgba(255, 102, 0, 0.2));
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .btn-calculate {
+            background: linear-gradient(135deg, var(--secondary-color), #ff9933);
+            border: none;
+            font-weight: 700;
+            padding: 0.75rem 2rem;
+            transition: all 0.3s;
+        }
+        
+        .btn-calculate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 102, 0, 0.4);
+        }
+        
+        .result-box {
+            background: rgba(0, 255, 0, 0.1);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .result-box.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .liquid-selector {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--primary-color);
+            color: #fff;
+            padding: 0.75rem;
+            border-radius: 8px;
+        }
+        
+        .liquid-selector option {
+            background: var(--dark-bg);
+            color: #fff;
+        }
+        
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            border-top: 3px solid var(--secondary-color);
+            margin-top: 4rem;
+            padding: 3rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 1.5rem;
+            }
+            .info-card {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to content -->
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
+    <!-- Header -->
+    <header class="main-header">
+        <nav class="navbar navbar-expand-lg navbar-dark" aria-label="Navegación principal">
+            <div class="container">
+                <a class="navbar-brand" href="index.html" aria-label="Inicio - Procesos Industriales">
+                    <img src="assets/images/logo.svg" alt="Logo Procesos Industriales" height="60" class="logo-header">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">
+                                Tablas de Propiedades
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item active" href="tablas/tabla-f1.html">Tabla F1: Densidades y Viscosidades</a></li>
+                                <li><a class="dropdown-item" href="tablas/tabla-f2.html">Tabla F2: Tuberías</a></li>
+                                <li><a class="dropdown-item" href="tablas/tabla-f3.html">Tabla F3: Rugosidad</a></li>
+                                <li><a class="dropdown-item" href="tablas/tabla-f4.html">Tabla F4: Longitud Equivalente</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                Procesos
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="procesos/paso0.html">Paso 0: Sistema y Frontera</a></li>
+                                <li><a class="dropdown-item" href="procesos/paso1.html">Paso 1: Matriz Entrada-Salida</a></li>
+                                <li><a class="dropdown-item" href="procesos/paso2.html">Paso 2: Clasificación</a></li>
+                                <li><a class="dropdown-item" href="procesos/paso3.html">Paso 3: Régimen Temporal</a></li>
+                                <li><a class="dropdown-item" href="procesos/paso4.html">Paso 4: Aplicación 8 Pasos</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                Quizzes
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="quizzes/quiz-paso0.html">Quiz Paso 0</a></li>
+                                <li><a class="dropdown-item" href="quizzes/quiz-paso1.html">Quiz Paso 1</a></li>
+                                <li><a class="dropdown-item" href="quizzes/quiz-paso2.html">Quiz Paso 2</a></li>
+                                <li><a class="dropdown-item" href="quizzes/quiz-paso3.html">Quiz Paso 3</a></li>
+                                <li><a class="dropdown-item" href="quizzes/quiz-paso4.html">Quiz Paso 4</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <div class="container">
+            <!-- Page Title -->
+            <h1 class="page-title">
+                <i class="fas fa-table me-3"></i>TABLA F1<br>
+                <small class="text-orange">Densidades y Viscosidades de Líquidos</small>
+            </h1>
+
+            <!-- Introduction -->
+            <div class="info-card">
+                <h3><i class="fas fa-info-circle text-orange me-2"></i>Propósito de esta Tabla</h3>
+                <p>
+                    La <strong>Tabla F1</strong> contiene las propiedades físicas fundamentales de líquidos comunes 
+                    utilizados en procesos industriales: <strong>densidad (ρ)</strong> y <strong>viscosidad</strong> 
+                    (absoluta η y cinemática ν) a diferentes temperaturas.
+                </p>
+                <p class="mb-0">
+                    <i class="fas fa-exclamation-triangle text-warning me-2"></i>
+                    <strong>Importante:</strong> Estas propiedades varían con la temperatura. Siempre verifique 
+                    la temperatura de operación de su proceso.
+                </p>
+            </div>
+
+            <!-- Formulas Section -->
+            <div class="info-card">
+                <h3><i class="fas fa-calculator text-orange me-2"></i>Fórmulas Fundamentales</h3>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="formula-box">
+                            <h5><i class="fas fa-tint me-2"></i>Viscosidad Cinemática</h5>
+                            <p>Relación entre viscosidad absoluta y densidad:</p>
+                            \[ \nu = \frac{\eta}{\rho} \]
+                            <small>
+                                Donde:<br>
+                                ν = Viscosidad cinemática (m²/s)<br>
+                                η = Viscosidad absoluta o dinámica (Pa·s)<br>
+                                ρ = Densidad (kg/m³)
+                            </small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="formula-box">
+                            <h5><i class="fas fa-weight-hanging me-2"></i>Masa a partir del Volumen</h5>
+                            <p>Cálculo de masa conociendo volumen y densidad:</p>
+                            \[ m = \rho \times V \]
+                            <small>
+                                Donde:<br>
+                                m = Masa (kg)<br>
+                                ρ = Densidad (kg/m³)<br>
+                                V = Volumen (m³)
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calculator Section -->
+            <div class="calculator-panel">
+                <h3 class="text-center mb-4">
+                    <i class="fas fa-calculator me-2"></i>Calculadora de Propiedades
+                </h3>
+                
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="liquidSelect" class="form-label">
+                            <i class="fas fa-flask me-2"></i>Seleccione el Líquido:
+                        </label>
+                        <select class="form-select liquid-selector" id="liquidSelect">
+                            <option value="" selected disabled>Escoja un líquido...</option>
+                            <option value="agua">Agua (H₂O)</option>
+                            <option value="aceite">Aceite Lubricante</option>
+                            <option value="etanol">Alcohol Etílico (Etanol)</option>
+                            <option value="metanol">Alcohol Metílico (Metanol)</option>
+                            <option value="benceno">Benceno</option>
+                            <option value="etilenglicol">Etilenglicol</option>
+                            <option value="kerosene">Kerosene</option>
+                            <option value="mercurio">Mercurio</option>
+                            <option value="octano">Octano Normal</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-4 mb-3">
+                        <label for="tempInput" class="form-label">
+                            <i class="fas fa-thermometer-half me-2"></i>Temperatura (°C):
+                        </label>
+                        <input type="number" class="form-control liquid-selector" id="tempInput" 
+                               placeholder="Ej: 20" step="10" min="-20" max="120">
+                        <small class="text-muted">Valores típicos: -20 a 120°C</small>
+                    </div>
+                    
+                    <div class="col-md-4 mb-3 d-flex align-items-end">
+                        <button class="btn btn-calculate w-100" onclick="calculateProperties()">
+                            <i class="fas fa-search me-2"></i>Buscar Propiedades
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Results -->
+                <div id="resultsBox" class="result-box">
+                    <h4 class="text-success mb-3">
+                        <i class="fas fa-check-circle me-2"></i>Resultados Encontrados
+                    </h4>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="text-center p-3 bg-dark rounded">
+                                <i class="fas fa-weight-hanging fa-2x text-orange mb-2"></i>
+                                <h5>Densidad</h5>
+                                <p class="mb-0" id="densityResult">-</p>
+                                <small>kg/m³</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center p-3 bg-dark rounded">
+                                <i class="fas fa-tint fa-2x text-primary mb-2"></i>
+                                <h5>Viscosidad Absoluta</h5>
+                                <p class="mb-0" id="absViscosityResult">-</p>
+                                <small>× 10³ Pa·s</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center p-3 bg-dark rounded">
+                                <i class="fas fa-wave-square fa-2x text-success mb-2"></i>
+                                <h5>Viscosidad Cinemática</h5>
+                                <p class="mb-0" id="kinViscosityResult">-</p>
+                                <small>× 10⁻⁷ m²/s</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-reference mt-4">
+                        <h5><i class="fas fa-book me-2"></i>Referencia para Búsqueda Manual:</h5>
+                        <p class="mb-2">
+                            <strong>Tabla F1</strong> - Ubique:
+                        </p>
+                        <ul class="mb-0">
+                            <li><strong>Columna 1:</strong> Nombre del líquido</li>
+                            <li><strong>Columna 2:</strong> Temperatura (°C)</li>
+                            <li><strong>Columna 3:</strong> Densidad (kg/m³)</li>
+                            <li><strong>Columna 4:</strong> Viscosidad absoluta × 10³ (Pa·s)</li>
+                            <li><strong>Columna 5:</strong> Viscosidad cinemática × 10⁷ (m²/s)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Complete Table -->
+            <div class="info-card">
+                <h3 class="mb-4">
+                    <i class="fas fa-database text-orange me-2"></i>Tabla Completa F1
+                </h3>
+                <div class="table-responsive">
+                    <table class="table table-dark table-striped data-table" id="tablaF1">
+                        <thead>
+                            <tr>
+                                <th>Líquido</th>
+                                <th>Temp. (°C)</th>
+                                <th>Densidad (kg/m³)</th>
+                                <th>Visc. Absoluta<br><small>× 10³ Pa·s</small></th>
+                                <th>Visc. Cinemática<br><small>× 10⁻⁷ m²/s</small></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Agua -->
+                            <tr><td rowspan="11"><strong>Agua</strong></td><td>0</td><td>1000</td><td>1.790</td><td>17,900</td></tr>
+                            <tr><td>10</td><td>1000</td><td>1.310</td><td>13,100</td></tr>
+                            <tr><td>20</td><td>998</td><td>1.000</td><td>10,000</td></tr>
+                            <tr><td>30</td><td>996</td><td>0.798</td><td>8,010</td></tr>
+                            <tr><td>40</td><td>992</td><td>0.653</td><td>6,580</td></tr>
+                            <tr><td>50</td><td>988</td><td>0.547</td><td>5,480</td></tr>
+                            <tr><td>60</td><td>983</td><td>0.467</td><td>4,750</td></tr>
+                            <tr><td>70</td><td>978</td><td>0.404</td><td>4,130</td></tr>
+                            <tr><td>80</td><td>972</td><td>0.355</td><td>3,650</td></tr>
+                            <tr><td>90</td><td>965</td><td>0.315</td><td>3,260</td></tr>
+                            <tr><td>100</td><td>958</td><td>0.282</td><td>2,940</td></tr>
+                            
+                            <!-- Aceite Lubricante -->
+                            <tr><td rowspan="6"><strong>Aceite Lubricante</strong></td><td>20</td><td>871</td><td>13,100</td><td>150,000</td></tr>
+                            <tr><td>40</td><td>858</td><td>6,810</td><td>79,400</td></tr>
+                            <tr><td>60</td><td>845</td><td>4,180</td><td>49,500</td></tr>
+                            <tr><td>80</td><td>832</td><td>2,830</td><td>34,000</td></tr>
+                            <tr><td>100</td><td>820</td><td>2,000</td><td>24,400</td></tr>
+                            <tr><td>120</td><td>809</td><td>1,540</td><td>19,000</td></tr>
+                            
+                            <!-- Alcohol Etílico -->
+                            <tr><td rowspan="4"><strong>Alcohol Etílico</strong></td><td>0</td><td>806</td><td>1.770</td><td>22,000</td></tr>
+                            <tr><td>20</td><td>789</td><td>1.200</td><td>15,200</td></tr>
+                            <tr><td>40</td><td>772</td><td>0.834</td><td>10,800</td></tr>
+                            <tr><td>60</td><td>754</td><td>0.592</td><td>7,850</td></tr>
+                            
+                            <!-- Alcohol Metílico -->
+                            <tr><td rowspan="4"><strong>Alcohol Metílico</strong></td><td>0</td><td>810</td><td>0.817</td><td>10,100</td></tr>
+                            <tr><td>20</td><td>792</td><td>0.584</td><td>7,370</td></tr>
+                            <tr><td>30</td><td>783</td><td>0.510</td><td>6,510</td></tr>
+                            <tr><td>40</td><td>774</td><td>0.450</td><td>5,810</td></tr>
+                            
+                            <!-- Benceno -->
+                            <tr><td rowspan="5"><strong>Benceno</strong></td><td>0</td><td>900</td><td>0.912</td><td>10,100</td></tr>
+                            <tr><td>20</td><td>879</td><td>0.652</td><td>7,420</td></tr>
+                            <tr><td>40</td><td>875</td><td>0.503</td><td>5,860</td></tr>
+                            <tr><td>60</td><td>836</td><td>0.392</td><td>4,690</td></tr>
+                            <tr><td>80</td><td>815</td><td>0.329</td><td>4,040</td></tr>
+                            
+                            <!-- Etilenglicol -->
+                            <tr><td rowspan="5"><strong>Etilenglicol</strong></td><td>20</td><td>1,110</td><td>19,900</td><td>179,000</td></tr>
+                            <tr><td>40</td><td>1,100</td><td>9,130</td><td>83,000</td></tr>
+                            <tr><td>60</td><td>1,090</td><td>4,950</td><td>45,500</td></tr>
+                            <tr><td>80</td><td>1,070</td><td>3,020</td><td>28,200</td></tr>
+                            <tr><td>100</td><td>1,060</td><td>1,990</td><td>18,800</td></tr>
+                            
+                            <!-- Kerosene -->
+                            <tr><td rowspan="2"><strong>Kerosene</strong></td><td>-18</td><td>841</td><td>7,060</td><td>84,000</td></tr>
+                            <tr><td>20</td><td>814</td><td>1.900</td><td>23,700</td></tr>
+                            
+                            <!-- Mercurio -->
+                            <tr><td rowspan="6"><strong>Mercurio</strong></td><td>0</td><td>13,600</td><td>1.680</td><td>1,240</td></tr>
+                            <tr><td>20</td><td>13,550</td><td>1.550</td><td>1,140</td></tr>
+                            <tr><td>40</td><td>13,500</td><td>1.450</td><td>1,070</td></tr>
+                            <tr><td>60</td><td>13,450</td><td>1.370</td><td>1,020</td></tr>
+                            <tr><td>80</td><td>13,400</td><td>1.300</td><td>0,970</td></tr>
+                            <tr><td>100</td><td>13,350</td><td>1.240</td><td>0,929</td></tr>
+                            
+                            <!-- Octano Normal -->
+                            <tr><td rowspan="3"><strong>Octano Normal</strong></td><td>0</td><td>718</td><td>0.706</td><td>9,830</td></tr>
+                            <tr><td>20</td><td>702</td><td>0.542</td><td>7,720</td></tr>
+                            <tr><td>40</td><td>686</td><td>0.433</td><td>6,310</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Usage Examples -->
+            <div class="info-card">
+                <h3><i class="fas fa-lightbulb text-orange me-2"></i>Ejemplos de Aplicación</h3>
+                
+                <div class="accordion" id="examplesAccordion">
+                    <div class="accordion-item bg-dark">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button bg-dark text-white" type="button" 
+                                    data-bs-toggle="collapse" data-bs-target="#example1">
+                                Ejemplo 1: Cálculo de Masa
+                            </button>
+                        </h2>
+                        <div id="example1" class="accordion-collapse collapse show" 
+                             data-bs-parent="#examplesAccordion">
+                            <div class="accordion-body">
+                                <p><strong>Problema:</strong> Calcular la masa de 2.5 m³ de agua a 20°C</p>
+                                <div class="formula-box">
+                                    <p><strong>Solución:</strong></p>
+                                    <ol>
+                                        <li>Buscar en <strong>Tabla F1</strong>:
+                                            <ul>
+                                                <li>Líquido: <strong>Agua</strong></li>
+                                                <li>Temperatura: <strong>20°C</strong></li>
+                                                <li>Columna 3 (Densidad): <strong>ρ = 998 kg/m³</strong></li>
+                                            </ul>
+                                        </li>
+                                        <li>Aplicar fórmula: \( m = \rho \times V \)</li>
+                                        <li>Calcular: \( m = 998 \times 2.5 = 2,495 \text{ kg} \)</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item bg-dark">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button bg-dark text-white collapsed" type="button" 
+                                    data-bs-toggle="collapse" data-bs-target="#example2">
+                                Ejemplo 2: Verificación de Viscosidad Cinemática
+                            </button>
+                        </h2>
+                        <div id="example2" class="accordion-collapse collapse" 
+                             data-bs-parent="#examplesAccordion">
+                            <div class="accordion-body">
+                                <p><strong>Problema:</strong> Verificar la viscosidad cinemática del etanol a 20°C</p>
+                                <div class="formula-box">
+                                    <p><strong>Solución:</strong></p>
+                                    <ol>
+                                        <li>Buscar en <strong>Tabla F1</strong>:
+                                            <ul>
+                                                <li>Líquido: <strong>Alcohol Etílico</strong></li>
+                                                <li>Temperatura: <strong>20°C</strong></li>
+                                                <li>Columna 3: <strong>ρ = 789 kg/m³</strong></li>
+                                                <li>Columna 4: <strong>η = 1.200 × 10⁻³ Pa·s</strong></li>
+                                            </ul>
+                                        </li>
+                                        <li>Aplicar fórmula: \( \nu = \frac{\eta}{\rho} \)</li>
+                                        <li>Calcular: \( \nu = \frac{1.200 \times 10^{-3}}{789} = 1.52 \times 10^{-6} \text{ m²/s} \)</li>
+                                        <li>Convertir: \( 1.52 \times 10^{-6} \text{ m²/s} = 15,200 \times 10^{-7} \text{ m²/s} \)</li>
+                                        <li>Verificar con Columna 5: <strong>15,200 ✓</strong></li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Important Notes -->
+            <div class="info-card bg-warning bg-opacity-10 border border-warning">
+                <h3><i class="fas fa-exclamation-triangle text-warning me-2"></i>Notas Importantes</h3>
+                <ul class="mb-0">
+                    <li>Las propiedades son válidas a presión atmosférica (1 atm = 101.325 kPa)</li>
+                    <li>Para temperaturas intermedias, use interpolación lineal</li>
+                    <li>La viscosidad disminuye con el aumento de temperatura en líquidos</li>
+                    <li>El mercurio tiene la mayor densidad pero baja viscosidad</li>
+                    <li>Los aceites lubricantes tienen alta viscosidad que varía significativamente con T</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <img src="assets/images/logo.svg" alt="Logo" height="50" class="mb-3">
+                    <p><strong>Procesos Industriales</strong></p>
+                    <p>Ingeniería Industrial - Facultad de Ingeniería</p>
+                    <p>Docente: Juan Velasco</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white text-decoration-none">Inicio</a></li>
+                        <li><a href="tablas/tabla-f1.html" class="text-white text-decoration-none">Tabla F1</a></li>
+                        <li><a href="protocol/guia-identificacion.html" class="text-white text-decoration-none">Protocolo</a></li>
+                        <li><a href="procesos/paso0.html" class="text-white text-decoration-none">Procesos</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Contacto</h5>
+                    <p><i class="fas fa-envelope me-2"></i>juan.velasco@universidad.edu</p>
+                    <p><i class="fas fa-clock me-2"></i>Período: 2026-2</p>
+                    <p><i class="fas fa-building me-2"></i>Facultad de Ingeniería</p>
+                </div>
+            </div>
+            <hr class="border-secondary">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2026 Procesos Industriales. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script>
+        // Database of properties from Table F1
+        const liquidProperties = {
+            agua: {
+                name: "Agua",
+                data: {
+                    0: { density: 1000, absVisc: 1.790, kinVisc: 17900 },
+                    10: { density: 1000, absVisc: 1.310, kinVisc: 13100 },
+                    20: { density: 998, absVisc: 1.000, kinVisc: 10000 },
+                    30: { density: 996, absVisc: 0.798, kinVisc: 8010 },
+                    40: { density: 992, absVisc: 0.653, kinVisc: 6580 },
+                    50: { density: 988, absVisc: 0.547, kinVisc: 5480 },
+                    60: { density: 983, absVisc: 0.467, kinVisc: 4750 },
+                    70: { density: 978, absVisc: 0.404, kinVisc: 4130 },
+                    80: { density: 972, absVisc: 0.355, kinVisc: 3650 },
+                    90: { density: 965, absVisc: 0.315, kinVisc: 3260 },
+                    100: { density: 958, absVisc: 0.282, kinVisc: 2940 }
+                }
+            },
+            aceite: {
+                name: "Aceite Lubricante",
+                data: {
+                    20: { density: 871, absVisc: 13100, kinVisc: 150000 },
+                    40: { density: 858, absVisc: 6810, kinVisc: 79400 },
+                    60: { density: 845, absVisc: 4180, kinVisc: 49500 },
+                    80: { density: 832, absVisc: 2830, kinVisc: 34000 },
+                    100: { density: 820, absVisc: 2000, kinVisc: 24400 },
+                    120: { density: 809, absVisc: 1540, kinVisc: 19000 }
+                }
+            },
+            etanol: {
+                name: "Alcohol Etílico",
+                data: {
+                    0: { density: 806, absVisc: 1.770, kinVisc: 22000 },
+                    20: { density: 789, absVisc: 1.200, kinVisc: 15200 },
+                    40: { density: 772, absVisc: 0.834, kinVisc: 10800 },
+                    60: { density: 754, absVisc: 0.592, kinVisc: 7850 }
+                }
+            },
+            metanol: {
+                name: "Alcohol Metílico",
+                data: {
+                    0: { density: 810, absVisc: 0.817, kinVisc: 10100 },
+                    20: { density: 792, absVisc: 0.584, kinVisc: 7370 },
+                    30: { density: 783, absVisc: 0.510, kinVisc: 6510 },
+                    40: { density: 774, absVisc: 0.450, kinVisc: 5810 }
+                }
+            },
+            benceno: {
+                name: "Benceno",
+                data: {
+                    0: { density: 900, absVisc: 0.912, kinVisc: 10100 },
+                    20: { density: 879, absVisc: 0.652, kinVisc: 7420 },
+                    40: { density: 875, absVisc: 0.503, kinVisc: 5860 },
+                    60: { density: 836, absVisc: 0.392, kinVisc: 4690 },
+                    80: { density: 815, absVisc: 0.329, kinVisc: 4040 }
+                }
+            },
+            etilenglicol: {
+                name: "Etilenglicol",
+                data: {
+                    20: { density: 1110, absVisc: 19900, kinVisc: 179000 },
+                    40: { density: 1100, absVisc: 9130, kinVisc: 83000 },
+                    60: { density: 1090, absVisc: 4950, kinVisc: 45500 },
+                    80: { density: 1070, absVisc: 3020, kinVisc: 28200 },
+                    100: { density: 1060, absVisc: 1990, kinVisc: 18800 }
+                }
+            },
+            kerosene: {
+                name: "Kerosene",
+                data: {
+                    "-18": { density: 841, absVisc: 7060, kinVisc: 84000 },
+                    20: { density: 814, absVisc: 1.900, kinVisc: 23700 }
+                }
+            },
+            mercurio: {
+                name: "Mercurio",
+                data: {
+                    0: { density: 13600, absVisc: 1.680, kinVisc: 1240 },
+                    20: { density: 13550, absVisc: 1.550, kinVisc: 1140 },
+                    40: { density: 13500, absVisc: 1.450, kinVisc: 1070 },
+                    60: { density: 13450, absVisc: 1.370, kinVisc: 1020 },
+                    80: { density: 13400, absVisc: 1.300, kinVisc: 970 },
+                    100: { density: 13350, absVisc: 1.240, kinVisc: 929 }
+                }
+            },
+            octano: {
+                name: "Octano Normal",
+                data: {
+                    0: { density: 718, absVisc: 0.706, kinVisc: 9830 },
+                    20: { density: 702, absVisc: 0.542, kinVisc: 7720 },
+                    40: { density: 686, absVisc: 0.433, kinVisc: 6310 }
+                }
+            }
+        };
+
+        function calculateProperties() {
+            const liquid = document.getElementById('liquidSelect').value;
+            const temp = document.getElementById('tempInput').value;
+            
+            if (!liquid || !temp) {
+                alert('Por favor seleccione un líquido y ingrese una temperatura');
+                return;
+            }
+            
+            const liquidData = liquidProperties[liquid];
+            const tempData = liquidData.data[temp];
+            
+            if (tempData) {
+                document.getElementById('densityResult').textContent = tempData.density.toLocaleString();
+                document.getElementById('absViscosityResult').textContent = tempData.absVisc.toLocaleString();
+                document.getElementById('kinViscosityResult').textContent = tempData.kinVisc.toLocaleString();
+                
+                document.getElementById('resultsBox').classList.add('show');
+                
+                // Scroll to results
+                document.getElementById('resultsBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                alert(`No hay datos disponibles para ${liquidData.name} a ${temp}°C.\n\nTemperaturas disponibles: ${Object.keys(liquidData.data).join(', ')}°C`);
+            }
+        }
+
+        // Add enter key support
+        document.getElementById('tempInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calculateProperties();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,22 +1,61 @@
-# Archivos del sistema
-.DS_Store
-Thumbs.db
-desktop.ini
+```
+# Compiled and build artifacts
+*.pyc
+__pycache__/
+*.o
+*.obj
+dist/
+build/
 
-# Editores
+# Dependencies
+.venv/
+venv/
+node_modules/
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+
+# Environment
+.env
+.env.local
+.env.*
+
+# Editors
 .vscode/
 .idea/
-*.swp
-*.swo
 
-# Logs
-*.log
-npm-debug.log*
+# Coverage reports
+coverage/
+htmlcov/
+.coverage
 
-# Dependencias (si usas Node)
-node_modules/
-package-lock.json
+# OS generated files
+.DS_Store
+Thumbs.db
 
-# Archivos temporales
-*.tmp
-*.temp
+# Archives and compressed files
+*.zip
+*.gz
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.zst
+*.lz4
+*.lzh
+*.cab
+*.arj
+*.rpm
+*.deb
+*.Z
+*.lz
+*.lzo
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.tar.zst
+```
