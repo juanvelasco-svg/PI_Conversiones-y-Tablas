@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Combustión | Procesos Industriales</title>
+    <link rel="icon" href="../assets/images/logo.svg" type="image/svg+xml">
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- MathJax -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #ff6600;
+            --dark-bg: #1a1a2e;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-light: #e0e0e0;
+        }
+        body { font-family: 'Roboto', sans-serif; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: var(--text-light); min-height: 100vh; }
+        h1, h2, h3, h4 { font-family: 'Orbitron', sans-serif; }
+        .main-header { background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); border-bottom: 3px solid var(--secondary-color); position: sticky; top: 0; z-index: 1000; }
+        .navbar-brand img { filter: drop-shadow(0 0 8px var(--secondary-color)); }
+        .nav-link:hover, .nav-link.active { color: var(--secondary-color) !important; }
+        .dropdown-menu-dark { background: rgba(0, 0, 0, 0.95); border: 1px solid var(--secondary-color); }
+        .page-title { background: linear-gradient(45deg, var(--secondary-color), #ff9933); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin: 2rem 0; font-weight: 900; }
+        .tool-card { background: var(--card-bg); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
+        .manual-ref-box { background: rgba(255, 102, 0, 0.1); border: 2px dashed var(--secondary-color); padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0; }
+        .manual-ref-box h5 { color: var(--secondary-color); }
+        .form-control, .form-select { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white; }
+        .form-control:focus, .form-select:focus { background: rgba(255, 255, 255, 0.15); border-color: var(--secondary-color); color: white; box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.25); }
+        .form-select option { background: var(--dark-bg); color: white; }
+        .btn-calculate { background: linear-gradient(135deg, var(--secondary-color), #ff9933); border: none; font-weight: 700; padding: 0.75rem 2rem; transition: all 0.3s; color: white; }
+        .btn-calculate:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(255, 102, 0, 0.4); color: white; }
+        .result-box { background: rgba(0, 255, 100, 0.1); border: 1px solid #00ff66; border-radius: 10px; padding: 1.5rem; margin-top: 1rem; display: none; }
+        .result-box.show { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .result-item { background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid var(--secondary-color); }
+        .nav-tabs .nav-link { color: var(--text-light); border: 1px solid rgba(255,255,255,0.2); }
+        .nav-tabs .nav-link.active { background: var(--secondary-color); color: white; border-color: var(--secondary-color); }
+        .fuel-table { background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; }
+        .fuel-table thead { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); }
+        .fuel-table th { font-weight: 700; text-transform: uppercase; font-size: 0.8rem; color: white; }
+        .fuel-table tbody tr:hover { background: rgba(255, 102, 0, 0.15); }
+        footer { background: rgba(0, 0, 0, 0.9); border-top: 3px solid var(--secondary-color); margin-top: 4rem; padding: 3rem 0; }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html"><img src="../assets/images/logo.svg" alt="Logo" height="60"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">Inicio</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" data-bs-toggle="dropdown">Herramientas</a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="tablas-y-calculadoras.html">Tablas y Conversores</a></li>
+                                <li><a class="dropdown-item" href="calculadora-fluidos.html">Flujo de Fluidos</a></li>
+                                <li><a class="dropdown-item" href="calculadora-termodinamica.html">Termodinámica</a></li>
+                                <li><a class="dropdown-item" href="calculadora-transferencia-calor.html">Transferencia de Calor</a></li>
+                                <li><a class="dropdown-item active" href="calculadora-combustion.html">Combustión</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container py-4">
+        <h1 class="page-title"><i class="fas fa-fire me-3"></i>CALCULADORA DE COMBUSTIÓN</h1>
+        <p class="text-center mb-4">Balance de Materia y Energía en Procesos de Combustión - Guía 3</p>
+
+        <!-- Navegación por pestañas -->
+        <ul class="nav nav-tabs" id="combTabs" role="tablist">
+            <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-combustible">Composición Combustible</button></li>
+            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-aire">Aire de Combustión</button></li>
+            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-humos">Composición de Humos</button></li>
+            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-energia">Balance de Energía</button></li>
+            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-reacciones">Reacciones Químicas</button></li>
+        </ul>
+
+        <div class="tab-content">
+
+            <!-- TAB 1: COMPOSICIÓN DEL COMBUSTIBLE -->
+            <div class="tab-pane fade show active" id="tab-combustible">
+                <div class="tool-card">
+                    <h3><i class="fas fa-gas-pump me-2 text-warning"></i>Composición del Combustible</h3>
+                    
+                    <div class="manual-ref-box">
+                        <h5><i class="fas fa-book-open me-2"></i>📚 Referencia Manual (Sin internet)</h5>
+                        <p><strong>Documentos:</strong> Tabla B1 (Propiedades físicas), Guía 3 (Problemas 1-10)</p>
+                        <ol>
+                            <li><strong>Combustibles gaseosos:</strong> Composición en % volumen (equivale a % molar). Ej: 60% C3H8, 40% C4H10</li>
+                            <li><strong>Combustibles líquidos/sólidos:</strong> Composición en % masa. Ej: 84% C, 14.5% H, 1% S</li>
+                            <li><strong>Conversión masa → moles:</strong> \( n_i = \frac{m_i}{M_i} \) donde \( M_i \) es la masa molar (Tabla B1)</li>
+                            <li><strong>Masa molar promedio:</strong> \( M_{prom} = \sum y_i \cdot M_i \) (para gases)</li>
+                        </ol>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Tipo de Combustible</label>
+                            <select id="fuel-type" class="form-select" onchange="cargarCombustible()">
+                                <option value="custom">Personalizado</option>
+                                <option value="propano_butano">Propano/Butano (Guía 3, Prob 1)</option>
+                                <option value="fuel_oil">Fuel Oil (Guía 3, Prob 3)</option>
+                                <option value="gasolina">Gasolina (Guía 3, Prob 4)</option>
+                                <option value="biogas">Biogás (Guía 3, Prob 6)</option>
+                                <option value="plasticos">Residuos Plásticos (Guía 3, Prob 10)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Flujo de Combustible</label>
+                            <div class="input-group">
+                                <input type="number" id="fuel-flow" class="form-control" placeholder="Ej: 100" step="0.01">
+                                <select id="fuel-unit" class="form-select" style="max-width: 120px;">
+                                    <option value="kmol_h">kmol/h</option>
+                                    <option value="kg_h">kg/h</option>
+                                    <option value="m3_h">m³/h</option>
+                                    <option value="ton_dia">ton/día</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mt-3">
+                            <h5 class="text-warning">Composición (separar valores por comas)</h5>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Componentes (% volumen para gases, % masa para líquidos/sólidos)</label>
+                            <input type="text" id="fuel-components" class="form-control" placeholder="Ej: 60, 40">
+                            <small class="text-muted">Para gases: C3H8, C4H10 | Para líquidos: C, H, S, O, N, H2O</small>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Temperatura de entrada (°C)</label>
+                            <input type="number" id="fuel-temp" class="form-control" placeholder="Ej: 25" step="0.1">
+                        </div>
+
+                        <div class="col-12 text-center mt-3">
+                            <button class="btn btn-calculate" onclick="calcularCombustible()"><i class="fas fa-calculator me-2"></i>Calcular Composición Molar</button>
+                        </div>
+                    </div>
+
+                    <div id="fuel-result" class="result-box">
+                        <h5 class="text-warning mb-3">Composición Molar del Combustible</h5>
+                        <div id="fuel-composition-table"></div>
+                        <div class="row mt-3">
+                            <div class="col-md-4"><div class="result-item"><h6>Masa Molar Promedio</h6><h4 id="fuel-M">-</h4><small>g/mol</small></div></div>
+                            <div class="col-md-4"><div class="result-item"><h6>Flujo Molar Total</h6><h4 id="fuel-n">-</h4><small>kmol/h</small></div></div>
+                            <div class="col-md-4"><div class="result-item"><h6>Flujo Másico Total</h6><h4 id="fuel-m">-</h4><small>kg/h</small></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: AIRE DE COMBUSTIÓN -->
+            <div class="tab-pane fade" id="tab-aire">
+                <div class="tool-card">
+                    <h3><i class="fas fa-wind me-2 text-info"></i>Cálculo de Aire de Combustión</h3>
+                    
+                    <div class="manual-ref-box">
+                        <h5><i class="fas fa-book-open me-2"></i>📚 Fórmulas Fundamentales</h5>
+                        <ol>
+                            <li><strong>Oxígeno teórico:</strong> \( O_{2,teo} = \sum n_i \cdot \nu_i \) donde \( \nu_i \) son los coeficientes estequiométricos</li>
+                            <li><strong>Aire teórico:</strong> \( n_{aire,teo} = \frac{O_{2,teo}}{0.21} \)</li>
+                            <li><strong>Aire real con exceso:</strong> \( n_{aire,real} = n_{aire,teo} \times (1 + \frac{\%exceso}{100}) \)</li>
+                            <li><strong>Aire húmedo:</strong> \( n_{aire,humedo} = n_{aire,seco} \times (1 + H_m) \) donde \( H_m \) es la humedad molar (mol agua/mol aire seco)</li>
+                            <li><strong>Volumen de aire:</strong> \( V = \frac{n \cdot R \cdot T}{P} \) con \( R = 0.08206 \frac{atm \cdot L}{mol \cdot K} \)</li>
+                        </ol>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Oxígeno teórico requerido (kmol/h)</label>
+                            <input type="number" id="O2-teo" class="form-control" step="0.01" placeholder="Del balance estequiométrico">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">% Exceso de aire</label>
+                            <input type="number" id="exceso" class="form-control" step="0.1" placeholder="Ej: 20">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Humedad molar del aire (mol agua/mol aire seco)</label>
+                            <input type="number" id="humedad-aire" class="form-control" step="0.001" placeholder="Ej: 0.02" value="0">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Temperatura del aire (°C)</label>
+                            <input type="number" id="aire-temp" class="form-control" step="0.1" placeholder="Ej: 25">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Presión (atm)</label>
+                            <input type="number" id="aire-pres" class="form-control" step="0.01" value="1" placeholder="Ej: 1">
+                        </div>
+
+                        <div class="col-12 text-center mt-3">
+                            <button class="btn btn-calculate" onclick="calcularAire()"><i class="fas fa-calculator me-2"></i>Calcular Aire</button>
+                        </div>
+                    </div>
+
+                    <div id="aire-result" class="result-box">
+                        <div class="row">
+                            <div class="col-md-3"><div class="result-item"><h6>Aire seco teórico</h6><h4 id="aire-teo">-</h4><small>kmol/h</small></div></div>
+                            <div class="col-md-3"><div class="result-item"><h6>Aire seco real</h6><h4 id="aire-real">-</h4><small>kmol/h</small></div></div>
+                            <div class="col-md-3"><div class="result-item"><h6>Aire húmedo</h6><h4 id="aire-humedo">-</h4><small>kmol/h</small></div></div>
+                            <div class="col-md-3"><div class="result-item"><h6>Volumen aire húmedo</h6><h4 id="aire-vol">-</h4><small>m³/h</small></div></div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-4"><div class="result-item"><h6>O2 en aire real</h6><h4 id="O2-real">-</h4><small>kmol/h</small></div></div>
+                            <div class="col-md-4"><div class="result-item"><h6>N2 en aire real</h6><h4 id="N2-real">-</h4><small>kmol/h</small></div></div>
+                            <div class="col-md-4"><div class="result-item"><h6>H2O en aire húmedo</h6><h4 id="H2O-aire">-</h4><small>kmol/h</small></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: COMPOSICIÓN DE HUMOS -->
+            <div class="tab-pane fade" id="tab-humos">
+                <div class="tool-card">
+                    <h3><i class="fas fa-smog me-2 text-warning"></i>Composición de Gases de Combustión (Humos)</h3>
+                    
+                    <div class="manual-ref-box">
+                        <h5><i class="fas fa-book-open me-2"></i>📚 Balance de Materia en Combustión</h5>
+                        <p><strong>Reacciones de combustión completa:</strong></p>
+                        <ul>
+                            <li>\( C + O_2 \rightarrow CO_2 \) → 1 mol C produce 1 mol CO2</li>
+                            <li>\( H_2 + 0.5 O_2 \rightarrow H_2O \) → 1 mol H2 produce 1 mol H2O</li>
+                            <li>\( S + O_2 \rightarrow SO_2 \) → 1 mol S produce 1 mol SO2</li>
+                            <li>\( CH_4 + 2 O_2 \rightarrow CO_2 + 2 H_2O \)</li>
+                            <li>\( C_3H_8 + 5 O_2 \rightarrow 3 CO_2 + 4 H_2O \)</li>
+                            <li>\( C_4H_{10} + 6.5 O_2 \rightarrow 4 CO_2 + 5 H_2O \)</li>
+                        </ul>
+                        <p><strong>Base seca:</strong> Excluir H2O del análisis. \( \%CO_2 (base seca) = \frac{n_{CO_2}}{n_{total} - n_{H_2O}} \times 100 \)</p>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label class="form-label">CO2 producido (kmol/h)</label>
+                            <input type="number" id="humo-CO2" class="form-control" step="0.01">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">H2O producido (kmol/h)</label>
+                            <input type="number" id="humo-H2O" class="form-control" step="0.01">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">SO2 producido (kmol/h)</label>
+                            <input type="number" id="humo-SO2" class="form-control" step="0.01" value="0">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">O2 en exceso (kmol/h)</label>
+                            <input type="number" id="humo-O2" class="form-control" step="0.01">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">N2 del aire (kmol/h)</label>
+                            <input type="number" id="humo-N2" class="form-control" step="0.01">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">CO2 del combustible (si es biogás, kmol/h)</label>
+                            <input type="number" id="humo-CO2-fuel" class="form-control" step="0.01" value="0">
+                        </div>
+
+                        <div class="col-12 text-center mt-3">
+                            <button class="btn btn-calculate" onclick="calcularHumos()"><i class="fas fa-calculator me-2"></i>Calcular Composición</button>
+                        </div>
+                    </div>
+
+                    <div id="humos-result" class="result-box">
+                        <h5 class="text-warning mb-3">Composición de Humos</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="text-info">Base Húmeda (incluye H2O)</h6>
+                                <div id="humos-humedo-table"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="text-info">Base Seca (sin H2O)</h6>
+                                <div id="humos-seco-table"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: BALANCE DE ENERGÍA -->
+            <div class="tab-pane fade" id="tab-energia">
+                <div class="tool-card">
+                    <h3><i class="fas fa-thermometer-half me-2 text-warning"></i>Balance de Energía en Combustión</h3>
+                    
+                    <div class="manual-ref-box">
+                        <h5><i class="fas fa-book-open me-2"></i>📚 Ecuación de Balance de Energía</h5>
+                        <p><strong>Primera Ley para sistemas abiertos:</strong></p>
+                        \[ Q = \sum_{salida} n_i \cdot \hat{H}_i - \sum_{entrada} n_i \cdot \hat{H}_i \]
+                        <p>Donde:</p>
+                        <ul>
+                            <li>\( Q \) = Calor transferido (kJ/h)</li>
+                            <li>\( n_i \) = Flujo molar del componente i (kmol/h)</li>
+                            <li>\( \hat{H}_i \) = Entalpía molar del componente i (kJ/kmol)</li>
+                            <li>\( \hat{H}_i = \int_{T_{ref}}^{T} C_{p,i} \, dT \) con \( T_{ref} = 25°C \)</li>
+                        </ul>
+                        <p><strong>Calores de combustión (Tabla B1):</strong></p>
+                        <ul>
+                            <li>Propano (C3H8): -2219.2 kJ/mol (H2O líquida)</li>
+                            <li>Butano (C4H10): -2877.6 kJ/mol (H2O líquida)</li>
+                            <li>Metano (CH4): -890.4 kJ/mol (H2O líquida)</li>
+                        </ul>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Entalpía total de entrada (kJ/h)</label>
+                            <input type="number" id="H-in" class="form-control" step="1" placeholder="Σ(n·H)entrada">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Entalpía total de salida (kJ/h)</label>
+                            <input type="number" id="H-out" class="form-control" step="1" placeholder="Σ(n·H)salida">
+                        </div>
+
+                        <div class="col-12 text-center mt-3">
+                            <button class="btn btn-calculate" onclick="calcularEnergia()"><i class="fas fa-calculator me-2"></i>Calcular Calor Transferido</button>
+                        </div>
+                    </div>
+
+                    <div id="energia-result" class="result-box">
+                        <div class="row">
+                            <div class="col-md-6"><div class="result-item"><h6>Calor Transferido (Q)</h6><h3 id="Q-kJ">-</h3><small>kJ/h</small></div></div>
+                            <div class="col-md-6"><div class="result-item"><h6>Calor Transferido (Q)</h6><h3 id="Q-MJ">-</h3><small>MJ/h</small></div></div>
+                        </div>
+                        <div class="mt-3">
+                            <p id="energia-signo" class="text-center"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: REACCIONES QUÍMICAS -->
+            <div class="tab-pane fade" id="tab-reacciones">
+                <div class="tool-card">
+                    <h3><i class="fas fa-flask me-2 text-info"></i>Reacciones de Combustión y Estequiometría</h3>
+                    
+                    <div class="manual-ref-box">
+                        <h5><i class="fas fa-book-open me-2"></i>📚 Coeficientes Estequiométricos</h5>
+                        <p>Para calcular el O2 teórico, usa estos coeficientes:</p>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table fuel-table">
+                            <thead>
+                                <tr>
+                                    <th>Combustible</th>
+                                    <th>Fórmula</th>
+                                    <th>Reacción de Combustión</th>
+                                    <th>O2 requerido (mol O2/mol fuel)</th>
+                                    <th>CO2 producido</th>
+                                    <th>H2O producido</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Metano</td>
+                                    <td>CH4</td>
+                                    <td>CH4 + 2O2 → CO2 + 2H2O</td>
+                                    <td>2</td>
+                                    <td>1</td>
+                                    <td>2</td>
+                                </tr>
+                                <tr>
+                                    <td>Propano</td>
+                                    <td>C3H8</td>
+                                    <td>C3H8 + 5O2 → 3CO2 + 4H2O</td>
+                                    <td>5</td>
+                                    <td>3</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>Butano</td>
+                                    <td>C4H10</td>
+                                    <td>C4H10 + 6.5O2 → 4CO2 + 5H2O</td>
+                                    <td>6.5</td>
+                                    <td>4</td>
+                                    <td>5</td>
+                                </tr>
+                                <tr>
+                                    <td>Carbono</td>
+                                    <td>C</td>
+                                    <td>C + O2 → CO2</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>Hidrógeno</td>
+                                    <td>H2</td>
+                                    <td>H2 + 0.5O2 → H2O</td>
+                                    <td>0.5</td>
+                                    <td>0</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td>Azufre</td>
+                                    <td>S</td>
+                                    <td>S + O2 → SO2</td>
+                                    <td>1</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>Etanol</td>
+                                    <td>C2H5OH</td>
+                                    <td>C2H5OH + 3O2 → 2CO2 + 3H2O</td>
+                                    <td>3</td>
+                                    <td>2</td>
+                                    <td>3</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-4">
+                        <h5 class="text-warning">Calculadora de O2 Teórico</h5>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Componente</label>
+                                <select id="reac-component" class="form-select">
+                                    <option value="CH4">Metano (CH4)</option>
+                                    <option value="C3H8">Propano (C3H8)</option>
+                                    <option value="C4H10">Butano (C4H10)</option>
+                                    <option value="C">Carbono (C)</option>
+                                    <option value="H2">Hidrógeno (H2)</option>
+                                    <option value="S">Azufre (S)</option>
+                                    <option value="C2H5OH">Etanol (C2H5OH)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Flujo molar (kmol/h)</label>
+                                <input type="number" id="reac-flow" class="form-control" step="0.01" placeholder="Ej: 60">
+                            </div>
+                            <div class="col-12 text-center mt-3">
+                                <button class="btn btn-calculate" onclick="calcularO2Teorico()"><i class="fas fa-calculator me-2"></i>Calcular O2 Requerido</button>
+                            </div>
+                        </div>
+                        <div id="reac-result" class="result-box">
+                            <div class="row">
+                                <div class="col-md-4"><div class="result-item"><h6>O2 requerido</h6><h4 id="reac-O2">-</h4><small>kmol/h</small></div></div>
+                                <div class="col-md-4"><div class="result-item"><h6>CO2 producido</h6><h4 id="reac-CO2">-</h4><small>kmol/h</small></div></div>
+                                <div class="col-md-4"><div class="result-item"><h6>H2O producido</h6><h4 id="reac-H2O">-</h4><small>kmol/h</small></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2026 Procesos Industriales. Facultad de Ingeniería.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // ==========================================
+        // BASE DE DATOS DE COMBUSTIBLES
+        // ==========================================
+        const combustiblesDB = {
+            propano_butano: {
+                tipo: 'gas',
+                componentes: ['C3H8', 'C4H10'],
+                porcentajes: [60, 40],
+                masas_molares: [44.1, 58.12]
+            },
+            fuel_oil: {
+                tipo: 'liquido',
+                componentes: ['C', 'H', 'S', 'H2O'],
+                porcentajes: [84, 14.5, 1.0, 0.5],
+                masas_molares: [12, 2, 32, 18]
+            },
+            gasolina: {
+                tipo: 'liquido',
+                componentes: ['C', 'H', 'O2'],
+                porcentajes: [85, 14, 1],
+                masas_molares: [12, 2, 32]
+            },
+            biogas: {
+                tipo: 'gas',
+                componentes: ['CH4', 'CO2'],
+                porcentajes: [65, 35],
+                masas_molares: [16, 44]
+            },
+            plasticos: {
+                tipo: 'solido',
+                componentes: ['C', 'H', 'inertes'],
+                porcentajes: [85, 10, 5],
+                masas_molares: [12, 2, 0]
+            }
+        };
+
+        // Coeficientes estequiométricos
+        const estequiometria = {
+            'CH4': { O2: 2, CO2: 1, H2O: 2 },
+            'C3H8': { O2: 5, CO2: 3, H2O: 4 },
+            'C4H10': { O2: 6.5, CO2: 4, H2O: 5 },
+            'C': { O2: 1, CO2: 1, H2O: 0 },
+            'H2': { O2: 0.5, CO2: 0, H2O: 1 },
+            'S': { O2: 1, CO2: 0, H2O: 0, SO2: 1 },
+            'C2H5OH': { O2: 3, CO2: 2, H2O: 3 }
+        };
+
+        function cargarCombustible() {
+            const tipo = document.getElementById('fuel-type').value;
+            if (combustiblesDB[tipo]) {
+                const fuel = combustiblesDB[tipo];
+                document.getElementById('fuel-components').value = fuel.porcentajes.join(', ');
+            }
+        }
+
+        function calcularCombustible() {
+            const tipo = document.getElementById('fuel-type').value;
+            const flow = parseFloat(document.getElementById('fuel-flow').value);
+            const unit = document.getElementById('fuel-unit').value;
+            const comps = document.getElementById('fuel-components').value.split(',').map(Number);
+            
+            if (comps.some(isNaN)) { alert("Ingresa valores válidos en composición"); return; }
+            
+            let fuel;
+            if (tipo === 'custom') {
+                fuel = {
+                    tipo: 'gas',
+                    componentes: ['Comp1', 'Comp2'],
+                    porcentajes: comps,
+                    masas_molares: [28, 32] // Valores por defecto
+                };
+            } else {
+                fuel = combustiblesDB[tipo];
+            }
+
+            // Calcular masa molar promedio
+            let M_prom = 0;
+            for (let i = 0; i < fuel.porcentajes.length; i++) {
+                M_prom += (fuel.porcentajes[i] / 100) * fuel.masas_molares[i];
+            }
+
+            // Convertir flujo a kmol/h
+            let n_total = 0;
+            let m_total = 0;
+            
+            if (unit === 'kmol_h') {
+                n_total = flow;
+                m_total = flow * M_prom;
+            } else if (unit === 'kg_h') {
+                m_total = flow;
+                n_total = flow / M_prom;
+            } else if (unit === 'm3_h') {
+                n_total = flow / 22.414; // CN
+                m_total = n_total * M_prom;
+            } else if (unit === 'ton_dia') {
+                m_total = flow * 1000 / 24; // kg/h
+                n_total = m_total / M_prom;
+            }
+
+            // Mostrar tabla de composición
+            let tableHTML = '<table class="table fuel-table"><thead><tr><th>Componente</th><th>%</th><th>kmol/h</th><th>kg/h</th></tr></thead><tbody>';
+            for (let i = 0; i < fuel.componentes.length; i++) {
+                const n_i = n_total * (fuel.porcentajes[i] / 100);
+                const m_i = n_i * fuel.masas_molares[i];
+                tableHTML += `<tr><td>${fuel.componentes[i]}</td><td>${fuel.porcentajes[i]}%</td><td>${n_i.toFixed(3)}</td><td>${m_i.toFixed(2)}</td></tr>`;
+            }
+            tableHTML += '</tbody></table>';
+
+            document.getElementById('fuel-composition-table').innerHTML = tableHTML;
+            document.getElementById('fuel-M').innerText = M_prom.toFixed(2);
+            document.getElementById('fuel-n').innerText = n_total.toFixed(3);
+            document.getElementById('fuel-m').innerText = m_total.toFixed(2);
+            document.getElementById('fuel-result').classList.add('show');
+        }
+
+        function calcularAire() {
+            const O2_teo = parseFloat(document.getElementById('O2-teo').value);
+            const exceso = parseFloat(document.getElementById('exceso').value);
+            const humedad = parseFloat(document.getElementById('humedad-aire').value) || 0;
+            const T = parseFloat(document.getElementById('aire-temp').value);
+            const P = parseFloat(document.getElementById('aire-pres').value);
+
+            if (isNaN(O2_teo) || isNaN(exceso)) { alert("Completa los campos obligatorios"); return; }
+
+            const aire_teo = O2_teo / 0.21;
+            const aire_real = aire_teo * (1 + exceso / 100);
+            const aire_humedo = aire_real * (1 + humedad);
+            
+            const O2_real = aire_real * 0.21;
+            const N2_real = aire_real * 0.79;
+            const H2O_aire = aire_real * humedad;
+
+            // Volumen con ley de gases ideales
+            const T_K = T + 273.15;
+            const R = 0.08206; // atm·L/(mol·K)
+            const V_L = (aire_humedo * 1000 * R * T_K) / P; // L/h
+            const V_m3 = V_L / 1000; // m³/h
+
+            document.getElementById('aire-teo').innerText = aire_teo.toFixed(3);
+            document.getElementById('aire-real').innerText = aire_real.toFixed(3);
+            document.getElementById('aire-humedo').innerText = aire_humedo.toFixed(3);
+            document.getElementById('aire-vol').innerText = V_m3.toFixed(2);
+            document.getElementById('O2-real').innerText = O2_real.toFixed(3);
+            document.getElementById('N2-real').innerText = N2_real.toFixed(3);
+            document.getElementById('H2O-aire').innerText = H2O_aire.toFixed(3);
+            document.getElementById('aire-result').classList.add('show');
+        }
+
+        function calcularHumos() {
+            const CO2 = parseFloat(document.getElementById('humo-CO2').value) || 0;
+            const H2O = parseFloat(document.getElementById('humo-H2O').value) || 0;
+            const SO2 = parseFloat(document.getElementById('humo-SO2').value) || 0;
+            const O2 = parseFloat(document.getElementById('humo-O2').value) || 0;
+            const N2 = parseFloat(document.getElementById('humo-N2').value) || 0;
+            const CO2_fuel = parseFloat(document.getElementById('humo-CO2-fuel').value) || 0;
+
+            const CO2_total = CO2 + CO2_fuel;
+            const total_humedo = CO2_total + H2O + SO2 + O2 + N2;
+            const total_seco = total_humedo - H2O;
+
+            // Composición base húmeda
+            let humedoHTML = '<table class="table fuel-table"><thead><tr><th>Componente</th><th>kmol/h</th><th>%</th></tr></thead><tbody>';
+            const comps_humedo = [
+                { name: 'CO2', val: CO2_total },
+                { name: 'H2O', val: H2O },
+                { name: 'SO2', val: SO2 },
+                { name: 'O2', val: O2 },
+                { name: 'N2', val: N2 }
+            ];
+            comps_humedo.forEach(c => {
+                const pct = (c.val / total_humedo) * 100;
+                humedoHTML += `<tr><td>${c.name}</td><td>${c.val.toFixed(3)}</td><td>${pct.toFixed(2)}%</td></tr>`;
+            });
+            humedoHTML += `<tr><td><strong>TOTAL</strong></td><td><strong>${total_humedo.toFixed(3)}</strong></td><td><strong>100%</strong></td></tr>`;
+            humedoHTML += '</tbody></table>';
+
+            // Composición base seca
+            let secoHTML = '<table class="table fuel-table"><thead><tr><th>Componente</th><th>kmol/h</th><th>%</th></tr></thead><tbody>';
+            const comps_seco = [
+                { name: 'CO2', val: CO2_total },
+                { name: 'SO2', val: SO2 },
+                { name: 'O2', val: O2 },
+                { name: 'N2', val: N2 }
+            ];
+            comps_seco.forEach(c => {
+                const pct = (c.val / total_seco) * 100;
+                secoHTML += `<tr><td>${c.name}</td><td>${c.val.toFixed(3)}</td><td>${pct.toFixed(2)}%</td></tr>`;
+            });
+            secoHTML += `<tr><td><strong>TOTAL</strong></td><td><strong>${total_seco.toFixed(3)}</strong></td><td><strong>100%</strong></td></tr>`;
+            secoHTML += '</tbody></table>';
+
+            document.getElementById('humos-humedo-table').innerHTML = humedoHTML;
+            document.getElementById('humos-seco-table').innerHTML = secoHTML;
+            document.getElementById('humos-result').classList.add('show');
+        }
+
+        function calcularEnergia() {
+            const H_in = parseFloat(document.getElementById('H-in').value);
+            const H_out = parseFloat(document.getElementById('H-out').value);
+
+            if (isNaN(H_in) || isNaN(H_out)) { alert("Completa ambos campos"); return; }
+
+            const Q = H_out - H_in;
+            const Q_MJ = Q / 1000;
+
+            document.getElementById('Q-kJ').innerText = Q.toFixed(2);
+            document.getElementById('Q-MJ').innerText = Q_MJ.toFixed(3);
+            
+            let signo = '';
+            if (Q < 0) {
+                signo = '<span class="text-info"><i class="fas fa-arrow-down me-2"></i>El sistema <strong>libera calor</strong> (exotérmico). Q es negativo.</span>';
+            } else if (Q > 0) {
+                signo = '<span class="text-warning"><i class="fas fa-arrow-up me-2"></i>El sistema <strong>absorbe calor</strong> (endotérmico). Q es positivo.</span>';
+            } else {
+                signo = '<span class="text-success"><i class="fas fa-check me-2"></i>Sistema adiabático (Q = 0)</span>';
+            }
+            document.getElementById('energia-signo').innerHTML = signo;
+            document.getElementById('energia-result').classList.add('show');
+        }
+
+        function calcularO2Teorico() {
+            const comp = document.getElementById('reac-component').value;
+            const flow = parseFloat(document.getElementById('reac-flow').value);
+
+            if (isNaN(flow)) { alert("Ingresa un flujo válido"); return; }
+
+            const est = estequiometria[comp];
+            const O2 = flow * est.O2;
+            const CO2 = flow * est.CO2;
+            const H2O = flow * est.H2O;
+
+            document.getElementById('reac-O2').innerText = O2.toFixed(3);
+            document.getElementById('reac-CO2').innerText = CO2.toFixed(3);
+            document.getElementById('reac-H2O').innerText = H2O.toFixed(3);
+            document.getElementById('reac-result').classList.add('show');
+        }
+    </script>
+</body>
+</html>
