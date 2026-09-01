@@ -247,12 +247,12 @@
         async function inicializarTablas() {
             const statusEl = document.getElementById('status-global');
             
-            tablas.A4 = await cargarJSON('datos/tabla_A4_agua_saturada_T.json');
-            tablas.A5 = await cargarJSON('datos/tabla_A5_agua_saturada_P.json');
-            tablas.A6 = await cargarJSON('datos/tabla_A6_vapor_sobrecalentado.json');
-            tablas.A11 = await cargarJSON('datos/tabla_A11_R134a_saturado_T.json');
-            tablas.A12 = await cargarJSON('datos/tabla_A12_R134a_saturado_P.json');
-            tablas.A13 = await cargarJSON('datos/tabla_A13_R134a_sobrecalentado.json');
+            tablas.A4 = await cargarJSON('../tablas/tabla_A4_agua_saturada_T.json');
+            tablas.A5 = await cargarJSON('../tablas/tabla_A5_agua_saturada_P.json');
+            tablas.A6 = await cargarJSON('../tablas/tabla_A6_vapor_sobrecalentado.json');
+            tablas.A11 = await cargarJSON('../tablas/tabla_A11_R134a_saturado_T.json');
+            tablas.A12 = await cargarJSON('../tablas/tabla_A12_R134a_saturado_P.json');
+            tablas.A13 = await cargarJSON('../tablas/tabla_A13_R134a_sobrecalentado.json');
             
             // Tabla A-7 (Gases Ideales) - Datos embebidos por ser pequeña
             tablas.A7 = {
