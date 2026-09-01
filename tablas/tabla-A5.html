@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tabla A-5 | Agua Saturada - Por Presión - Procesos Industriales</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        :root { --primary-color: #0066cc; --secondary-color: #ff6600; --dark-bg: #1a1a2e; }
+        body { font-family: 'Roboto', sans-serif; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #fff; }
+        .main-header { background: rgba(0,0,0,0.8); border-bottom: 3px solid var(--secondary-color); }
+        .navbar-brand img { filter: drop-shadow(0 0 10px var(--secondary-color)); }
+        .nav-link:hover { color: var(--secondary-color) !important; }
+        .dropdown-menu-dark { background: rgba(0,0,0,0.9); border: 1px solid var(--secondary-color); }
+        .page-title { font-family: 'Orbitron'; background: linear-gradient(45deg, var(--secondary-color), #ff9933); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin: 2rem 0; }
+        .info-card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 15px; padding: 2rem; margin-bottom: 2rem; }
+        .table-reference { background: rgba(255,102,0,0.15); border: 2px dashed var(--secondary-color); padding: 1rem; border-radius: 8px; }
+        .formula-box { background: rgba(0,102,204,0.2); border-left: 4px solid var(--secondary-color); padding: 1.5rem; border-radius: 8px; }
+        .data-table { background: rgba(255,255,255,0.05); border-radius: 10px; }
+        .data-table thead { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); }
+        .data-table tbody tr:hover { background: rgba(255,102,0,0.2); }
+        .calculator-panel { background: linear-gradient(135deg, rgba(0,102,204,0.3), rgba(255,102,0,0.2)); border-radius: 15px; padding: 2rem; margin: 2rem 0; }
+        .btn-calculate { background: linear-gradient(135deg, var(--secondary-color), #ff9933); border: none; font-weight: 700; }
+        .btn-calculate:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(255,102,0,0.4); }
+        .result-box { background: rgba(0,255,0,0.1); border: 2px solid #00ff00; border-radius: 10px; padding: 1.5rem; display: none; }
+        .result-box.show { display: block; }
+        .table-container { max-height: 500px; overflow-y: auto; }
+        footer { background: rgba(0,0,0,0.9); border-top: 3px solid var(--secondary-color); margin-top: 4rem; padding: 2rem 0; }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html"><img src="../assets/images/logo.png" alt="Logo" height="60"></a>
+                <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">Inicio</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" data-bs-toggle="dropdown">Tablas de Propiedades</a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="tabla-f1.html">F1: Densidades y Viscosidades</a></li>
+                                <li><a class="dropdown-item" href="tabla-f2.html">F2: Tuberías</a></li>
+                                <li><a class="dropdown-item" href="tabla-f3.html">F3: Rugosidad</a></li>
+                                <li><a class="dropdown-item" href="tabla-f4.html">F4: Longitud Equivalente</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="tabla-A4.html">A-4: Agua Saturada (T)</a></li>
+                                <li><a class="dropdown-item" href="tabla-A5.html">A-5: Agua Saturada (P)</a></li>
+                                <li><a class="dropdown-item" href="tabla-A6.html">A-6: Vapor Sobrecalentado</a></li>
+                                <li><a class="dropdown-item" href="tabla-A7.html">A-7: Gases Ideales</a></li>
+                                <li><a class="dropdown-item" href="tabla-A11.html">A-11: R-134a (T)</a></li>
+                                <li><a class="dropdown-item" href="tabla-A12.html">A-12: R-134a (P)</a></li>
+                                <li><a class="dropdown-item" href="tabla-A13.html">A-13: R-134a Sobrecalentado</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Procesos</a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="../procesos/paso0.html">Paso 0</a></li>
+                                <li><a class="dropdown-item" href="../procesos/paso1.html">Paso 1</a></li>
+                                <li><a class="dropdown-item" href="../procesos/paso2.html">Paso 2</a></li>
+                                <li><a class="dropdown-item" href="../procesos/paso3.html">Paso 3</a></li>
+                                <li><a class="dropdown-item" href="../procesos/paso4.html">Paso 4</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Quizzes</a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="../quizzes/quiz-paso0.html">Quiz Paso 0</a></li>
+                                <li><a class="dropdown-item" href="../quizzes/quiz-paso1.html">Quiz Paso 1</a></li>
+                                <li><a class="dropdown-item" href="../quizzes/quiz-paso2.html">Quiz Paso 2</a></li>
+                                <li><a class="dropdown-item" href="../quizzes/quiz-paso3.html">Quiz Paso 3</a></li>
+                                <li><a class="dropdown-item" href="../quizzes/quiz-paso4.html">Quiz Paso 4</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container py-4">
+        <h1 class="page-title"><i class="fas fa-table me-3"></i>TABLA A-A5<br><small>Agua Saturada - Por Presión</small></h1>
+        
+        <div class="info-card">
+            <h3><i class="fas fa-info-circle text-orange me-2"></i>Propósito</h3>
+            <p>La <strong>Tabla A-5</strong> agua saturada - por presión.</p>
+        </div>
+
+        <div class="info-card">
+            <h3><i class="fas fa-book-open text-orange me-2"></i>Cómo Usar (Examen)</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="table-reference">
+                        <h5>Búsqueda Manual</h5>
+                        <ol>
+                            <li>Identifique el valor conocido (presión (kpa))</li>
+                            <li>Busque en la columna correspondiente</li>
+                            <li>Lea horizontalmente las propiedades</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="formula-box">
+                        <h5>Fórmula Mezclas</h5>
+                        <p>\( y = y_f + x \cdot y_{fg} \)</p>
+                        <small>x = calidad (masa vapor / masa total)</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="calculator-panel">
+            <h4 class="text-center"><i class="fas fa-calculator me-2"></i>Buscador Interactivo</h4>
+            <div class="row g-3 mt-2">
+                <div class="col-md-8">
+                    <input type="number" id="searchInput" class="form-control" placeholder="Presión (kPa)..." step="0.01">
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-calculate w-100" onclick="buscar()">Buscar</button>
+                </div>
+            </div>
+            <div id="resultsBox" class="result-box mt-3"><div class="row g-3" id="resultsContent"></div></div>
+        </div>
+
+        <div class="info-card">
+            <h3><i class="fas fa-list text-orange me-2"></i>Tabla Completa</h3>
+            <div class="table-container">
+                <table class="table table-dark table-hover data-table" id="tabla">
+                    <thead><tr><th>P (kPa)</th><th>T (°C)</th><th>v<sub>f</sub></th><th>v<sub>g</sub></th><th>u<sub>f</sub></th><th>u<sub>g</sub></th><th>h<sub>f</sub></th><th>h<sub>fg</sub></th><th>h<sub>g</sub></th><th>s<sub>f</sub></th><th>s<sub>fg</sub></th><th>s<sub>g</sub></th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center"><p>&copy; 2026 Procesos Industriales - Cengel & Boles 9ª Edición</p></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let datos = [];
+        async function cargar() {
+            try {
+                const r = await fetch('tabla_A5_agua_saturada_P.json');
+                datos = (await r.json()).datos;
+                render();
+            } catch(e) { document.getElementById('tabla').innerHTML = '<tr><td>Error cargando</td></tr>'; }
+        }
+        function render() {
+            const tb = document.querySelector('#tabla tbody');
+            tb.innerHTML = '';
+            datos.forEach(fila => {
+                const tr = document.createElement('tr');
+                tr.innerHTML += `<td>${fila.P}</td>`;tr.innerHTML += `<td>${fila.T}</td>`;tr.innerHTML += `<td>${fila.vf}</td>`;tr.innerHTML += `<td>${fila.vg}</td>`;tr.innerHTML += `<td>${fila.uf}</td>`;tr.innerHTML += `<td>${fila.ug}</td>`;tr.innerHTML += `<td>${fila.hf}</td>`;tr.innerHTML += `<td>${fila.hfg}</td>`;tr.innerHTML += `<td>${fila.hg}</td>`;tr.innerHTML += `<td>${fila.sf}</td>`;tr.innerHTML += `<td>${fila.sfg}</td>`;tr.innerHTML += `<td>${fila.sg}</td>`;
+                tb.appendChild(tr);
+            });
+        }
+        function buscar() {
+            const val = parseFloat(document.getElementById('searchInput').value);
+            if(isNaN(val)) return alert('Ingrese valor válido');
+            let mejor = null, diff = Infinity;
+            datos.forEach(f => { const d = Math.abs(f['P'] - val); if(d < diff) { diff = d; mejor = f; } });
+            if(mejor && diff < 0.5) {
+                document.getElementById('resultsContent').innerHTML = Object.keys(mejor).map(k => 
+                    `<div class="col-md-4"><div class="text-center p-3 bg-dark rounded"><h5>${k.toUpperCase()}</h5><p>${mejor[k]}</p></div></div>`
+                ).join('');
+                document.getElementById('resultsBox').classList.add('show');
+            } else alert('No encontrado');
+        }
+        document.addEventListener('DOMContentLoaded', cargar);
+    </script>
+</body>
+</html>
