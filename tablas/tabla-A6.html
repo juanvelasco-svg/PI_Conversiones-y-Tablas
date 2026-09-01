@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Tabla A-4 | Vapor Sobrecalentado - Procesos Industriales</title>
+    <title>Tabla A-6 | Agua Sobrecalentada - Procesos Industriales</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
@@ -19,15 +19,53 @@
         .info-card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 15px; padding: 2rem; margin-bottom: 2rem; }
         .table-reference { background: rgba(255,102,0,0.15); border: 2px dashed var(--secondary-color); padding: 1rem; border-radius: 8px; }
         .formula-box { background: rgba(0,102,204,0.2); border-left: 4px solid var(--secondary-color); padding: 1.5rem; border-radius: 8px; }
-        .data-table { background: rgba(255,255,255,0.05); border-radius: 10px; }
-        .data-table thead { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); }
+        .data-table { background: rgba(255,255,255,0.05); border-radius: 10px; width: 100%; border-collapse: separate; border-spacing: 0; }
+        .data-table thead th { 
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); 
+            border-bottom: 2px solid var(--secondary-color);
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+        .data-table tbody tr { background: rgba(255,255,255,0.05); }
         .data-table tbody tr:hover { background: rgba(255,102,0,0.2); }
+        
+        /* --- MEJORA: FILA Y COLUMNA FIJAS (STICKY) --- */
+        .table-container { 
+            max-height: 600px; 
+            overflow: auto; /* Permite scroll vertical y horizontal */
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+        }
+        /* Fijar primera columna (Presión) */
+        .data-table tbody td:first-child,
+        .data-table thead th:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 1;
+            background: #1a1a2e; /* Color sólido para evitar transparencia al hacer scroll */
+            border-right: 2px solid var(--secondary-color);
+            font-weight: 700;
+            text-align: center;
+        }
+        /* Esquina superior izquierda (intersección de fila y columna fija) */
+        .data-table thead th:first-child {
+            z-index: 3; /* Mayor prioridad para quedar encima de todo */
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+        /* Efecto hover en la columna fija */
+        .data-table tbody tr:hover td:first-child {
+            background: rgba(255,102,0,0.3);
+        }
+        /* ----------------------------------------------- */
+
         .calculator-panel { background: linear-gradient(135deg, rgba(0,102,204,0.3), rgba(255,102,0,0.2)); border-radius: 15px; padding: 2rem; margin: 2rem 0; }
-        .btn-calculate { background: linear-gradient(135deg, var(--secondary-color), #ff9933); border: none; font-weight: 700; }
-        .btn-calculate:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(255,102,0,0.4); }
+        .btn-calculate { background: linear-gradient(135deg, var(--secondary-color), #ff9933); border: none; font-weight: 700; color: #fff; }
+        .btn-calculate:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(255,102,0,0.4); color: #fff; }
         .result-box { background: rgba(0,255,0,0.1); border: 2px solid #00ff00; border-radius: 10px; padding: 1.5rem; display: none; }
-        .result-box.show { display: block; }
-        .table-container { max-height: 500px; overflow-y: auto; }
+        .result-box.show { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
         footer { background: rgba(0,0,0,0.9); border-top: 3px solid var(--secondary-color); margin-top: 4rem; padding: 2rem 0; }
     </style>
 </head>
@@ -43,38 +81,10 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle active" href="#" data-bs-toggle="dropdown">Tablas de Propiedades</a>
                             <ul class="dropdown-menu dropdown-menu-dark">
-                                <li><a class="dropdown-item" href="tabla-f1.html">F1: Densidades y Viscosidades</a></li>
-                                <li><a class="dropdown-item" href="tabla-f2.html">F2: Tuberías</a></li>
-                                <li><a class="dropdown-item" href="tabla-f3.html">F3: Rugosidad</a></li>
-                                <li><a class="dropdown-item" href="tabla-f4.html">F4: Longitud Equivalente</a></li>
-                                <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="tabla-A4.html">A-4: Agua Saturada (T)</a></li>
                                 <li><a class="dropdown-item" href="tabla-A5.html">A-5: Agua Saturada (P)</a></li>
-                                <li><a class="dropdown-item" href="tabla-A6.html">A-6: Vapor Sobrecalentado</a></li>
+                                <li><a class="dropdown-item active" href="tabla-A6.html">A-6: Vapor Sobrecalentado</a></li>
                                 <li><a class="dropdown-item" href="tabla-A7.html">A-7: Gases Ideales</a></li>
-                                <li><a class="dropdown-item" href="tabla-A11.html">A-11: R-134a (T)</a></li>
-                                <li><a class="dropdown-item" href="tabla-A12.html">A-12: R-134a (P)</a></li>
-                                <li><a class="dropdown-item" href="tabla-A13.html">A-13: R-134a Sobrecalentado</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Procesos</a>
-                            <ul class="dropdown-menu dropdown-menu-dark">
-                                <li><a class="dropdown-item" href="../procesos/paso0.html">Paso 0</a></li>
-                                <li><a class="dropdown-item" href="../procesos/paso1.html">Paso 1</a></li>
-                                <li><a class="dropdown-item" href="../procesos/paso2.html">Paso 2</a></li>
-                                <li><a class="dropdown-item" href="../procesos/paso3.html">Paso 3</a></li>
-                                <li><a class="dropdown-item" href="../procesos/paso4.html">Paso 4</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Quizzes</a>
-                            <ul class="dropdown-menu dropdown-menu-dark">
-                                <li><a class="dropdown-item" href="../quizzes/quiz-paso0.html">Quiz Paso 0</a></li>
-                                <li><a class="dropdown-item" href="../quizzes/quiz-paso1.html">Quiz Paso 1</a></li>
-                                <li><a class="dropdown-item" href="../quizzes/quiz-paso2.html">Quiz Paso 2</a></li>
-                                <li><a class="dropdown-item" href="../quizzes/quiz-paso3.html">Quiz Paso 3</a></li>
-                                <li><a class="dropdown-item" href="../quizzes/quiz-paso4.html">Quiz Paso 4</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -84,11 +94,11 @@
     </header>
 
     <main class="container py-4">
-        <h1 class="page-title"><i class="fas fa-table me-3"></i>TABLA A-A4<br><small>Vapor Sobrecalentado</small></h1>
+        <h1 class="page-title"><i class="fas fa-table me-3"></i>TABLA A-6<br><small>Agua Sobrecalentada</small></h1>
         
         <div class="info-card">
             <h3><i class="fas fa-info-circle text-orange me-2"></i>Propósito</h3>
-            <p>La <strong>Tabla A-4</strong> agua saturada - por temperatura.</p>
+            <p>La <strong>Tabla A-6</strong> proporciona las propiedades del agua en estado de <strong>vapor sobrecalentado</strong>. Se utiliza cuando la temperatura del vapor es mayor que la temperatura de saturación a una presión dada (\(T > T_{sat}\) a \(P\) constante).</p>
         </div>
 
         <div class="info-card">
@@ -98,17 +108,17 @@
                     <div class="table-reference">
                         <h5>Búsqueda Manual</h5>
                         <ol>
-                            <li>Identifique el valor conocido (temperatura (°c))</li>
-                            <li>Busque en la columna correspondiente</li>
-                            <li>Lea horizontalmente las propiedades</li>
+                            <li>Identifique la <strong>Presión (P)</strong> del bloque de tablas.</li>
+                            <li>Dentro de ese bloque, busque la <strong>Temperatura (T)</strong> conocida.</li>
+                            <li>Si el valor exacto no existe, use <strong>interpolación lineal</strong> entre los dos valores de temperatura más cercanos.</li>
                         </ol>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="formula-box">
-                        <h5>Fórmula Mezclas</h5>
-                        <p>\( y = y_f + x \cdot y_{fg} \)</p>
-                        <small>x = calidad (masa vapor / masa total)</small>
+                        <h5>Interpolación Lineal</h5>
+                        <p>\( y = y_1 + \frac{(x - x_1)}{(x_2 - x_1)} \cdot (y_2 - y_1) \)</p>
+                        <small>Donde \(x\) es la temperatura conocida, e \(y\) es la propiedad a hallar (v, u, h, s).</small>
                     </div>
                 </div>
             </div>
@@ -116,12 +126,16 @@
 
         <div class="calculator-panel">
             <h4 class="text-center"><i class="fas fa-calculator me-2"></i>Buscador Interactivo</h4>
+            <p class="text-center text-muted small">Ingrese ambos valores para encontrar la coincidencia más cercana en la tabla.</p>
             <div class="row g-3 mt-2">
-                <div class="col-md-8">
-                    <input type="number" id="searchInput" class="form-control" placeholder="Temperatura (°C)..." step="0.01">
+                <div class="col-md-5">
+                    <input type="number" id="searchP" class="form-control" placeholder="Presión P (kPa)..." step="1">
                 </div>
-                <div class="col-md-4">
-                    <button class="btn btn-calculate w-100" onclick="buscar()">Buscar</button>
+                <div class="col-md-5">
+                    <input type="number" id="searchT" class="form-control" placeholder="Temperatura T (°C)..." step="0.1">
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-calculate w-100" onclick="buscar()"><i class="fas fa-search"></i> Buscar</button>
                 </div>
             </div>
             <div id="resultsBox" class="result-box mt-3"><div class="row g-3" id="resultsContent"></div></div>
@@ -129,48 +143,113 @@
 
         <div class="info-card">
             <h3><i class="fas fa-list text-orange me-2"></i>Tabla Completa</h3>
+            <p class="small text-muted mb-2"><i class="fas fa-info-circle"></i> Desplace la tabla para ver todos los datos. La primera fila y columna permanecerán visibles.</p>
             <div class="table-container">
                 <table class="table table-dark table-hover data-table" id="tabla">
-                    <thead><tr><th>T (°C)</th><th>P (kPa)</th><th>v<sub>f</sub></th><th>v<sub>g</sub></th><th>u<sub>f</sub></th><th>u<sub>g</sub></th><th>h<sub>f</sub></th><th>h<sub>fg</sub></th><th>h<sub>g</sub></th><th>s<sub>f</sub></th><th>s<sub>fg</sub></th><th>s<sub>g</sub></th></tr></thead>
+                    <thead>
+                        <tr>
+                            <th>P (kPa)</th>
+                            <th>T (°C)</th>
+                            <th>v (m³/kg)</th>
+                            <th>u (kJ/kg)</th>
+                            <th>h (kJ/kg)</th>
+                            <th>s (kJ/kg·K)</th>
+                        </tr>
+                    </thead>
                     <tbody></tbody>
                 </table>
             </div>
         </div>
     </main>
 
-    <footer class="text-center"><p>&copy; 2026 Procesos Industriales - Cengel & Boles 9ª Edición</p></footer>
+    <footer class="text-center">
+        <p>&copy; 2026 Procesos Industriales - Cengel & Boles 9ª Edición</p>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         let datos = [];
+        
         async function cargar() {
             try {
-                const r = await fetch('tabla_A6_vapor_sobrecalentado.json');
-                datos = (await r.json()).datos;
+                // Asegúrate de que este archivo JSON exista en tu carpeta con el formato adecuado
+                const r = await fetch('tabla_A6_agua_sobrecalentada.json');
+                if (!r.ok) throw new Error("No se pudo cargar el JSON");
+                const json = await r.json();
+                datos = json.datos || json; // Soporta si es un array directo o un objeto {datos: []}
                 render();
-            } catch(e) { document.getElementById('tabla').innerHTML = '<tr><td>Error cargando</td></tr>'; }
+            } catch(e) { 
+                console.error(e);
+                document.querySelector('#tabla tbody').innerHTML = '<tr><td colspan="6" class="text-center text-warning">Error cargando los datos. Verifique que "tabla_A6_agua_sobrecalentada.json" exista.</td></tr>'; 
+            }
         }
+
         function render() {
             const tb = document.querySelector('#tabla tbody');
             tb.innerHTML = '';
             datos.forEach(fila => {
                 const tr = document.createElement('tr');
-                tr.innerHTML += `<td>${fila.T}</td>`;tr.innerHTML += `<td>${fila.P}</td>`;tr.innerHTML += `<td>${fila.vf}</td>`;tr.innerHTML += `<td>${fila.vg}</td>`;tr.innerHTML += `<td>${fila.uf}</td>`;tr.innerHTML += `<td>${fila.ug}</td>`;tr.innerHTML += `<td>${fila.hf}</td>`;tr.innerHTML += `<td>${fila.hfg}</td>`;tr.innerHTML += `<td>${fila.hg}</td>`;tr.innerHTML += `<td>${fila.sf}</td>`;tr.innerHTML += `<td>${fila.sfg}</td>`;tr.innerHTML += `<td>${fila.sg}</td>`;
+                // Se asume que el JSON tiene las claves: P, T, v, u, h, s
+                tr.innerHTML = `
+                    <td>${fila.P}</td>
+                    <td>${fila.T}</td>
+                    <td>${fila.v}</td>
+                    <td>${fila.u}</td>
+                    <td>${fila.h}</td>
+                    <td>${fila.s}</td>
+                `;
                 tb.appendChild(tr);
             });
         }
+
         function buscar() {
-            const val = parseFloat(document.getElementById('searchInput').value);
-            if(isNaN(val)) return alert('Ingrese valor válido');
+            const pVal = parseFloat(document.getElementById('searchP').value);
+            const tVal = parseFloat(document.getElementById('searchT').value);
+            
+            if(isNaN(pVal) || isNaN(tVal)) {
+                return alert('Por favor, ingrese valores numéricos válidos para Presión y Temperatura.');
+            }
+
+            // Algoritmo de búsqueda: prioriza coincidir con la Presión, luego busca la Temperatura más cercana
             let mejor = null, diff = Infinity;
-            datos.forEach(f => { const d = Math.abs(f['T'] - val); if(d < diff) { diff = d; mejor = f; } });
-            if(mejor && diff < 0.5) {
-                document.getElementById('resultsContent').innerHTML = Object.keys(mejor).map(k => 
-                    `<div class="col-md-4"><div class="text-center p-3 bg-dark rounded"><h5>${k.toUpperCase()}</h5><p>${mejor[k]}</p></div></div>`
-                ).join('');
+            
+            datos.forEach(f => {
+                // Damos mucho más peso a la diferencia de presión para asegurar que estamos en el bloque correcto
+                const pDiff = Math.abs(f.P - pVal);
+                const tDiff = Math.abs(f.T - tVal);
+                
+                // Puntuación: penaliza fuertemente la diferencia de presión (factor 10)
+                const score = (pDiff * 10) + tDiff; 
+                
+                if(score < diff) {
+                    diff = score;
+                    mejor = f;
+                }
+            });
+
+            // Umbral de tolerancia (ej. presión dentro de 50 kPa y temp dentro de 10 °C)
+            if(mejor && Math.abs(mejor.P - pVal) <= 50 && Math.abs(mejor.T - tVal) <= 15) {
+                const contenido = `
+                    <div class="col-12 text-center mb-2"><h5 class="text-success"><i class="fas fa-check-circle"></i> Coincidencia más cercana encontrada</h5></div>
+                    <div class="col-md-2"><div class="text-center p-3 bg-dark rounded border border-secondary"><h6 class="text-muted">P</h6><h4>${mejor.P}</h4><small>kPa</small></div></div>
+                    <div class="col-md-2"><div class="text-center p-3 bg-dark rounded border border-secondary"><h6 class="text-muted">T</h6><h4>${mejor.T}</h4><small>°C</small></div></div>
+                    <div class="col-md-2"><div class="text-center p-3 bg-dark rounded border border-primary"><h6 class="text-muted">v</h6><h4>${mejor.v}</h4><small>m³/kg</small></div></div>
+                    <div class="col-md-2"><div class="text-center p-3 bg-dark rounded border border-primary"><h6 class="text-muted">u</h6><h4>${mejor.u}</h4><small>kJ/kg</small></div></div>
+                    <div class="col-md-2"><div class="text-center p-3 bg-dark rounded border border-primary"><h6 class="text-muted">h</h6><h4>${mejor.h}</h4><small>kJ/kg</small></div></div>
+                    <div class="col-md-2"><div class="text-center p-3 bg-dark rounded border border-primary"><h6 class="text-muted">s</h6><h4>${mejor.s}</h4><small>kJ/kg·K</small></div></div>
+                    <div class="col-12 mt-2 text-center"><small class="text-warning"><i class="fas fa-exclamation-triangle"></i> Si los valores no son exactos, recuerde usar interpolación lineal con los datos adyacentes de la tabla.</small></div>
+                `;
+                document.getElementById('resultsContent').innerHTML = contenido;
                 document.getElementById('resultsBox').classList.add('show');
-            } else alert('No encontrado');
+                
+                // Opcional: hacer scroll suave hasta los resultados
+                document.getElementById('resultsBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                alert('No se encontró una coincidencia cercana en la tabla. Verifique que el estado sea realmente vapor sobrecalentado (T > T_sat a esa presión).');
+                document.getElementById('resultsBox').classList.remove('show');
+            }
         }
+
         document.addEventListener('DOMContentLoaded', cargar);
     </script>
 </body>
