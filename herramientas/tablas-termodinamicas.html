@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablas Termodinámicas | Procesos Industriales</title>
+    <link rel="icon" href="../assets/images/logo.svg" type="image/svg+xml">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root { --primary-color: #0066cc; --secondary-color: #ff6600; --dark-bg: #1a1a2e; --card-bg: rgba(255, 255, 255, 0.05); --text-light: #e0e0e0; }
+        body { font-family: 'Roboto', sans-serif; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: var(--text-light); min-height: 100vh; }
+        h1, h2, h3, h4 { font-family: 'Orbitron', sans-serif; }
+        .main-header { background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); border-bottom: 3px solid var(--secondary-color); position: sticky; top: 0; z-index: 1000; }
+        .navbar-brand img { filter: drop-shadow(0 0 8px var(--secondary-color)); }
+        .nav-link:hover, .nav-link.active { color: var(--secondary-color) !important; }
+        .dropdown-menu-dark { background: rgba(0, 0, 0, 0.95); border: 1px solid var(--secondary-color); }
+        .page-title { background: linear-gradient(45deg, var(--secondary-color), #ff9933); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin: 2rem 0; font-weight: 900; }
+        .tool-card { background: var(--card-bg); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
+        .manual-ref-box { background: rgba(255, 102, 0, 0.1); border: 2px dashed var(--secondary-color); padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0; }
+        .manual-ref-box h5 { color: var(--secondary-color); }
+        .form-control, .form-select { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white; }
+        .form-control:focus, .form-select:focus { background: rgba(255, 255, 255, 0.15); border-color: var(--secondary-color); color: white; box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.25); }
+        .form-select option { background: var(--dark-bg); color: white; }
+        .btn-calculate { background: linear-gradient(135deg, var(--secondary-color), #ff9933); border: none; font-weight: 700; padding: 0.75rem 2rem; transition: all 0.3s; color: white; }
+        .btn-calculate:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(255, 102, 0, 0.4); color: white; }
+        .nav-tabs .nav-link { color: var(--text-light); border: 1px solid rgba(255,255,255,0.2); }
+        .nav-tabs .nav-link.active { background: var(--secondary-color); color: white; border-color: var(--secondary-color); }
+        .thermo-table { background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; font-size: 0.85rem; }
+        .thermo-table thead { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); position: sticky; top: 0; }
+        .thermo-table th { font-weight: 700; text-transform: uppercase; font-size: 0.75rem; color: white; padding: 0.75rem 0.5rem; }
+        .thermo-table td { padding: 0.5rem; border-top: 1px solid rgba(255,255,255,0.05); }
+        .thermo-table tbody tr:hover { background: rgba(255, 102, 0, 0.15); }
+        .thermo-table tbody tr.highlight { background: rgba(0, 255, 100, 0.2); border-left: 3px solid #00ff66; }
+        .table-container { max-height: 600px; overflow-y: auto; border-radius: 10px; }
+        .table-container::-webkit-scrollbar { width: 8px; }
+        .table-container::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
+        .table-container::-webkit-scrollbar-thumb { background: var(--secondary-color); border-radius: 4px; }
+        .status-badge { padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem; display: inline-block; }
+        .status-ok { background: rgba(0, 255, 100, 0.2); color: #00ff66; border: 1px solid #00ff66; }
+        .status-error { background: rgba(255, 50, 50, 0.2); color: #ff6666; border: 1px solid #ff6666; }
+        footer { background: rgba(0, 0, 0, 0.9); border-top: 3px solid var(--secondary-color); margin-top: 4rem; padding: 3rem 0; }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html"><img src="../assets/images/logo.svg" alt="Logo" height="60"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">Inicio</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" data-bs-toggle="dropdown">Herramientas</a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="tablas-y-calculadoras.html">Tablas y Conversores</a></li>
+                                <li><a class="dropdown-item active" href="tablas-termodinamicas.html">Tablas Termodinámicas</a></li>
+                                <li><a class="dropdown-item" href="calculadora-fluidos.html">Flujo de Fluidos</a></li>
+                                <li><a class="dropdown-item" href="calculadora-termodinamica.html">Termodinámica</a></li>
+                                <li><a class="dropdown-item" href="calculadora-transferencia-calor.html">Transferencia de Calor</a></li>
+                                <li><a class="dropdown-item" href="calculadora-combustion.html">Combustión</a></li>
+                                <li><a class="dropdown-item" href="calculadora-operaciones-unitarias.html">Operaciones Unitarias</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container py-4">
+        <h1 class="page-title"><i class="fas fa-book me-3"></i>TABLAS TERMODINÁMICAS</h1>
+        <p class="text-center mb-3">Consulta interactiva de las tablas de Cengel & Boles (9ª Edición)</p>
+        
+        <div class="text-center mb-4">
+            <span id="status-global" class="status-badge"><i class="fas fa-spinner fa-spin"></i> Cargando tablas...</span>
+        </div>
+
+        <div class="manual-ref-box">
+            <h5><i class="fas fa-info-circle me-2"></i>📚 Cómo usar estas tablas en exámenes (sin internet)</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <ul>
+                        <li><strong>Tabla A-4:</strong> Agua saturada por <u>temperatura</u>. Busca T → obtienes P, v, u, h, s</li>
+                        <li><strong>Tabla A-5:</strong> Agua saturada por <u>presión</u>. Busca P → obtienes T, v, u, h, s</li>
+                        <li><strong>Tabla A-6:</strong> Vapor <u>sobrecalentado</u>. Busca P (encabezado) y luego T</li>
+                        <li><strong>Tabla A-7:</strong> Propiedades de <u>gases ideales</u> (Cp, Cv, k, R, M)</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul>
+                        <li><strong>Tabla A-11:</strong> R-134a saturado por <u>temperatura</u></li>
+                        <li><strong>Tabla A-12:</strong> R-134a saturado por <u>presión</u></li>
+                        <li><strong>Tabla A-13:</strong> R-134a <u>sobrecalentado</u></li>
+                    </ul>
+                    <p class="mb-0 mt-2"><strong>💡 Tip:</strong> Para mezclas líquido-vapor: \( h = h_f + x \cdot h_{fg} \)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Buscador rápido -->
+        <div class="tool-card mb-4">
+            <h4><i class="fas fa-search me-2 text-warning"></i>Buscador Rápido en Tablas</h4>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Seleccionar Tabla</label>
+                    <select id="search-table" class="form-select" onchange="actualizarOpcionesBusqueda()">
+                        <option value="A4">A-4: Agua saturada (por T)</option>
+                        <option value="A5">A-5: Agua saturada (por P)</option>
+                        <option value="A11">A-11: R-134a saturado (por T)</option>
+                        <option value="A12">A-12: R-134a saturado (por P)</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Valor a buscar</label>
+                    <input type="number" id="search-value" class="form-control" step="0.01" placeholder="Ej: 100">
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <button class="btn btn-calculate w-100" onclick="buscarEnTabla()"><i class="fas fa-search me-2"></i>Buscar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pestañas de tablas -->
+        <ul class="nav nav-tabs" id="tablaTabs" role="tablist">
+            <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-A4">A-4 Agua (T)</button></li>
+            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-A5">A-5 Agua (P)</button></li>
+            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-A6">A-6 Vapor</button></li>
+            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-A7">A-7 Gases</button></li>
+            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-A11">A-11 R134a (T)</button></li>
+            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-A12">A-12 R134a (P)</button></li>
+            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-A13">A-13 R134a Sup.</button></li>
+        </ul>
+
+        <div class="tab-content">
+            <!-- TAB A-4 -->
+            <div class="tab-pane fade show active" id="tab-A4">
+                <div class="tool-card">
+                    <h4><i class="fas fa-water me-2 text-info"></i>Tabla A-4: Agua Saturada por Temperatura</h4>
+                    <p class="text-muted">Unidades: T (°C), P (kPa), v (m³/kg), u, h (kJ/kg), s (kJ/kg·K)</p>
+                    <div class="table-container" id="container-A4"><p class="text-center">Cargando datos...</p></div>
+                </div>
+            </div>
+
+            <!-- TAB A-5 -->
+            <div class="tab-pane fade" id="tab-A5">
+                <div class="tool-card">
+                    <h4><i class="fas fa-tachometer-alt me-2 text-info"></i>Tabla A-5: Agua Saturada por Presión</h4>
+                    <p class="text-muted">Unidades: P (kPa), T (°C), v (m³/kg), u, h (kJ/kg), s (kJ/kg·K)</p>
+                    <div class="table-container" id="container-A5"><p class="text-center">Cargando datos...</p></div>
+                </div>
+            </div>
+
+            <!-- TAB A-6 -->
+            <div class="tab-pane fade" id="tab-A6">
+                <div class="tool-card">
+                    <h4><i class="fas fa-cloud me-2 text-info"></i>Tabla A-6: Vapor de Agua Sobrecalentado</h4>
+                    <p class="text-muted">Unidades: P (MPa), T (°C), v (m³/kg), u, h (kJ/kg), s (kJ/kg·K)</p>
+                    <div class="mb-3">
+                        <label class="form-label">Seleccionar Presión (MPa)</label>
+                        <select id="A6-presion" class="form-select" onchange="renderA6()" style="max-width: 300px;">
+                            <option value="">-- Seleccione --</option>
+                        </select>
+                    </div>
+                    <div class="table-container" id="container-A6"><p class="text-center">Seleccione una presión</p></div>
+                </div>
+            </div>
+
+            <!-- TAB A-7 -->
+            <div class="tab-pane fade" id="tab-A7">
+                <div class="tool-card">
+                    <h4><i class="fas fa-wind me-2 text-info"></i>Tabla A-7: Propiedades de Gases Ideales</h4>
+                    <p class="text-muted">Unidades: M (kg/kmol), R (kJ/kg·K), Cp, Cv (kJ/kg·K), k (adim.)</p>
+                    <div class="table-container" id="container-A7"></div>
+                </div>
+            </div>
+
+            <!-- TAB A-11 -->
+            <div class="tab-pane fade" id="tab-A11">
+                <div class="tool-card">
+                    <h4><i class="fas fa-snowflake me-2 text-info"></i>Tabla A-11: R-134a Saturado por Temperatura</h4>
+                    <p class="text-muted">Unidades: T (°C), P (MPa), v (m³/kg), u, h (kJ/kg), s (kJ/kg·K)</p>
+                    <div class="table-container" id="container-A11"><p class="text-center">Cargando datos...</p></div>
+                </div>
+            </div>
+
+            <!-- TAB A-12 -->
+            <div class="tab-pane fade" id="tab-A12">
+                <div class="tool-card">
+                    <h4><i class="fas fa-compress-arrows-alt me-2 text-info"></i>Tabla A-12: R-134a Saturado por Presión</h4>
+                    <p class="text-muted">Unidades: P (MPa), T (°C), v (m³/kg), u, h (kJ/kg), s (kJ/kg·K)</p>
+                    <div class="table-container" id="container-A12"><p class="text-center">Cargando datos...</p></div>
+                </div>
+            </div>
+
+            <!-- TAB A-13 -->
+            <div class="tab-pane fade" id="tab-A13">
+                <div class="tool-card">
+                    <h4><i class="fas fa-temperature-high me-2 text-info"></i>Tabla A-13: R-134a Sobrecalentado</h4>
+                    <p class="text-muted">Unidades: P (MPa), T (°C), v (m³/kg), u, h (kJ/kg), s (kJ/kg·K)</p>
+                    <div class="mb-3">
+                        <label class="form-label">Seleccionar Presión (MPa)</label>
+                        <select id="A13-presion" class="form-select" onchange="renderA13()" style="max-width: 300px;">
+                            <option value="">-- Seleccione --</option>
+                        </select>
+                    </div>
+                    <div class="table-container" id="container-A13"><p class="text-center">Seleccione una presión</p></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2026 Procesos Industriales. Facultad de Ingeniería.</p>
+            <small class="text-muted">Datos basados en Cengel & Boles, Termodinámica 9ª Edición</small>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // ==========================================
+        // VARIABLES GLOBALES
+        // ==========================================
+        let tablas = { A4: null, A5: null, A6: null, A7: null, A11: null, A12: null, A13: null };
+        
+        // ==========================================
+        // CARGA DE ARCHIVOS JSON
+        // ==========================================
+        async function cargarJSON(url) {
+            try {
+                const res = await fetch(url);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                return await res.json();
+            } catch (e) {
+                console.warn(`No se pudo cargar ${url}:`, e);
+                return null;
+            }
+        }
+
+        async function inicializarTablas() {
+            const statusEl = document.getElementById('status-global');
+            
+            tablas.A4 = await cargarJSON('datos/tabla_A4_agua_saturada_T.json');
+            tablas.A5 = await cargarJSON('datos/tabla_A5_agua_saturada_P.json');
+            tablas.A6 = await cargarJSON('datos/tabla_A6_vapor_sobrecalentado.json');
+            tablas.A11 = await cargarJSON('datos/tabla_A11_R134a_saturado_T.json');
+            tablas.A12 = await cargarJSON('datos/tabla_A12_R134a_saturado_P.json');
+            tablas.A13 = await cargarJSON('datos/tabla_A13_R134a_sobrecalentado.json');
+            
+            // Tabla A-7 (Gases Ideales) - Datos embebidos por ser pequeña
+            tablas.A7 = {
+                titulo: "Tabla A-7: Propiedades de gases ideales",
+                datos: [
+                    { sustancia: "Aire", formula: "Aire", M: 28.97, R: 0.287, Cp: 1.005, Cv: 0.718, k: 1.400 },
+                    { sustancia: "Nitrógeno", formula: "N₂", M: 28.013, R: 0.2968, Cp: 1.039, Cv: 0.743, k: 1.400 },
+                    { sustancia: "Oxígeno", formula: "O₂", M: 31.999, R: 0.2598, Cp: 0.918, Cv: 0.658, k: 1.395 },
+                    { sustancia: "Dióxido de carbono", formula: "CO₂", M: 44.01, R: 0.1889, Cp: 0.846, Cv: 0.657, k: 1.289 },
+                    { sustancia: "Monóxido de carbono", formula: "CO", M: 28.011, R: 0.2968, Cp: 1.040, Cv: 0.744, k: 1.400 },
+                    { sustancia: "Hidrógeno", formula: "H₂", M: 2.016, R: 4.124, Cp: 14.307, Cv: 10.183, k: 1.405 },
+                    { sustancia: "Vapor de agua", formula: "H₂O", M: 18.015, R: 0.4615, Cp: 1.872, Cv: 1.410, k: 1.329 },
+                    { sustancia: "Helio", formula: "He", M: 4.003, R: 2.0769, Cp: 5.1926, Cv: 3.1156, k: 1.667 },
+                    { sustancia: "Argón", formula: "Ar", M: 39.948, R: 0.2081, Cp: 0.5203, Cv: 0.3122, k: 1.667 },
+                    { sustancia: "Metano", formula: "CH₄", M: 16.043, R: 0.5182, Cp: 2.2537, Cv: 1.7354, k: 1.299 },
+                    { sustancia: "Etano", formula: "C₂H₆", M: 30.07, R: 0.2765, Cp: 1.7662, Cv: 1.4897, k: 1.186 },
+                    { sustancia: "Propano", formula: "C₃H₈", M: 44.097, R: 0.1885, Cp: 1.6794, Cv: 1.4909, k: 1.129 },
+                    { sustancia: "Butano", formula: "C₄H₁₀", M: 58.123, R: 0.1433, Cp: 1.6794, Cv: 1.5361, k: 1.093 }
+                ]
+            };
+
+            // Renderizar todas las tablas
+            renderA4();
+            renderA5();
+            renderA6();
+            renderA7();
+            renderA11();
+            renderA12();
+            renderA13();
+
+            // Actualizar estado global
+            const cargadas = Object.values(tablas).filter(t => t !== null).length;
+            if (cargadas === 7) {
+                statusEl.className = 'status-badge status-ok';
+                statusEl.innerHTML = '<i class="fas fa-check-circle"></i> Todas las tablas cargadas correctamente';
+            } else {
+                statusEl.className = 'status-badge status-error';
+                statusEl.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${cargadas}/7 tablas cargadas. Verifique la carpeta /datos/`;
+            }
+        }
+
+        // ==========================================
+        // RENDERIZADO DE TABLAS
+        // ==========================================
+        function renderTablaSaturada(containerId, datos, campoPrincipal, unidadPrincipal) {
+            const container = document.getElementById(containerId);
+            if (!datos || !datos.datos) {
+                container.innerHTML = '<div class="alert alert-warning">No se pudo cargar la tabla. Verifique el archivo JSON.</div>';
+                return;
+            }
+            
+            let html = '<table class="table table-dark thermo-table"><thead><tr>';
+            html += `<th>${campoPrincipal}</th>`;
+            
+            // Obtener campos dinámicamente del primer dato
+            const campos = Object.keys(datos.datos[0]).filter(k => k !== campoPrincipal);
+            campos.forEach(c => html += `<th>${c}</th>`);
+            html += '</tr></thead><tbody>';
+            
+            datos.datos.forEach((fila, idx) => {
+                html += `<tr data-valor="${fila[campoPrincipal]}">`;
+                html += `<td><strong>${fila[campoPrincipal]}</strong></td>`;
+                campos.forEach(c => {
+                    const val = fila[c];
+                    const formatted = typeof val === 'number' ? (Math.abs(val) < 0.001 || Math.abs(val) > 10000 ? val.toExponential(4) : val.toFixed(4)) : val;
+                    html += `<td>${formatted}</td>`;
+                });
+                html += '</tr>';
+            });
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        function renderA4() { renderTablaSaturada('container-A4', tablas.A4, 'T', '°C'); }
+        function renderA5() { renderTablaSaturada('container-A5', tablas.A5, 'P', 'kPa'); }
+        function renderA11() { renderTablaSaturada('container-A11', tablas.A11, 'T', '°C'); }
+        function renderA12() { renderTablaSaturada('container-A12', tablas.A12, 'P', 'MPa'); }
+
+        function renderA6() {
+            const container = document.getElementById('container-A6');
+            const select = document.getElementById('A6-presion');
+            
+            if (!tablas.A6 || !tablas.A6.datos) {
+                container.innerHTML = '<div class="alert alert-warning">No se pudo cargar la tabla A-6.</div>';
+                return;
+            }
+            
+            // Llenar select si está vacío
+            if (select.options.length <= 1) {
+                Object.keys(tablas.A6.datos).sort((a,b) => parseFloat(a)-parseFloat(b)).forEach(p => {
+                    const opt = document.createElement('option');
+                    opt.value = p; opt.textContent = p + ' MPa';
+                    select.appendChild(opt);
+                });
+            }
+            
+            const presion = select.value;
+            if (!presion) { container.innerHTML = '<p class="text-center">Seleccione una presión</p>'; return; }
+            
+            const datos = tablas.A6.datos[presion];
+            let html = `<h5 class="text-warning mb-3">P = ${presion} MPa</h5>`;
+            html += '<table class="table table-dark thermo-table"><thead><tr><th>T (°C)</th><th>v (m³/kg)</th><th>u (kJ/kg)</th><th>h (kJ/kg)</th><th>s (kJ/kg·K)</th></tr></thead><tbody>';
+            datos.forEach(fila => {
+                html += `<tr><td><strong>${fila.T}</strong></td><td>${fila.v}</td><td>${fila.u}</td><td>${fila.h}</td><td>${fila.s}</td></tr>`;
+            });
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        function renderA13() {
+            const container = document.getElementById('container-A13');
+            const select = document.getElementById('A13-presion');
+            
+            if (!tablas.A13 || !tablas.A13.datos) {
+                container.innerHTML = '<div class="alert alert-warning">No se pudo cargar la tabla A-13.</div>';
+                return;
+            }
+            
+            if (select.options.length <= 1) {
+                Object.keys(tablas.A13.datos).sort((a,b) => parseFloat(a)-parseFloat(b)).forEach(p => {
+                    const opt = document.createElement('option');
+                    opt.value = p; opt.textContent = p + ' MPa';
+                    select.appendChild(opt);
+                });
+            }
+            
+            const presion = select.value;
+            if (!presion) { container.innerHTML = '<p class="text-center">Seleccione una presión</p>'; return; }
+            
+            const datos = tablas.A13.datos[presion];
+            let html = `<h5 class="text-warning mb-3">P = ${presion} MPa</h5>`;
+            html += '<table class="table table-dark thermo-table"><thead><tr><th>T (°C)</th><th>v (m³/kg)</th><th>u (kJ/kg)</th><th>h (kJ/kg)</th><th>s (kJ/kg·K)</th></tr></thead><tbody>';
+            datos.forEach(fila => {
+                html += `<tr><td><strong>${fila.T}</strong></td><td>${fila.v}</td><td>${fila.u}</td><td>${fila.h}</td><td>${fila.s}</td></tr>`;
+            });
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        function renderA7() {
+            const container = document.getElementById('container-A7');
+            if (!tablas.A7) { container.innerHTML = '<div class="alert alert-warning">No se pudo cargar la tabla A-7.</div>'; return; }
+            
+            let html = '<table class="table table-dark thermo-table"><thead><tr>';
+            html += '<th>Sustancia</th><th>Fórmula</th><th>M (kg/kmol)</th><th>R (kJ/kg·K)</th><th>Cp (kJ/kg·K)</th><th>Cv (kJ/kg·K)</th><th>k</th>';
+            html += '</tr></thead><tbody>';
+            tablas.A7.datos.forEach(g => {
+                html += `<tr><td><strong>${g.sustancia}</strong></td><td>${g.formula}</td><td>${g.M}</td><td>${g.R}</td><td>${g.Cp}</td><td>${g.Cv}</td><td>${g.k}</td></tr>`;
+            });
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        // ==========================================
+        // BUSCADOR RÁPIDO
+        // ==========================================
+        function actualizarOpcionesBusqueda() {
+            const tabla = document.getElementById('search-table').value;
+            const input = document.getElementById('search-value');
+            const labels = {
+                'A4': 'Temperatura (°C)',
+                'A5': 'Presión (kPa)',
+                'A11': 'Temperatura (°C)',
+                'A12': 'Presión (MPa)'
+            };
+            input.placeholder = labels[tabla] || 'Valor';
+        }
+
+        function buscarEnTabla() {
+            const tabla = document.getElementById('search-table').value;
+            const valor = parseFloat(document.getElementById('search-value').value);
+            if (isNaN(valor)) { alert('Ingrese un valor numérico'); return; }
+            
+            // Cambiar a la pestaña correspondiente
+            const tabMap = { 'A4': 'tab-A4', 'A5': 'tab-A5', 'A11': 'tab-A11', 'A12': 'tab-A12' };
+            const tabButton = document.querySelector(`[data-bs-target="#${tabMap[tabla]}"]`);
+            if (tabButton) new bootstrap.Tab(tabButton).show();
+            
+            // Resaltar la fila más cercana
+            setTimeout(() => {
+                const container = document.getElementById(`container-${tabla}`);
+                const filas = container.querySelectorAll('tbody tr');
+                let filaMasCercana = null;
+                let diffMinima = Infinity;
+                
+                filas.forEach(fila => {
+                    const valFila = parseFloat(fila.getAttribute('data-valor'));
+                    const diff = Math.abs(valFila - valor);
+                    if (diff < diffMinima) { diffMinima = diff; filaMasCercana = fila; }
+                });
+                
+                filas.forEach(f => f.classList.remove('highlight'));
+                if (filaMasCercana) {
+                    filaMasCercana.classList.add('highlight');
+                    filaMasCercana.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 300);
+        }
+
+        // ==========================================
+        // INICIALIZACIÓN
+        // ==========================================
+        window.addEventListener('DOMContentLoaded', inicializarTablas);
+    </script>
+</body>
+</html>
